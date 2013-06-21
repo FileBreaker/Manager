@@ -3,6 +3,7 @@ package com.filebreaker.manager.controllers;
 import java.util.List;
 
 import com.filebreaker.manager.beans.Experiment;
+import com.filebreaker.manager.beans.Sample;
 import com.filebreaker.manager.managers.ExperimentsManager;
 import com.filebreaker.manager.managers.ExperimentsManagerImpl;
 
@@ -14,23 +15,15 @@ public class MainController {
 		experimentsManager = new ExperimentsManagerImpl();
 	}
 	
-	public Object [][] getExperiments(){
+	// Experiments
+	public List<Experiment> getExperiments(){
 		List<Experiment> experiments = experimentsManager.findExperiments();
-		Object [][] result = null;
-		
-		if(experiments != null && !experiments.isEmpty()){
-			result = new Object[experiments.size()][3];
-		
-			for(int i = 0; i < experiments.size(); i++){
-				Experiment experiment = experiments.get(i);
-			
-				result[i][0] = experiment.getName();
-				result[i][1] = experiment.getCreationDate();
-				result[i][2] = experiment.getModificationDate();
-			}
-		}
-		
-		return result;
+		return experiments;
+	}
+	
+	public Experiment getExperiment(Integer experimentId) {
+		Experiment experiment = experimentsManager.findExperiment(experimentId);
+		return experiment;
 	}
 	
 	public void createExperiment(String experimentName, Integer samplesNumber) {
@@ -41,8 +34,30 @@ public class MainController {
 		
 	}
 
-	public void deleteExperiment() {
-		
+	public void deleteExperiment(Integer selectedExperimentId) {
+		experimentsManager.deleteExperiment(selectedExperimentId);
+	}
+	
+	// Samples
+	public List<Sample> getSamples(Integer experimentId){
+		List<Sample> samples = experimentsManager.findSamples(experimentId);
+		return samples;
+	}
+	
+	public Sample getSample(Integer experimentId, Integer sampleId){
+		Sample sample = experimentsManager.findSample(experimentId, sampleId);
+		return sample;
+	}
+	
+	public void createSample(Sample sample) {
+		experimentsManager.createSample(sample);
 	}
 
+	public void updateSample(Sample sample) {
+		experimentsManager.updateSample(sample);
+	}
+	
+	public void deleteSample(Integer experimentId, Integer sampleId) {
+		experimentsManager.deleteSample(experimentId, sampleId);
+	}
 }

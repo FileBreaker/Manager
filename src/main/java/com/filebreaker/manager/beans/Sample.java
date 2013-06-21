@@ -4,63 +4,65 @@ import java.util.Date;
 
 public class Sample {
 
-	private int id;
+	private Integer id;
 	
-	private int curvatureAngle;
+	private Integer curvatureAngle;
 	
-	private int curvatureRadius;
+	private Integer curvatureRadius;
 	
-	private int uses;
+	private Integer uses;
 	
 	private String fileType;
 	
-	private int apicalDiameter;
+	private Integer apicalDiameter;
 	
-	private int engineAngularSpeed;
+	private Integer engineAngularSpeed;
 	
-	private int engineTorque;
+	private Integer engineTorque;
 	
-	private int ductSpeed;
+	private Integer ductSpeed;
 	
-	private int movementTypeId;
+	private Integer movementTypeId;
 	
-	private int studyTypeId;
+	private Integer studyTypeId;
 	
-	private int experimentId;
+	private Integer experimentId;
+	
+	private Integer metalCompositionId;
 	
 	private Date creationDate;
 	
 	private Date modificationDate;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public int getCurvatureAngle() {
+	public Integer getCurvatureAngle() {
 		return curvatureAngle;
 	}
 
-	public void setCurvatureAngle(int curvatureAngle) {
+	public void setCurvatureAngle(Integer curvatureAngle) {
 		this.curvatureAngle = curvatureAngle;
 	}
 
-	public int getCurvatureRadius() {
+	public Integer getCurvatureRadius() {
 		return curvatureRadius;
 	}
 
-	public void setCurvatureRadius(int curvatureRadius) {
+	public void setCurvatureRadius(Integer curvatureRadius) {
 		this.curvatureRadius = curvatureRadius;
 	}
 
-	public int getUses() {
+	public Integer getUses() {
 		return uses;
 	}
 
-	public void setUses(int uses) {
+	public void setUses(Integer uses) {
 		this.uses = uses;
 	}
 
@@ -72,60 +74,68 @@ public class Sample {
 		this.fileType = fileType;
 	}
 
-	public int getApicalDiameter() {
+	public Integer getApicalDiameter() {
 		return apicalDiameter;
 	}
 
-	public void setApicalDiameter(int apicalDiameter) {
+	public void setApicalDiameter(Integer apicalDiameter) {
 		this.apicalDiameter = apicalDiameter;
 	}
 
-	public int getEngineAngularSpeed() {
+	public Integer getEngineAngularSpeed() {
 		return engineAngularSpeed;
 	}
 
-	public void setEngineAngularSpeed(int engineAngularSpeed) {
+	public void setEngineAngularSpeed(Integer engineAngularSpeed) {
 		this.engineAngularSpeed = engineAngularSpeed;
 	}
 
-	public int getEngineTorque() {
+	public Integer getEngineTorque() {
 		return engineTorque;
 	}
 
-	public void setEngineTorque(int engineTorque) {
+	public void setEngineTorque(Integer engineTorque) {
 		this.engineTorque = engineTorque;
 	}
 
-	public int getMovementTypeId() {
+	public Integer getMovementTypeId() {
 		return movementTypeId;
 	}
 
-	public void setMovementTypeId(int movementTypeId) {
+	public void setMovementTypeId(Integer movementTypeId) {
 		this.movementTypeId = movementTypeId;
 	}
 
-	public int getStudyTypeId() {
+	public Integer getStudyTypeId() {
 		return studyTypeId;
 	}
 
-	public void setStudyTypeId(int studyTypeId) {
+	public void setStudyTypeId(Integer studyTypeId) {
 		this.studyTypeId = studyTypeId;
 	}
 
-	public int getDuctSpeed() {
+	public Integer getDuctSpeed() {
 		return ductSpeed;
 	}
 
-	public void setDuctSpeed(int ductSpeed) {
+	public void setDuctSpeed(Integer ductSpeed) {
 		this.ductSpeed = ductSpeed;
 	}
 
-	public int getExperimentId() {
+	public Integer getExperimentId() {
 		return experimentId;
 	}
 
-	public void setExperimentId(int experimentId) {
+	public void setExperimentId(Integer experimentId) {
 		this.experimentId = experimentId;
+	}
+
+	public Integer getMetalCompositionId() {
+		return metalCompositionId;
+	}
+
+	public void setMetalCompositionId(Integer metalCompositionId) {
+		this.metalCompositionId = metalCompositionId;
 	}
 
 	public Date getCreationDate() {

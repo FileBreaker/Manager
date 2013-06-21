@@ -25,8 +25,13 @@ public class ExperimentsManagerImpl implements ExperimentsManager {
 		List<Experiment> experiments = experimentsDAO.findExperiments();
 		return experiments;
 	}
+	
+	public Experiment findExperiment(Integer experimentId) {
+		Experiment experiment = experimentsDAO.findExperiment(experimentId);
+		return experiment;
+	}
 
-	public void createExperiment(String experimentName, int sampleNumber) {
+	public void createExperiment(String experimentName, Integer sampleNumber) {
 		Experiment experiment = new Experiment();
 		
 		experiment.setName(experimentName);
@@ -39,7 +44,36 @@ public class ExperimentsManagerImpl implements ExperimentsManager {
 			sample.setExperimentId(experimentId);
 			sample.setCreationDate(new Date());
 			
-			sampleDAO.createSample(sample);
+			sampleDAO.saveSample(sample);
 		}
+	}
+	
+	public void deleteExperiment(Integer experimentId) {
+		sampleDAO.deleteSamples(experimentId);
+		experimentsDAO.deleteExperiment(experimentId);
+	}
+
+	public List<Sample> findSamples(Integer experimentId) {
+		List<Sample> samples = sampleDAO.findSamples(experimentId);
+		return samples;
+	}
+
+	public Sample findSample(Integer experimentId, Integer sampleId) {
+		Sample sample = sampleDAO.findSample(experimentId, sampleId);
+		return sample;
+	}
+
+	public void createSample(Sample sample) {
+		sample.setCreationDate(new Date());
+		sampleDAO.saveSample(sample);
+	}
+
+	public void updateSample(Sample sample) {
+		sample.setModificationDate(new Date());
+		sampleDAO.updateSample(sample);
+	}
+
+	public void deleteSample(Integer experimentId, Integer sampleId) {
+		sampleDAO.deleteSample(experimentId, sampleId);
 	}
 }

@@ -8,6 +8,10 @@ public interface ExperimentsDAO {
 
 	List<Experiment> findExperiments();
 
+	Experiment findExperiment(Integer experimentId);
+	
 	Integer createExperiment(Experiment experiment);
+
+	void deleteExperiment(Integer experimentId);
 	
 }

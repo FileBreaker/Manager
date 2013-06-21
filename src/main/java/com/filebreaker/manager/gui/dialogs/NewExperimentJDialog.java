@@ -3,6 +3,7 @@ package com.filebreaker.manager.gui.dialogs;
 import java.awt.event.ActionEvent;
 
 import com.filebreaker.manager.controllers.MainController;
+import com.filebreaker.manager.gui.frames.ExperimentsFrameView;
 
 public class NewExperimentJDialog extends javax.swing.JDialog {
 
@@ -24,12 +25,17 @@ public class NewExperimentJDialog extends javax.swing.JDialog {
     
     private MainController mainController;
     
+    private ExperimentsFrameView experimentsFrameView;
+    
     /**
      * Creates new form NewExperimentJDialog
+     * @param experimentsFrameView 
      */
-    public NewExperimentJDialog(java.awt.Frame parent, boolean modal, MainController mainController) {
+    public NewExperimentJDialog(java.awt.Frame parent, boolean modal, MainController mainController, ExperimentsFrameView experimentsFrameView) {
         super(parent, modal);
+        
         this.mainController = mainController;
+        this.experimentsFrameView = experimentsFrameView;
         
         initComponents();
     }
@@ -132,6 +138,8 @@ public class NewExperimentJDialog extends javax.swing.JDialog {
 		
 		mainController.createExperiment(experimentName, samplesNumber);
 		this.setVisible(false);
+		
+		experimentsFrameView.refreshTable();
 	}
     
     private void cancelExperimentCreationActionPerformed(ActionEvent evt) {

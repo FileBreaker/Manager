@@ -40,6 +40,30 @@ public class ExperimentsDAOImpl extends H2DAO implements ExperimentsDAO {
 		
 		return result;
 	}
+	
+	public Experiment findExperiment(Integer experimentId) {
+		Experiment experiment = null;
+		
+		try {
+			Connection conn = getConnection();
+			Statement statement = conn.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM EXPERIMENTS WHERE ID = " + experimentId);
+			
+			if(rs.first()){
+				experiment = new Experiment();
+				
+				experiment.setId(rs.getInt("ID"));
+				experiment.setName(rs.getString("NAME"));
+				experiment.setCreationDate(rs.getDate("CREATION_DATE"));
+				experiment.setModificationDate(rs.getDate("MODIFICATION_DATE"));
+			}
+		} catch(Exception e) {
+			// TODO: LOG
+			e.printStackTrace();
+		}
+		
+		return experiment;
+	}
 
 	public Integer createExperiment(Experiment experiment) {
 		Integer experimentId = null;
@@ -48,18 +72,18 @@ public class ExperimentsDAOImpl extends H2DAO implements ExperimentsDAO {
 			Connection con = getConnection();
 			
 			//prepared statement
-			Statement stat = con.createStatement();
+			PreparedStatement stat = con.prepareStatement("INSERT INTO EXPERIMENTS (NAME, CREATION_DATE) VALUES (?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
 			
-			//con.cre
+			stat.setString(1, experiment.getName());
+			stat.setTimestamp(2, new Timestamp(experiment.getCreationDate().getTime()));
+			stat.addBatch();
 			
-			//stat.
-			//stat.setString(1, experiment.getName());
-			//prep.setTimestamp(2, new Timestamp(experiment.getCreationDate().getTime()));
-		
-			stat.executeUpdate("INSERT INTO EXPERIMENTS (NAME, CREATION_DATE) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
+			stat.executeBatch();
+			
+			ResultSet rsKeys = stat.getGeneratedKeys();
+			rsKeys.next();
+			experimentId = rsKeys.getInt(1);
 			con.commit();
-			
-			experimentId = stat.getGeneratedKeys().getInt(1);
 		} catch (Exception e){
 			// TODO: LOG
 			e.printStackTrace();
@@ -68,4 +92,20 @@ public class ExperimentsDAOImpl extends H2DAO implements ExperimentsDAO {
 		return experimentId;
 	}
 
+	public void deleteExperiment(Integer experimentId) {
+		try {
+			Connection con = getConnection();
+			
+			//prepared statement
+			PreparedStatement stat = con.prepareStatement("DELETE FROM EXPERIMENTS WHERE ID=?");
+			stat.setInt(1, experimentId);
+			
+			stat.addBatch();
+			stat.executeBatch();
+			con.commit();
+		} catch(Exception e) {
+			// TODO: LOG
+			e.printStackTrace();
+		}
+	}
 }
