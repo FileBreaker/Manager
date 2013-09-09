@@ -4,7 +4,7 @@ import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;
 
 import com.filebreaker.manager.controllers.MainController;
-import com.filebreaker.manager.gui.frames.ExperimentsFrameView;
+import com.filebreaker.manager.gui.frames.experiments.ExperimentsFrameView;
 
 public class Gui extends SingleFrameApplication {
     /**

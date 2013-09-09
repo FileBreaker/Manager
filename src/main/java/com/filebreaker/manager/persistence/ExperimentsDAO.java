@@ -13,5 +13,7 @@ public interface ExperimentsDAO {
 	Integer createExperiment(Experiment experiment);
 
 	void deleteExperiment(Integer experimentId);
+
+	void updateExperiment(Experiment experiment);
 	
 }

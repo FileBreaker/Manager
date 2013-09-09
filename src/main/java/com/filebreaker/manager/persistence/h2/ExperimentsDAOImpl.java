@@ -108,4 +108,26 @@ public class ExperimentsDAOImpl extends H2DAO implements ExperimentsDAO {
 			e.printStackTrace();
 		}
 	}
+
+	public void updateExperiment(Experiment experiment) {
+		try {
+			Connection con = getConnection();
+			
+			//prepared statement
+			PreparedStatement prep = con.prepareStatement("UPDATE EXPERIMENTS SET CREATION_DATE=?, MODIFICATION_DATE=?, NAME=? WHERE ID=?");
+	
+			prep.setTimestamp(1, new Timestamp(experiment.getCreationDate().getTime()));
+			prep.setTimestamp(2, new Timestamp(experiment.getModificationDate().getTime()));
+			prep.setString(3, experiment.getName());
+			prep.setInt(4, experiment.getId());
+			
+			//batch insert
+			prep.addBatch();
+		
+			prep.executeBatch();
+		} catch (Exception e){
+			// TODO: LOG
+			e.printStackTrace();
+		}
+	}
 }

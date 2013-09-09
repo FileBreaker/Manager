@@ -26,6 +26,8 @@ public class Sample {
 	
 	private Integer studyTypeId;
 	
+	private String studyGroup;
+	
 	private Integer experimentId;
 	
 	private Integer metalCompositionId;
@@ -33,6 +35,10 @@ public class Sample {
 	private Date creationDate;
 	
 	private Date modificationDate;
+	
+	private int oscillations;
+	
+	private long durationMillis;
 
 	public Integer getId() {
 		return id;
@@ -113,6 +119,14 @@ public class Sample {
 	public void setStudyTypeId(Integer studyTypeId) {
 		this.studyTypeId = studyTypeId;
 	}
+	
+	public String getStudyGroup() {
+		return studyGroup;
+	}
+
+	public void setStudyGroup(String studyGroup) {
+		this.studyGroup = studyGroup;
+	}
 
 	public Integer getDuctSpeed() {
 		return ductSpeed;
@@ -152,5 +166,21 @@ public class Sample {
 
 	public void setModificationDate(Date modificationDate) {
 		this.modificationDate = modificationDate;
+	}
+
+	public int getOscillations() {
+		return oscillations;
+	}
+
+	public void setOscillations(int oscillations) {
+		this.oscillations = oscillations;
+	}
+
+	public long getDurationMillis() {
+		return durationMillis;
+	}
+
+	public void setDurationMillis(long durationMillis) {
+		this.durationMillis = durationMillis;
 	}
 }
