@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JTable;
@@ -23,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 import com.filebreaker.manager.beans.Experiment;
 import com.filebreaker.manager.beans.Sample;
 import com.filebreaker.manager.controllers.MainController;
+import com.filebreaker.manager.gui.dialogs.DuplicateSampleJDialog;
 import com.filebreaker.manager.gui.frames.RefreshableFrame;
 import com.filebreaker.manager.gui.tables.IdentifiedTableModel;
 import com.filebreaker.manager.gui.utils.ExportFileChooserFactory;
@@ -43,6 +45,8 @@ public class SamplesJFrame extends javax.swing.JFrame implements RefreshableFram
     
     private javax.swing.JButton deleteButton;
     
+    private javax.swing.JButton duplicateButton;
+    
     private javax.swing.JLabel sampleLabel;
     
     private javax.swing.JScrollPane scrollPane;
@@ -50,6 +54,8 @@ public class SamplesJFrame extends javax.swing.JFrame implements RefreshableFram
     private javax.swing.JTable samplesTable; 
     
     private Integer experimentId;
+    
+    private JDialog duplicateSampleDialog;
 
     public SamplesJFrame(MainController mainController, Integer experimentId) {
     	this.experimentId = experimentId;
@@ -71,6 +77,7 @@ public class SamplesJFrame extends javax.swing.JFrame implements RefreshableFram
         samplesTable = new javax.swing.JTable();
         newButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
+        duplicateButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -95,6 +102,7 @@ public class SamplesJFrame extends javax.swing.JFrame implements RefreshableFram
         		if(row != -1){
         			exportButton.setEnabled(true);
         			deleteButton.setEnabled(true);
+        			duplicateButton.setEnabled(true);
         			
         			if(e.getClickCount() > 1){
         				IdentifiedTableModel tableModel = (IdentifiedTableModel)target.getModel();
@@ -125,6 +133,15 @@ public class SamplesJFrame extends javax.swing.JFrame implements RefreshableFram
                 deleteButtonActionPerformed(evt);
             }
         });
+        
+        duplicateButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/note_new.gif"))); // NOI18N
+        duplicateButton.setText("Duplicar");
+        duplicateButton.setEnabled(false);
+        duplicateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                duplicateButtonActionPerformed(evt);
+            }
+        });
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -145,6 +162,8 @@ public class SamplesJFrame extends javax.swing.JFrame implements RefreshableFram
                         .add(newButton)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(deleteButton)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(duplicateButton)
                         .add(0, 239, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -161,7 +180,8 @@ public class SamplesJFrame extends javax.swing.JFrame implements RefreshableFram
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(newButton)
-                    .add(deleteButton))
+                    .add(deleteButton)
+                    .add(duplicateButton))
                 .addContainerGap(8, Short.MAX_VALUE))
         );
 
@@ -255,6 +275,7 @@ public class SamplesJFrame extends javax.swing.JFrame implements RefreshableFram
     	if(samplesTable.getSelectedRow() == -1){
     		deleteButton.setEnabled(false);
     		exportButton.setEnabled(false);
+    		duplicateButton.setEnabled(false);
     	}
     }
 
@@ -276,5 +297,22 @@ public class SamplesJFrame extends javax.swing.JFrame implements RefreshableFram
     	
     	mainController.deleteSamples(experimentId, selectedSamplesId);
     	refresh();
-    }                                        
+    }
+    
+    @SuppressWarnings("unchecked")
+	private void duplicateButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    	int row = samplesTable.getSelectedRow();
+    	
+    	if(row != -1){
+	    	IdentifiedTableModel tableModel = (IdentifiedTableModel) samplesTable.getModel();
+	    	
+	    	Map<String, Object> composedId = (Map<String, Object>)tableModel.getModelId(row);
+			
+	    	Integer sampleId = (Integer) composedId.get("sampleId");
+			Integer experimentId = (Integer)composedId.get("experimentId");
+			
+			duplicateSampleDialog = new DuplicateSampleJDialog(this, true, mainController, sampleId, experimentId);
+	    	duplicateSampleDialog.setVisible(true);
+    	}
+	}
 }

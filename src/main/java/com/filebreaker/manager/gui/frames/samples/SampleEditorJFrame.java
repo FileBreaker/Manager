@@ -1,8 +1,10 @@
 package com.filebreaker.manager.gui.frames.samples;
 
 import java.awt.event.ActionEvent;
+import java.math.BigDecimal;
 
 import javax.swing.JFrame;
+import javax.swing.SpinnerNumberModel;
 
 import com.filebreaker.manager.beans.Sample;
 import com.filebreaker.manager.controllers.MainController;
@@ -44,7 +46,9 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
     
 	private javax.swing.JLabel esterilizationNumberLabel;
     
-	private javax.swing.JLabel limeTypeLabel;
+	private javax.swing.JLabel sectionLabel;
+	
+	private javax.swing.JLabel fileTypeLabel;
     
 	private javax.swing.JLabel conicityLabel;
     
@@ -71,6 +75,8 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
 	private javax.swing.JSpinner angularSpeedSpinner;
     
 	private javax.swing.JSpinner engineTorqueSpinner;
+	
+	private javax.swing.JSpinner sectionSpinner;
     
 	private javax.swing.JTextField fileTypeTextField;
 	
@@ -108,7 +114,8 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
         radiusCurveLabel = new javax.swing.JLabel();
         useNumberLabel = new javax.swing.JLabel();
         esterilizationNumberLabel = new javax.swing.JLabel();
-        limeTypeLabel = new javax.swing.JLabel();
+        sectionLabel = new javax.swing.JLabel();
+        fileTypeLabel = new javax.swing.JLabel();
         conicityLabel = new javax.swing.JLabel();
         apicalDiameterLabel = new javax.swing.JLabel();
         angularSpeedLabel = new javax.swing.JLabel();
@@ -127,22 +134,32 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
         esterilizationNumberSpinner = new javax.swing.JSpinner();
         fileTypeTextField = new javax.swing.JTextField();
         studyGroupTextField = new javax.swing.JTextField();
-        conicitySpinner = new javax.swing.JSpinner();
-        apicalDiameterSpinner = new javax.swing.JSpinner();
         angularSpeedSpinner = new javax.swing.JSpinner();
-        engineTorqueSpinner = new javax.swing.JSpinner();
         ductSpeedSpinner = new javax.swing.JSpinner();
         movementTypeComboBox = new javax.swing.JComboBox();
         fileMetalCompositionComboBox = new javax.swing.JComboBox();
         studyTypeComboBox = new javax.swing.JComboBox();
         
+        // spinners with double values
+        SpinnerNumberModel snmApicalDiameter = new SpinnerNumberModel(0.0,0.0,99999.99,0.01);
+        apicalDiameterSpinner = new javax.swing.JSpinner(snmApicalDiameter);
+        
+        SpinnerNumberModel snmConicity = new SpinnerNumberModel(0.0,0.0,99999.99,0.01);
+        conicitySpinner = new javax.swing.JSpinner(snmConicity);
+        
+        SpinnerNumberModel snmEngineTorque = new SpinnerNumberModel(0.0,0.0,99999.99,0.01);
+        engineTorqueSpinner = new javax.swing.JSpinner(snmEngineTorque);
+        
+        SpinnerNumberModel snmSection = new SpinnerNumberModel(0.0,0.0,99999.99,0.01);
+        sectionSpinner = new javax.swing.JSpinner(snmSection);
+                
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         angleCurveLabel.setText("Ángulo de curvatura");
         radiusCurveLabel.setText("Radio de curvatura");
         useNumberLabel.setText("Número de usos");
         esterilizationNumberLabel.setText("Número de esterilizaciones");
-        limeTypeLabel.setText("Tipo de lima");
+        fileTypeLabel.setText("Tipo de lima");
         conicityLabel.setText("Conicidad");
         apicalDiameterLabel.setText("Diámetro apical");
         angularSpeedLabel.setText("Velocidad angular del motor");
@@ -152,6 +169,7 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
         fileMetalCompositionLabel.setText("Aleación de la lima");
         studyTypeLabel.setText("Tipo de estudio");
         studyGroupLabel.setText("Grupo de estudio");
+        sectionLabel.setText("Sección");
         
         fileTypeTextField.setText("");
         studyGroupTextField.setText("");
@@ -192,12 +210,13 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
                             .add(esterilizationNumberLabel)
                             .add(angleCurveLabel)
                             .add(conicityLabel)
+                            .add(sectionLabel)
                             .add(engineTorqueLabel)
                             .add(movementTypeLabel)
                             .add(studyTypeLabel)
                             .add(studyGroupLabel)
                             .add(ductSpeedLabel)
-                            .add(limeTypeLabel)
+                            .add(fileTypeLabel)
                             .add(angularSpeedLabel)
                             .add(apicalDiameterLabel)
                             .add(fileMetalCompositionLabel)
@@ -209,6 +228,7 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
                             .add(radiusCurveSpinner, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 90, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                             .add(angleCurveSpinner, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 90, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                             .add(conicitySpinner, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 90, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(sectionSpinner, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 90, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                             .add(apicalDiameterSpinner, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 90, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                             .add(angularSpeedSpinner, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 90, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                             .add(ductSpeedSpinner, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 90, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -246,6 +266,10 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
                     .add(conicitySpinner, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(sectionLabel)
+                    .add(sectionSpinner, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(apicalDiameterLabel)
                     .add(apicalDiameterSpinner, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
@@ -262,7 +286,7 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
                     .add(ductSpeedSpinner, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(limeTypeLabel)
+                    .add(fileTypeLabel)
                     .add(fileTypeTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -295,14 +319,17 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
     	
     	sample.setId(this.sampleId);
     	sample.setExperimentId(this.experimentId);
-    	sample.setApicalDiameter((Integer)apicalDiameterSpinner.getValue());
+    	sample.setApicalDiameter(new BigDecimal(apicalDiameterSpinner.getValue().toString()));
     	sample.setCurvatureAngle((Integer)angleCurveSpinner.getValue());
     	sample.setCurvatureRadius((Integer)radiusCurveSpinner.getValue());
     	sample.setDuctSpeed((Integer)ductSpeedSpinner.getValue());
     	sample.setEngineAngularSpeed((Integer)angularSpeedSpinner.getValue());
-    	sample.setEngineTorque((Integer)engineTorqueSpinner.getValue());
+    	sample.setEngineTorque(new BigDecimal(engineTorqueSpinner.getValue().toString()));
     	sample.setFileType(fileTypeTextField.getText());
     	sample.setUses((Integer)useNumberSpinner.getValue());
+    	sample.setSterilizations((Integer)esterilizationNumberSpinner.getValue());
+    	sample.setConicity(new BigDecimal(conicitySpinner.getValue().toString()));
+    	sample.setSection(new BigDecimal(sectionSpinner.getValue().toString()));
     	sample.setMovementTypeId(movementTypeComboBox.getSelectedIndex());
     	sample.setStudyTypeId(studyTypeComboBox.getSelectedIndex());
     	sample.setStudyGroup(studyGroupTextField.getText());
@@ -318,8 +345,11 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
     	ductSpeedSpinner.setValue(sample.getDuctSpeed());
     	angularSpeedSpinner.setValue(sample.getEngineAngularSpeed());
     	engineTorqueSpinner.setValue(sample.getEngineTorque());
+    	sectionSpinner.setValue(sample.getSection());
+    	conicitySpinner.setValue(sample.getConicity());
     	fileTypeTextField.setText(sample.getFileType());
     	useNumberSpinner.setValue(sample.getUses());
+    	esterilizationNumberSpinner.setValue(sample.getSterilizations());
     	movementTypeComboBox.setSelectedIndex(sample.getMovementTypeId());
     	studyTypeComboBox.setSelectedIndex(sample.getStudyTypeId());
     	studyGroupTextField.setText(sample.getStudyGroup());

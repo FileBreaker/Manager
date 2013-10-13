@@ -211,7 +211,7 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
     	Object [][] result = null;
 		
 		if(sample != null){
-			result = new Object[18][2];
+			result = new Object[20][2];
 		
 			result[0][0] = "id";
 			result[0][1] = sample.getId();
@@ -266,6 +266,12 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
 			
 			result[17][0] = "nº de usos";
 			result[17][1] = sample.getUses();
+			
+			result[18][0] = "conicidad";
+			result[18][1] = sample.getConicity();
+			
+			result[19][0] = "sección";
+			result[19][1] = sample.getSection();
 		}
 		
 		return result;

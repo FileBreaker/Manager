@@ -92,6 +92,15 @@ public class ExperimentsManagerImpl implements ExperimentsManager {
 		sampleDAO.deleteSamples(experimentId, samplesId);
 	}
 
+	public void duplicateSample(Integer sampleId, Integer experimentId, Integer samplesNumber) {
+		Sample sample = sampleDAO.findSample(experimentId, sampleId);
+		sample.setId(null);
+		
+		for(int i = 0; i < samplesNumber; i++){
+			sampleDAO.saveSample(sample);
+		}
+	}
+	
 	public void saveState(Integer experimentId, Integer sampleId, long duration, int oscillations) {
 		Sample sample = sampleDAO.findSample(experimentId, sampleId);
 		sample.setModificationDate(new Date());

@@ -1,5 +1,6 @@
 package com.filebreaker.manager.beans;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Sample {
@@ -12,13 +13,15 @@ public class Sample {
 	
 	private Integer uses;
 	
+	private Integer sterilizations;
+
 	private String fileType;
 	
-	private Integer apicalDiameter;
+	private BigDecimal apicalDiameter;
 	
 	private Integer engineAngularSpeed;
 	
-	private Integer engineTorque;
+	private BigDecimal engineTorque;
 	
 	private Integer ductSpeed;
 	
@@ -36,10 +39,14 @@ public class Sample {
 	
 	private Date modificationDate;
 	
+	private BigDecimal conicity;
+	
+	private BigDecimal section;
+	
 	private int oscillations;
 	
 	private long durationMillis;
-
+	
 	public Integer getId() {
 		return id;
 	}
@@ -71,6 +78,14 @@ public class Sample {
 	public void setUses(Integer uses) {
 		this.uses = uses;
 	}
+	
+	public Integer getSterilizations() {
+		return sterilizations;
+	}
+
+	public void setSterilizations(Integer sterilizations) {
+		this.sterilizations = sterilizations;
+	}
 
 	public String getFileType() {
 		return fileType;
@@ -80,11 +95,11 @@ public class Sample {
 		this.fileType = fileType;
 	}
 
-	public Integer getApicalDiameter() {
+	public BigDecimal getApicalDiameter() {
 		return apicalDiameter;
 	}
 
-	public void setApicalDiameter(Integer apicalDiameter) {
+	public void setApicalDiameter(BigDecimal apicalDiameter) {
 		this.apicalDiameter = apicalDiameter;
 	}
 
@@ -96,11 +111,11 @@ public class Sample {
 		this.engineAngularSpeed = engineAngularSpeed;
 	}
 
-	public Integer getEngineTorque() {
+	public BigDecimal getEngineTorque() {
 		return engineTorque;
 	}
 
-	public void setEngineTorque(Integer engineTorque) {
+	public void setEngineTorque(BigDecimal engineTorque) {
 		this.engineTorque = engineTorque;
 	}
 
@@ -168,8 +183,24 @@ public class Sample {
 		this.modificationDate = modificationDate;
 	}
 
+	public BigDecimal getConicity() {
+		return conicity;
+	}
+
+	public void setConicity(BigDecimal conicity) {
+		this.conicity = conicity;
+	}
+
 	public int getOscillations() {
 		return oscillations;
+	}
+
+	public BigDecimal getSection() {
+		return section;
+	}
+
+	public void setSection(BigDecimal section) {
+		this.section = section;
 	}
 
 	public void setOscillations(int oscillations) {

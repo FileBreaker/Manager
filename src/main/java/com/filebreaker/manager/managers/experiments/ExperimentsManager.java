@@ -32,6 +32,8 @@ public interface ExperimentsManager {
 
 	void deleteSamples(Integer experimentId, Set<Integer> samplesId);
 
+	void duplicateSample(Integer sampleId, Integer experimentId, Integer samplesNumber);
+	
 	void saveState(Integer experimentId, Integer sampleId, long duration, int oscillations);
 
 }

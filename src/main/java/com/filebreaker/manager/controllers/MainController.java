@@ -85,6 +85,10 @@ public class MainController {
 	public void saveState(Integer experimentId, Integer sampleId, long duration, int oscillations) {
 		experimentsManager.saveState(experimentId, sampleId, duration, oscillations);	
 	}
+	
+	public void duplicateSamples(Integer sampleId, Integer experimentId, Integer samplesNumber) {
+		experimentsManager.duplicateSample(sampleId, experimentId, samplesNumber);
+	}
 
 	public boolean isFileBroken() {
 		return false;

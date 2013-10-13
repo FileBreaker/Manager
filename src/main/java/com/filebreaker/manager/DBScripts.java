@@ -44,7 +44,11 @@ public class DBScripts {
 		Statement stat = con.createStatement();	
 		
 		//create table
-		stat.execute("CREATE TABLE EXPERIMENTS (ID BIGINT AUTO_INCREMENT, NAME VARCHAR(200), CREATION_DATE datetime, MODIFICATION_DATE datetime, PRIMARY KEY (ID))");
+		stat.execute("CREATE TABLE EXPERIMENTS (ID BIGINT AUTO_INCREMENT, " +
+												"NAME VARCHAR(200), " +
+												"CREATION_DATE datetime, " +
+												"MODIFICATION_DATE datetime, " +
+												"PRIMARY KEY (ID))");
 
 		//close connection
 		con.close();
@@ -55,7 +59,29 @@ public class DBScripts {
 		Statement stat = con.createStatement();	
 		
 		//create table
-		stat.execute("CREATE TABLE SAMPLES (ID BIGINT AUTO_INCREMENT, EXPERIMENT_ID BIGINT NOT NULL, CURVATURE_ANGLE INT, CURVATURE_RADIUS INT, USES INT, FILE_TYPE VARCHAR(200), APICAL_DIAMETER INT, ENGINE_ANGULAR_SPEED INT, ENGINE_TORQUE INT, DUCT_SPEED INT, METAL_COMPOSITION_ID TINYINT, MOVEMENT_TYPE_ID TINYINT, STUDY_TYPE_ID TINYINT, STUDY_GROUP VARCHAR(200), CREATION_DATE DATETIME, MODIFICATION_DATE DATETIME, OSCILLATIONS BIGINT, DURATION LONG, PRIMARY KEY (ID), FOREIGN KEY(EXPERIMENT_ID) REFERENCES EXPERIMENTS(ID))");
+		stat.execute("CREATE TABLE SAMPLES (ID BIGINT AUTO_INCREMENT, " +
+											"EXPERIMENT_ID BIGINT NOT NULL, " +
+											"CURVATURE_ANGLE INT, " +
+											"CURVATURE_RADIUS INT, " +
+											"USES INT, " +
+											"STERILIZATIONS INT, " +
+											"FILE_TYPE VARCHAR(200), " +
+											"APICAL_DIAMETER DECIMAL(20, 2), " +
+											"CONICITY DECIMAL(20, 2)," +
+											"ENGINE_ANGULAR_SPEED INT, " +
+											"ENGINE_TORQUE DECIMAL(20, 2), " +
+											"SECTION DECIMAL(20, 2), " +
+											"DUCT_SPEED INT, " +
+											"METAL_COMPOSITION_ID TINYINT, " +
+											"MOVEMENT_TYPE_ID TINYINT, " +
+											"STUDY_TYPE_ID TINYINT, " +
+											"STUDY_GROUP VARCHAR(200), " +
+											"CREATION_DATE DATETIME, " +
+											"MODIFICATION_DATE DATETIME, " +
+											"OSCILLATIONS BIGINT, " +
+											"DURATION LONG, " +
+											"PRIMARY KEY (ID), " +
+											"FOREIGN KEY(EXPERIMENT_ID) REFERENCES EXPERIMENTS(ID))");
 
 		//close connection
 		con.close();
