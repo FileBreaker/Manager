@@ -1,4 +1,0 @@
-09-09 23:51:44 jdbc[2]: exception
-org.h2.jdbc.JdbcSQLException: Tabla "EXPERIMENTS" no encontrada
-Table "EXPERIMENTS" not found; SQL statement:
-SELECT * FROM EXPERIMENTS [42102-172]
