@@ -11,8 +11,6 @@ public abstract class H2DAO {
 
 	protected Connection getConnection() throws ClassNotFoundException, SQLException {
 		Class.forName("org.h2.Driver");
-		
-		//Connection conn = DriverManager.getConnection("jdbc:h2:file:C:\\test", "sa", "");
 		Connection conn = DriverManager.getConnection("jdbc:h2:~/test", "sa", "");
 		
 		return conn;

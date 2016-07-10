@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import com.filebreaker.manager.beans.Sample;
 import com.filebreaker.manager.controllers.MainController;
 import com.filebreaker.manager.gui.frames.RefreshableFrame;
+import com.filebreaker.manager.gui.i18n.Literals;
 import com.filebreaker.manager.gui.utils.TimeUtils;
 import com.filebreaker.manager.tasks.SampleExecutionTask;
 
@@ -78,13 +79,13 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
         oscillationNumberLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        oscillationNumberLabel.setText(sample.getOscillations() + " oscilaciones");
+        oscillationNumberLabel.setText(sample.getOscillations() + " " + Literals.getInstance().getString("sample.oscillations"));
 
         chronometerLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         chronometerLabel.setText(TimeUtils.getDuration(sample.getDurationMillis()));
 
         stateLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        stateLabel.setText("apagado");
+        stateLabel.setText(Literals.getInstance().getString("sample.off"));
 
         switcherSlider.setValue(0);
         switcherSlider.setMinimum(0);
@@ -100,9 +101,9 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
 					int value = source.getValue();
 					
 					if(value == 0){
-						stateLabel.setText("apagado");
+						stateLabel.setText(Literals.getInstance().getString("sample.off"));
 					} else if(value == 1){
-						stateLabel.setText("encendido");
+						stateLabel.setText(Literals.getInstance().getString("sample.on"));
 						task.execute();
 					}
 			    }
@@ -142,7 +143,7 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
                 .addContainerGap(79, Short.MAX_VALUE))
         );
 
-        executionTabbedPane.addTab("Ejecución", jPanel1);
+        executionTabbedPane.addTab(Literals.getInstance().getString("sample.execution"), jPanel1);
 
         propertiesTable.setModel(getTableModel());
         scrollPane.setViewportView(propertiesTable);
@@ -172,7 +173,7 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
                 .add(scrollPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 168, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
         );
 
-        executionTabbedPane.addTab("Datos de la muestra", jPanel2);
+        executionTabbedPane.addTab(Literals.getInstance().getString("sample.data"), jPanel2);
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -202,7 +203,8 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
     	return new DefaultTableModel(
             getModel(sample),
             new String [] {
-                "Propiedad", "Valor"
+                Literals.getInstance().getString("sample.property"), 
+                Literals.getInstance().getString("sample.value")
             }
         );
 	}
@@ -213,64 +215,64 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
 		if(sample != null){
 			result = new Object[20][2];
 		
-			result[0][0] = "id";
+			result[0][0] = Literals.getInstance().getString("sample.editor.id");
 			result[0][1] = sample.getId();
 			
-			result[1][0] = "oscilaciones";
+			result[1][0] = Literals.getInstance().getString("sample.oscillations");
 			result[1][1] = sample.getOscillations();
 			
-			result[2][0] = "duración";
+			result[2][0] = Literals.getInstance().getString("sample.duration");
 			result[2][1] = TimeUtils.getDuration(sample.getDurationMillis());
 			
-			result[3][0] = "diámetro apical";
+			result[3][0] = Literals.getInstance().getString("sample.editor.apical.diameter");
 			result[3][1] = sample.getApicalDiameter();
 			
-			result[4][0] = "ángulo de curvatura";
+			result[4][0] = Literals.getInstance().getString("sample.editor.curve.angle");
 			result[4][1] = sample.getCurvatureAngle();
 			
-			result[5][0] = "radio de curvatura";
+			result[5][0] = Literals.getInstance().getString("sample.editor.curve.radius");
 			result[5][1] = sample.getCurvatureRadius();
 			
-			result[6][0] = "velocidad del conducto";
+			result[6][0] = Literals.getInstance().getString("sample.editor.duct.speed");
 			result[6][1] = sample.getDuctSpeed();
 			
-			result[7][0] = "velocidad angular del motor";
+			result[7][0] = Literals.getInstance().getString("sample.editor.engine.angular.speed");
 			result[7][1] = sample.getEngineAngularSpeed();
 			
-			result[8][0] = "torque del motor";
+			result[8][0] = Literals.getInstance().getString("sample.editor.engine.torque");
 			result[8][1] = sample.getEngineTorque();
 			
-			result[9][0] = "identificador del experimento";
+			result[9][0] = Literals.getInstance().getString("experiments.identifier");
 			result[9][1] = sample.getExperimentId();
 			
-			result[10][0] = "tipo de lima";
+			result[10][0] = Literals.getInstance().getString("sample.editor.file.type");
 			result[10][1] = sample.getFileType();
 			
-			result[11][0] = "identificador de la muestra";
+			result[11][0] = Literals.getInstance().getString("sample.editor.identifier");
 			result[11][1] = sample.getId();
 			
-			result[12][0] = "composición del metal";
+			result[12][0] = Literals.getInstance().getString("sample.editor.file.alloy");
 			result[12][1] = sample.getMetalCompositionId();
 			
-			result[13][0] = "fecha de modificación";
+			result[13][0] = Literals.getInstance().getString("sample.modification");
 			result[13][1] = sample.getModificationDate();
 			
-			result[14][0] = "tipo de movimiento";
+			result[14][0] = Literals.getInstance().getString("sample.editor.movement.type");
 			result[14][1] = sample.getMovementTypeId();
 			
-			result[15][0] = "tipo de estudio";
+			result[15][0] = Literals.getInstance().getString("sample.editor.study.type");
 			result[15][1] = sample.getStudyTypeId();
 			
-			result[16][0] = "grupo de estudio";
+			result[16][0] = Literals.getInstance().getString("sample.editor.study.group");
 			result[16][1] = sample.getStudyGroup();
 			
-			result[17][0] = "nº de usos";
+			result[17][0] = Literals.getInstance().getString("sample.editor.use.number");
 			result[17][1] = sample.getUses();
 			
-			result[18][0] = "conicidad";
+			result[18][0] = Literals.getInstance().getString("sample.editor.coning");
 			result[18][1] = sample.getConicity();
 			
-			result[19][0] = "sección";
+			result[19][0] = Literals.getInstance().getString("sample.editor.section");
 			result[19][1] = sample.getSection();
 		}
 		

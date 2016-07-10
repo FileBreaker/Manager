@@ -26,6 +26,7 @@ import com.filebreaker.manager.beans.Sample;
 import com.filebreaker.manager.controllers.MainController;
 import com.filebreaker.manager.gui.dialogs.DuplicateSampleJDialog;
 import com.filebreaker.manager.gui.frames.RefreshableFrame;
+import com.filebreaker.manager.gui.i18n.Literals;
 import com.filebreaker.manager.gui.tables.IdentifiedTableModel;
 import com.filebreaker.manager.gui.utils.ExportFileChooserFactory;
 
@@ -69,7 +70,7 @@ public class SamplesJFrame extends javax.swing.JFrame implements RefreshableFram
     	this.setResizable(false);
     	
     	Experiment experiment = mainController.getExperiment(this.experimentId);
-    	this.setTitle("Muestras del experimento: " + experiment.getName()); // NOI18N
+    	this.setTitle(Literals.getInstance().getString("samples.number") + " " + experiment.getName()); // NOI18N
     	
         sampleLabel = new javax.swing.JLabel();
         exportButton = new javax.swing.JButton();
@@ -81,10 +82,10 @@ public class SamplesJFrame extends javax.swing.JFrame implements RefreshableFram
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        sampleLabel.setText("Muestras");
+        sampleLabel.setText(Literals.getInstance().getString("samples.title"));
 
         exportButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/page_down.gif"))); // NOI18N
-        exportButton.setText("Exportar");
+        exportButton.setText(Literals.getInstance().getString("samples.export"));
         exportButton.setEnabled(false);
         exportButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -118,7 +119,7 @@ public class SamplesJFrame extends javax.swing.JFrame implements RefreshableFram
         scrollPane.setViewportView(samplesTable);
 
         newButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/note_new.gif"))); // NOI18N
-        newButton.setText("Nuevo");
+        newButton.setText(Literals.getInstance().getString("samples.new"));
         newButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newButtonActionPerformed(evt);
@@ -126,7 +127,7 @@ public class SamplesJFrame extends javax.swing.JFrame implements RefreshableFram
         });
 
         deleteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/note_delete.gif"))); // NOI18N
-        deleteButton.setText("Eliminar");
+        deleteButton.setText(Literals.getInstance().getString("samples.delete"));
         deleteButton.setEnabled(false);
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,7 +136,7 @@ public class SamplesJFrame extends javax.swing.JFrame implements RefreshableFram
         });
         
         duplicateButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/note_new.gif"))); // NOI18N
-        duplicateButton.setText("Duplicar");
+        duplicateButton.setText(Literals.getInstance().getString("samples.duplicate"));
         duplicateButton.setEnabled(false);
         duplicateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -194,7 +195,9 @@ public class SamplesJFrame extends javax.swing.JFrame implements RefreshableFram
     	return new IdentifiedTableModel(
             getModel(samples),
             new String [] {
-                "Identificador", "Fecha de creación", "Fecha de modificación"
+                Literals.getInstance().getString("samples.sample.identifier"), 
+                Literals.getInstance().getString("samples.sample.creationdate"), 
+                Literals.getInstance().getString("samples.sample.modificationdate")
             },
             getModelIds(samples)
         );

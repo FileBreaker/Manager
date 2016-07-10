@@ -9,6 +9,7 @@ import javax.swing.SpinnerNumberModel;
 import com.filebreaker.manager.beans.Sample;
 import com.filebreaker.manager.controllers.MainController;
 import com.filebreaker.manager.gui.frames.RefreshableFrame;
+import com.filebreaker.manager.gui.i18n.Literals;
 
 /**
  *
@@ -22,11 +23,11 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
     
 	private javax.swing.JButton cancelButton;
     
-	private javax.swing.JComboBox fileMetalCompositionComboBox;
+	private javax.swing.JComboBox<String> fileMetalCompositionComboBox;
     
-	private javax.swing.JComboBox studyTypeComboBox;
+	private javax.swing.JComboBox<String> studyTypeComboBox;
     
-	private javax.swing.JComboBox movementTypeComboBox;
+	private javax.swing.JComboBox<String> movementTypeComboBox;
     
 	private javax.swing.JLabel angleCurveLabel;
     
@@ -136,9 +137,9 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
         studyGroupTextField = new javax.swing.JTextField();
         angularSpeedSpinner = new javax.swing.JSpinner();
         ductSpeedSpinner = new javax.swing.JSpinner();
-        movementTypeComboBox = new javax.swing.JComboBox();
-        fileMetalCompositionComboBox = new javax.swing.JComboBox();
-        studyTypeComboBox = new javax.swing.JComboBox();
+        movementTypeComboBox = new javax.swing.JComboBox<String>();
+        fileMetalCompositionComboBox = new javax.swing.JComboBox<String>();
+        studyTypeComboBox = new javax.swing.JComboBox<String>();
         
         // spinners with double values
         SpinnerNumberModel snmApicalDiameter = new SpinnerNumberModel(0.0,0.0,99999.99,0.01);
@@ -155,31 +156,39 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
                 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        angleCurveLabel.setText("Ángulo de curvatura");
-        radiusCurveLabel.setText("Radio de curvatura");
-        useNumberLabel.setText("Número de usos");
-        esterilizationNumberLabel.setText("Número de esterilizaciones");
-        fileTypeLabel.setText("Tipo de lima");
-        conicityLabel.setText("Conicidad");
-        apicalDiameterLabel.setText("Diámetro apical");
-        angularSpeedLabel.setText("Velocidad angular del motor");
-        engineTorqueLabel.setText("Torqué del motor");
-        movementTypeLabel.setText("Tipo de movimiento");
-        ductSpeedLabel.setText("Velocidad del conducto");
-        fileMetalCompositionLabel.setText("Aleación de la lima");
-        studyTypeLabel.setText("Tipo de estudio");
-        studyGroupLabel.setText("Grupo de estudio");
-        sectionLabel.setText("Sección");
+        angleCurveLabel.setText(Literals.getInstance().getString("sample.editor.curve.angle"));
+        radiusCurveLabel.setText(Literals.getInstance().getString("sample.editor.curve.radius"));
+        useNumberLabel.setText(Literals.getInstance().getString("sample.editor.use.number"));
+        esterilizationNumberLabel.setText(Literals.getInstance().getString("sample.editor.sterilization.number"));
+        fileTypeLabel.setText(Literals.getInstance().getString("sample.editor.file.type"));
+        conicityLabel.setText(Literals.getInstance().getString("sample.editor.coning"));
+        apicalDiameterLabel.setText(Literals.getInstance().getString("sample.editor.apical.diameter"));
+        angularSpeedLabel.setText(Literals.getInstance().getString("sample.editor.engine.angular.speed"));
+        engineTorqueLabel.setText(Literals.getInstance().getString("sample.editor.engine.torque"));
+        movementTypeLabel.setText(Literals.getInstance().getString("sample.editor.movement.type"));
+        ductSpeedLabel.setText(Literals.getInstance().getString("sample.editor.duct.speed"));
+        fileMetalCompositionLabel.setText(Literals.getInstance().getString("sample.editor.file.alloy"));
+        studyTypeLabel.setText(Literals.getInstance().getString("sample.editor.study.type"));
+        studyGroupLabel.setText(Literals.getInstance().getString("sample.editor.study.group"));
+        sectionLabel.setText(Literals.getInstance().getString("sample.editor.section"));
         
         fileTypeTextField.setText("");
         studyGroupTextField.setText("");
        
-        movementTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String [] {"Rotacional Continuo", "Reciprocante"}));
-        fileMetalCompositionComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "NiTi" }));
-        studyTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Estático", "Dinámico" }));
+        movementTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<String>(new String [] {
+        		Literals.getInstance().getString("sample.editor.movement.type.continuous.rotational"), 
+        		Literals.getInstance().getString("sample.editor.movement.type.reciprocating"
+        )}));
+        fileMetalCompositionComboBox.setModel(new javax.swing.DefaultComboBoxModel<String>(new String[] { 
+        		Literals.getInstance().getString("sample.editor.file.alloy.niti")
+        }));
+        studyTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<String>(new String[] { 
+        		Literals.getInstance().getString("sample.editor.study.type.static"), 
+        		Literals.getInstance().getString("sample.editor.study.type.dynamic")
+        }));
 
         saveButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/page_tick.gif"))); // NOI18N
-        saveButton.setText("Guardar");
+        saveButton.setText(Literals.getInstance().getString("sample.editor.save"));
         saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveButtonActionPerformed(evt);
@@ -187,7 +196,7 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
         });
 
         cancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/page_text_delete.gif"))); // NOI18N
-        cancelButton.setText("Cancelar");
+        cancelButton.setText(Literals.getInstance().getString("sample.editor.cancel"));
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);

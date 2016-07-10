@@ -6,6 +6,7 @@ import javax.swing.JDialog;
 
 import com.filebreaker.manager.controllers.MainController;
 import com.filebreaker.manager.gui.frames.samples.SamplesJFrame;
+import com.filebreaker.manager.gui.i18n.Literals;
 
 public class DuplicateSampleJDialog extends javax.swing.JDialog {
 
@@ -63,12 +64,12 @@ public class DuplicateSampleJDialog extends javax.swing.JDialog {
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
         titleLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
-        titleLabel.setText("Introduce los siguientes datos");
+        titleLabel.setText(Literals.getInstance().getString("duplicate.sample.required.data"));
 
-        sampleNumberLabel.setText("Número de muestras");
+        sampleNumberLabel.setText(Literals.getInstance().getString("duplicate.sample.number"));
         
         duplicateSampleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/note_new.gif")));
-        duplicateSampleButton.setText("Guardar");
+        duplicateSampleButton.setText(Literals.getInstance().getString("duplicate.sample.save"));
         duplicateSampleButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 duplicateSampleActionPerformed(evt);
@@ -76,7 +77,7 @@ public class DuplicateSampleJDialog extends javax.swing.JDialog {
         });
 
         cancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/note_delete.gif")));
-        cancelButton.setText("Cancelar");
+        cancelButton.setText(Literals.getInstance().getString("duplicate.sample.cancel"));
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	cancelExperimentCreationActionPerformed(evt);

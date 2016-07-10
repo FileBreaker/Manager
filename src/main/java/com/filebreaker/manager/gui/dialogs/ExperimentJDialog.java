@@ -7,6 +7,7 @@ import javax.swing.JDialog;
 import com.filebreaker.manager.beans.Experiment;
 import com.filebreaker.manager.controllers.MainController;
 import com.filebreaker.manager.gui.frames.experiments.ExperimentsFrameView;
+import com.filebreaker.manager.gui.i18n.Literals;
 
 public class ExperimentJDialog extends javax.swing.JDialog {
 
@@ -79,16 +80,15 @@ public class ExperimentJDialog extends javax.swing.JDialog {
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
         titleLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
-        titleLabel.setText("Introduce los siguientes datos");
-
-        experimentLabel.setText("Nombre del experimento");
-
-        sampleNumberLabel.setText("Número inicial de muestras");
+        
+        titleLabel.setText(Literals.getInstance().getString("new.experiment.required.data"));
+        experimentLabel.setText(Literals.getInstance().getString("new.experiment.name"));
+        sampleNumberLabel.setText(Literals.getInstance().getString("new.experiment.initial.sample.number"));
         
         experimentNameTextField.setText("");
         
         saveExperimentButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/note_new.gif")));
-        saveExperimentButton.setText("Guardar");
+        saveExperimentButton.setText(Literals.getInstance().getString("new.experiment.save"));
         saveExperimentButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createExperimentActionPerformed(evt);
@@ -96,7 +96,7 @@ public class ExperimentJDialog extends javax.swing.JDialog {
         });
 
         cancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/note_delete.gif")));
-        cancelButton.setText("Cancelar");
+        cancelButton.setText(Literals.getInstance().getString("new.experiment.cancel"));
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	cancelExperimentCreationActionPerformed(evt);

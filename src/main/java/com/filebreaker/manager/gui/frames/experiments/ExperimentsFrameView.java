@@ -28,6 +28,7 @@ import com.filebreaker.manager.beans.Experiment;
 import com.filebreaker.manager.controllers.MainController;
 import com.filebreaker.manager.gui.dialogs.ExperimentJDialog;
 import com.filebreaker.manager.gui.frames.samples.SamplesJFrame;
+import com.filebreaker.manager.gui.i18n.Literals;
 import com.filebreaker.manager.gui.tables.IdentifiedTableModel;
 import com.filebreaker.manager.gui.utils.ExportFileChooserFactory;
 
@@ -68,7 +69,7 @@ public class ExperimentsFrameView extends FrameView {
     	this.getFrame().setResizable(false);
     	
     	mainPanel = new JPanel();
-    	this.getFrame().setTitle("FileBreaker Manager");
+    	this.getFrame().setTitle(Literals.getInstance().getString("filebreaker.title"));
     	
         experimentsLabel = new javax.swing.JLabel();
         exportButton = new javax.swing.JButton();
@@ -77,12 +78,10 @@ public class ExperimentsFrameView extends FrameView {
         deleteButton = new javax.swing.JButton();
         editButton = new javax.swing.JButton();
         
-        //newExperimentJDialog = new ExperimentJDialog(this.getFrame(), true, mainController, this);
-        
-        experimentsLabel.setText("Experimentos");
+        experimentsLabel.setText(Literals.getInstance().getString("experiments.title"));
 
         exportButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/page_down.gif"))); // NOI18N
-        exportButton.setText("Exportar");
+        exportButton.setText(Literals.getInstance().getString("experiments.export"));
         exportButton.setEnabled(false);
         exportButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -132,7 +131,7 @@ public class ExperimentsFrameView extends FrameView {
         scrollPane.setViewportView(experimentsTable);
 
         newButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/note_new.gif"))); // NOI18N
-        newButton.setText("Nuevo");
+        newButton.setText(Literals.getInstance().getString("experiments.new"));
         newButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newButtonActionPerformed(evt);
@@ -140,7 +139,7 @@ public class ExperimentsFrameView extends FrameView {
         });
 
         deleteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/note_delete.gif"))); // NOI18N
-        deleteButton.setText("Eliminar");
+        deleteButton.setText(Literals.getInstance().getString("experiments.delete"));
         deleteButton.setEnabled(false);
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -149,7 +148,7 @@ public class ExperimentsFrameView extends FrameView {
         });
         
         editButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/note.gif"))); // NOI18N
-        editButton.setText("Editar Nombre");
+        editButton.setText(Literals.getInstance().getString("experiments.name.edit"));
         editButton.setEnabled(false);
         editButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -221,7 +220,9 @@ public class ExperimentsFrameView extends FrameView {
 		return new IdentifiedTableModel(
             getModel(experiments),
             new String [] {
-                "Nombre", "Fecha de creación", "Fecha de modificación"
+                Literals.getInstance().getString("experiments.name"), 
+                Literals.getInstance().getString("experiments.creation.date"), 
+                Literals.getInstance().getString("experiments.modification.date")
             },
             getModelIds(experiments)
         );
