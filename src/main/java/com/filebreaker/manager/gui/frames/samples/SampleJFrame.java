@@ -149,7 +149,7 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
         scrollPane.setViewportView(propertiesTable);
 
         editButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/interface_dialog.gif"))); // NOI18N
-        editButton.setText("Editar");
+        editButton.setText(Literals.getInstance().getString("sample.edit"));
         editButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editButtonActionPerformed(evt);
