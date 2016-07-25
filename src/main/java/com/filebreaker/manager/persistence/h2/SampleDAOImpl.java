@@ -23,6 +23,8 @@ public class SampleDAOImpl extends H2DAO implements SampleDAO {
 			
 			//prepared statement
 			PreparedStatement prep = con.prepareStatement("INSERT INTO SAMPLES (EXPERIMENT_ID, " +
+																				"HELIX_ANGLE, " +
+																				"DISTANCE_BETWEEN_TURNS, " +
 																				"CURVATURE_ANGLE, " +
 																				"CURVATURE_RADIUS, " +
 																				"USES, " +
@@ -41,27 +43,29 @@ public class SampleDAOImpl extends H2DAO implements SampleDAO {
 																				"CREATION_DATE, " +
 																				"OSCILLATIONS, " +
 																				"DURATION) " +
-																				"VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+																				"VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 	
-			prep.setInt(1, sample.getExperimentId());		
-			setNullSafeValue(prep, 2, sample.getCurvatureAngle(), java.sql.Types.INTEGER);
-			setNullSafeValue(prep, 3, sample.getCurvatureRadius(), java.sql.Types.INTEGER);
-			setNullSafeValue(prep, 4, sample.getUses(), java.sql.Types.INTEGER);
-			setNullSafeValue(prep, 5, sample.getSterilizations(), java.sql.Types.INTEGER);
-			setNullSafeValue(prep, 6, sample.getFileType(), java.sql.Types.VARCHAR);
-			setNullSafeValue(prep, 7, sample.getApicalDiameter(), java.sql.Types.DECIMAL);
-			setNullSafeValue(prep, 8, sample.getConicity(), java.sql.Types.DECIMAL);
-			setNullSafeValue(prep, 9, sample.getSection(), java.sql.Types.DECIMAL);
-			setNullSafeValue(prep, 10, sample.getEngineAngularSpeed(), java.sql.Types.INTEGER);
-			setNullSafeValue(prep, 11, sample.getEngineTorque(), java.sql.Types.DECIMAL);
-			setNullSafeValue(prep, 12, sample.getDuctSpeed(), java.sql.Types.INTEGER);
-			setNullSafeValue(prep, 13, sample.getMovementTypeId(), java.sql.Types.INTEGER);
-			setNullSafeValue(prep, 14, sample.getStudyTypeId(), java.sql.Types.INTEGER);
-			setNullSafeValue(prep, 15, sample.getStudyGroup(), java.sql.Types.VARCHAR);
-			setNullSafeValue(prep, 16, sample.getMetalCompositionId(), java.sql.Types.INTEGER);
-			prep.setTimestamp(17, new Timestamp(sample.getCreationDate().getTime()));
-			prep.setInt(18, sample.getOscillations());
-			prep.setLong(19, sample.getDurationMillis());
+			prep.setInt(1, sample.getExperimentId());
+			setNullSafeValue(prep, 2, sample.getHelixAngle(), java.sql.Types.INTEGER);
+			setNullSafeValue(prep, 3, sample.getDistanceBetweenTurns(), java.sql.Types.INTEGER);
+			setNullSafeValue(prep, 4, sample.getCurvatureAngle(), java.sql.Types.INTEGER);
+			setNullSafeValue(prep, 5, sample.getCurvatureRadius(), java.sql.Types.INTEGER);
+			setNullSafeValue(prep, 6, sample.getUses(), java.sql.Types.INTEGER);
+			setNullSafeValue(prep, 7, sample.getSterilizations(), java.sql.Types.INTEGER);
+			setNullSafeValue(prep, 8, sample.getFileType(), java.sql.Types.VARCHAR);
+			setNullSafeValue(prep, 9, sample.getApicalDiameter(), java.sql.Types.DECIMAL);
+			setNullSafeValue(prep, 10, sample.getConicity(), java.sql.Types.DECIMAL);
+			setNullSafeValue(prep, 11, sample.getSection(), java.sql.Types.DECIMAL);
+			setNullSafeValue(prep, 12, sample.getEngineAngularSpeed(), java.sql.Types.INTEGER);
+			setNullSafeValue(prep, 13, sample.getEngineTorque(), java.sql.Types.DECIMAL);
+			setNullSafeValue(prep, 14, sample.getDuctSpeed(), java.sql.Types.INTEGER);
+			setNullSafeValue(prep, 15, sample.getMovementTypeId(), java.sql.Types.INTEGER);
+			setNullSafeValue(prep, 16, sample.getStudyTypeId(), java.sql.Types.INTEGER);
+			setNullSafeValue(prep, 17, sample.getStudyGroup(), java.sql.Types.VARCHAR);
+			setNullSafeValue(prep, 18, sample.getMetalCompositionId(), java.sql.Types.INTEGER);
+			prep.setTimestamp(19, new Timestamp(sample.getCreationDate().getTime()));
+			prep.setInt(20, sample.getOscillations());
+			prep.setLong(21, sample.getDurationMillis());
 			
 			//batch insert
 			prep.addBatch();
@@ -161,7 +165,9 @@ public class SampleDAOImpl extends H2DAO implements SampleDAO {
 			Connection con = getConnection();
 			
 			//prepared statement
-			PreparedStatement prep = con.prepareStatement("UPDATE SAMPLES SET CURVATURE_ANGLE=?, " +
+			PreparedStatement prep = con.prepareStatement("UPDATE SAMPLES SET HELIX_ANGLE=?, " +
+					"DISTANCE_BETWEEN_TURNS=?, " +
+					"CURVATURE_ANGLE=?, " +
 					"CURVATURE_RADIUS=?, " +
 					"USES=?, " +
 					"STERILIZATIONS=?, " +
@@ -181,26 +187,28 @@ public class SampleDAOImpl extends H2DAO implements SampleDAO {
 					"DURATION=? " +
 					"WHERE ID=? AND EXPERIMENT_ID=?");
 	
-			prep.setInt(1, sample.getCurvatureAngle());
-			prep.setInt(2, sample.getCurvatureRadius());
-			prep.setInt(3, sample.getUses());
-			prep.setInt(4, sample.getSterilizations());
-			prep.setString(5, sample.getFileType());
-			prep.setBigDecimal(6, sample.getApicalDiameter());
-			prep.setBigDecimal(7, sample.getConicity());
-			prep.setBigDecimal(8, sample.getSection());
-			prep.setInt(9, sample.getEngineAngularSpeed());
-			prep.setBigDecimal(10, sample.getEngineTorque());
-			prep.setInt(11, sample.getDuctSpeed());
-			prep.setInt(12, sample.getMovementTypeId());
-			prep.setInt(13, sample.getStudyTypeId());
-			prep.setString(14, sample.getStudyGroup());
-			prep.setInt(15, sample.getMetalCompositionId());
-			prep.setTimestamp(16, new Timestamp(sample.getModificationDate().getTime()));
-			prep.setInt(17, sample.getOscillations());
-			prep.setLong(18, sample.getDurationMillis());
-			prep.setInt(19, sample.getId());
-			prep.setInt(20, sample.getExperimentId());
+			prep.setInt(1, sample.getHelixAngle());
+			prep.setInt(2, sample.getDistanceBetweenTurns());
+			prep.setInt(3, sample.getCurvatureAngle());
+			prep.setInt(4, sample.getCurvatureRadius());
+			prep.setInt(5, sample.getUses());
+			prep.setInt(6, sample.getSterilizations());
+			prep.setString(7, sample.getFileType());
+			prep.setBigDecimal(8, sample.getApicalDiameter());
+			prep.setBigDecimal(9, sample.getConicity());
+			prep.setBigDecimal(10, sample.getSection());
+			prep.setInt(11, sample.getEngineAngularSpeed());
+			prep.setBigDecimal(12, sample.getEngineTorque());
+			prep.setInt(13, sample.getDuctSpeed());
+			prep.setInt(14, sample.getMovementTypeId());
+			prep.setInt(15, sample.getStudyTypeId());
+			prep.setString(16, sample.getStudyGroup());
+			prep.setInt(17, sample.getMetalCompositionId());
+			prep.setTimestamp(18, new Timestamp(sample.getModificationDate().getTime()));
+			prep.setInt(19, sample.getOscillations());
+			prep.setLong(20, sample.getDurationMillis());
+			prep.setInt(21, sample.getId());
+			prep.setInt(22, sample.getExperimentId());
 			
 			//batch insert
 			prep.addBatch();
@@ -247,6 +255,8 @@ public class SampleDAOImpl extends H2DAO implements SampleDAO {
 	}
 	
 	private void getSampleFromResultSet(ResultSet rs, Sample sample) throws SQLException {
+		sample.setHelixAngle(rs.getInt("HELIX_ANGLE"));
+		sample.setDistanceBetweenTurns(rs.getInt("DISTANCE_BETWEEN_TURNS"));
 		sample.setApicalDiameter(rs.getBigDecimal("APICAL_DIAMETER"));
 		sample.setCreationDate(rs.getDate("CREATION_DATE"));
 		sample.setCurvatureAngle(rs.getInt("CURVATURE_ANGLE"));

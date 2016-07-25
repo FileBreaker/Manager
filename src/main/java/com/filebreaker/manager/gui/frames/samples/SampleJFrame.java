@@ -213,7 +213,7 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
     	Object [][] result = null;
 		
 		if(sample != null){
-			result = new Object[20][2];
+			result = new Object[22][2];
 		
 			result[0][0] = Literals.getInstance().getString("sample.editor.id");
 			result[0][1] = sample.getId();
@@ -221,59 +221,65 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
 			result[1][0] = Literals.getInstance().getString("sample.oscillations");
 			result[1][1] = sample.getOscillations();
 			
-			result[2][0] = Literals.getInstance().getString("sample.duration");
-			result[2][1] = TimeUtils.getDuration(sample.getDurationMillis());
+			result[2][0] = Literals.getInstance().getString("sample.editor.helix.angle");
+			result[2][1] = sample.getHelixAngle();
 			
-			result[3][0] = Literals.getInstance().getString("sample.editor.apical.diameter");
-			result[3][1] = sample.getApicalDiameter();
+			result[3][0] = Literals.getInstance().getString("sample.editor.distance.turns");
+			result[3][1] = sample.getDistanceBetweenTurns();
 			
-			result[4][0] = Literals.getInstance().getString("sample.editor.curve.angle");
-			result[4][1] = sample.getCurvatureAngle();
+			result[4][0] = Literals.getInstance().getString("sample.duration");
+			result[4][1] = TimeUtils.getDuration(sample.getDurationMillis());
 			
-			result[5][0] = Literals.getInstance().getString("sample.editor.curve.radius");
-			result[5][1] = sample.getCurvatureRadius();
+			result[5][0] = Literals.getInstance().getString("sample.editor.apical.diameter");
+			result[5][1] = sample.getApicalDiameter();
 			
-			result[6][0] = Literals.getInstance().getString("sample.editor.duct.speed");
-			result[6][1] = sample.getDuctSpeed();
+			result[6][0] = Literals.getInstance().getString("sample.editor.curve.angle");
+			result[6][1] = sample.getCurvatureAngle();
 			
-			result[7][0] = Literals.getInstance().getString("sample.editor.engine.angular.speed");
-			result[7][1] = sample.getEngineAngularSpeed();
+			result[7][0] = Literals.getInstance().getString("sample.editor.curve.radius");
+			result[7][1] = sample.getCurvatureRadius();
 			
-			result[8][0] = Literals.getInstance().getString("sample.editor.engine.torque");
-			result[8][1] = sample.getEngineTorque();
+			result[8][0] = Literals.getInstance().getString("sample.editor.duct.speed");
+			result[8][1] = sample.getDuctSpeed();
 			
-			result[9][0] = Literals.getInstance().getString("experiments.identifier");
-			result[9][1] = sample.getExperimentId();
+			result[9][0] = Literals.getInstance().getString("sample.editor.engine.angular.speed");
+			result[9][1] = sample.getEngineAngularSpeed();
 			
-			result[10][0] = Literals.getInstance().getString("sample.editor.file.type");
-			result[10][1] = sample.getFileType();
+			result[10][0] = Literals.getInstance().getString("sample.editor.engine.torque");
+			result[10][1] = sample.getEngineTorque();
 			
-			result[11][0] = Literals.getInstance().getString("sample.editor.identifier");
-			result[11][1] = sample.getId();
+			result[11][0] = Literals.getInstance().getString("experiments.identifier");
+			result[11][1] = sample.getExperimentId();
 			
-			result[12][0] = Literals.getInstance().getString("sample.editor.file.alloy");
-			result[12][1] = sample.getMetalCompositionId();
+			result[12][0] = Literals.getInstance().getString("sample.editor.file.type");
+			result[12][1] = sample.getFileType();
 			
-			result[13][0] = Literals.getInstance().getString("sample.modification");
-			result[13][1] = sample.getModificationDate();
+			result[13][0] = Literals.getInstance().getString("sample.editor.identifier");
+			result[13][1] = sample.getId();
 			
-			result[14][0] = Literals.getInstance().getString("sample.editor.movement.type");
-			result[14][1] = sample.getMovementTypeId();
+			result[14][0] = Literals.getInstance().getString("sample.editor.file.alloy");
+			result[14][1] = sample.getMetalCompositionId();
 			
-			result[15][0] = Literals.getInstance().getString("sample.editor.study.type");
-			result[15][1] = sample.getStudyTypeId();
+			result[15][0] = Literals.getInstance().getString("sample.modification");
+			result[15][1] = sample.getModificationDate();
 			
-			result[16][0] = Literals.getInstance().getString("sample.editor.study.group");
-			result[16][1] = sample.getStudyGroup();
+			result[16][0] = Literals.getInstance().getString("sample.editor.movement.type");
+			result[16][1] = sample.getMovementTypeId();
 			
-			result[17][0] = Literals.getInstance().getString("sample.editor.use.number");
-			result[17][1] = sample.getUses();
+			result[17][0] = Literals.getInstance().getString("sample.editor.study.type");
+			result[17][1] = sample.getStudyTypeId();
 			
-			result[18][0] = Literals.getInstance().getString("sample.editor.coning");
-			result[18][1] = sample.getConicity();
+			result[18][0] = Literals.getInstance().getString("sample.editor.study.group");
+			result[18][1] = sample.getStudyGroup();
 			
-			result[19][0] = Literals.getInstance().getString("sample.editor.section");
-			result[19][1] = sample.getSection();
+			result[19][0] = Literals.getInstance().getString("sample.editor.use.number");
+			result[19][1] = sample.getUses();
+			
+			result[20][0] = Literals.getInstance().getString("sample.editor.coning");
+			result[20][1] = sample.getConicity();
+			
+			result[21][0] = Literals.getInstance().getString("sample.editor.section");
+			result[21][1] = sample.getSection();
 		}
 		
 		return result;

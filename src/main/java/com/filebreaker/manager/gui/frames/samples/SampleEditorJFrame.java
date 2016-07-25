@@ -29,6 +29,10 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
     
 	private javax.swing.JComboBox<String> movementTypeComboBox;
     
+	private javax.swing.JLabel helixAngleLabel;
+	
+	private javax.swing.JLabel distanceBetweenTurnsLabel;
+	
 	private javax.swing.JLabel angleCurveLabel;
     
 	private javax.swing.JLabel movementTypeLabel;
@@ -58,6 +62,10 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
 	private javax.swing.JLabel angularSpeedLabel;
     
 	private javax.swing.JLabel engineTorqueLabel;
+	
+	private javax.swing.JSpinner helixAngleSpinner;
+	
+	private javax.swing.JSpinner distanceBetweenTurnsSpinner;
     
 	private javax.swing.JSpinner angleCurveSpinner;
     
@@ -111,6 +119,8 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
 
 		this.setResizable(false);
 		
+		helixAngleLabel = new javax.swing.JLabel();
+		distanceBetweenTurnsLabel = new javax.swing.JLabel();
         angleCurveLabel = new javax.swing.JLabel();
         radiusCurveLabel = new javax.swing.JLabel();
         useNumberLabel = new javax.swing.JLabel();
@@ -129,6 +139,8 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
         
         saveButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
+        helixAngleSpinner = new javax.swing.JSpinner();
+        distanceBetweenTurnsSpinner = new javax.swing.JSpinner();
         angleCurveSpinner = new javax.swing.JSpinner();
         radiusCurveSpinner = new javax.swing.JSpinner();
         useNumberSpinner = new javax.swing.JSpinner();
@@ -156,6 +168,8 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
                 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+        helixAngleLabel.setText(Literals.getInstance().getString("sample.editor.helix.angle"));
+        distanceBetweenTurnsLabel.setText(Literals.getInstance().getString("sample.editor.distance.turns"));
         angleCurveLabel.setText(Literals.getInstance().getString("sample.editor.curve.angle"));
         radiusCurveLabel.setText(Literals.getInstance().getString("sample.editor.curve.radius"));
         useNumberLabel.setText(Literals.getInstance().getString("sample.editor.use.number"));
@@ -218,6 +232,8 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
                             .add(useNumberLabel)
                             .add(esterilizationNumberLabel)
                             .add(angleCurveLabel)
+                            .add(helixAngleLabel)
+                            .add(distanceBetweenTurnsLabel)
                             .add(conicityLabel)
                             .add(sectionLabel)
                             .add(engineTorqueLabel)
@@ -235,6 +251,8 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
                             .add(esterilizationNumberSpinner, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 90, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                             .add(useNumberSpinner, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 90, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                             .add(radiusCurveSpinner, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 90, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(helixAngleSpinner, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 90, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(distanceBetweenTurnsSpinner, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 90, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                             .add(angleCurveSpinner, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 90, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                             .add(conicitySpinner, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 90, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                             .add(sectionSpinner, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 90, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -254,6 +272,14 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .add(16, 16, 16)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(helixAngleLabel)
+                    .add(helixAngleSpinner, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(distanceBetweenTurnsLabel)
+                    .add(distanceBetweenTurnsSpinner, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)    
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(angleCurveLabel)
                     .add(angleCurveSpinner, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
@@ -329,6 +355,8 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
     	sample.setId(this.sampleId);
     	sample.setExperimentId(this.experimentId);
     	sample.setApicalDiameter(new BigDecimal(apicalDiameterSpinner.getValue().toString()));
+    	sample.setHelixAngle((Integer) helixAngleSpinner.getValue());
+    	sample.setDistanceBetweenTurns((Integer) distanceBetweenTurnsSpinner.getValue());
     	sample.setCurvatureAngle((Integer)angleCurveSpinner.getValue());
     	sample.setCurvatureRadius((Integer)radiusCurveSpinner.getValue());
     	sample.setDuctSpeed((Integer)ductSpeedSpinner.getValue());
@@ -349,6 +377,8 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
 	
 	private void fillFormWithSample(Sample sample){
 		apicalDiameterSpinner.setValue(sample.getApicalDiameter());
+		helixAngleSpinner.setValue(sample.getHelixAngle());
+		distanceBetweenTurnsSpinner.setValue(sample.getDistanceBetweenTurns());
 		angleCurveSpinner.setValue(sample.getCurvatureAngle());
 		radiusCurveSpinner.setValue(sample.getCurvatureRadius());
     	ductSpeedSpinner.setValue(sample.getDuctSpeed());

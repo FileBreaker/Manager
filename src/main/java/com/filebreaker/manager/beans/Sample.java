@@ -7,6 +7,10 @@ public class Sample {
 
 	private Integer id;
 	
+	private Integer helixAngle;
+	
+	private Integer distanceBetweenTurns;
+	
 	private Integer curvatureAngle;
 	
 	private Integer curvatureRadius;
@@ -53,6 +57,22 @@ public class Sample {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Integer getHelixAngle() {
+		return helixAngle;
+	}
+
+	public void setHelixAngle(Integer helixAngle) {
+		this.helixAngle = helixAngle;
+	}
+
+	public Integer getDistanceBetweenTurns() {
+		return distanceBetweenTurns;
+	}
+
+	public void setDistanceBetweenTurns(Integer distanceBetweenTurns) {
+		this.distanceBetweenTurns = distanceBetweenTurns;
 	}
 
 	public Integer getCurvatureAngle() {

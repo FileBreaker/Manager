@@ -61,6 +61,8 @@ public class DBScripts {
 		//create table
 		stat.execute("CREATE TABLE SAMPLES (ID BIGINT AUTO_INCREMENT, " +
 											"EXPERIMENT_ID BIGINT NOT NULL, " +
+											"HELIX_ANGLE INT," +
+											"DISTANCE_BETWEEN_TURNS INT," +
 											"CURVATURE_ANGLE INT, " +
 											"CURVATURE_RADIUS INT, " +
 											"USES INT, " +
