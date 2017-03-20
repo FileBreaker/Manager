@@ -32,7 +32,7 @@ public class SampleExecutionTask {
 			long millisNow = (new Date()).getTime();
 			
 			public void run(){
-	        	 if(sampleJFrame.getSwitcherSlider().getValue() == 1 && !mainController.isFileBroken()){
+	        	if(sampleJFrame.getSwitcherSlider().getValue() == 1 && !mainController.isFileBroken()){
 	     			diff = this.scheduledExecutionTime() - millisNow;
 	     			oscillations = mainController.getOscillations();
 	     			

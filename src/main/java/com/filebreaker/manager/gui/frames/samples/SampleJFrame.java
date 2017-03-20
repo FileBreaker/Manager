@@ -1,9 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.filebreaker.manager.gui.frames.samples;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JFrame;
@@ -18,11 +15,19 @@ import com.filebreaker.manager.gui.i18n.Literals;
 import com.filebreaker.manager.gui.utils.TimeUtils;
 import com.filebreaker.manager.tasks.SampleExecutionTask;
 
+import jssc.SerialPortException;
+
 public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame {
 
 	private static final long serialVersionUID = 8162818230491268811L;
 	
 	private MainController mainController;
+	
+	private javax.swing.JButton speedUpButton;
+	
+	private javax.swing.JButton speedDownButton;
+	
+	private javax.swing.JLabel actualSpeedLabel;
 	
 	private javax.swing.JButton editButton;
     
@@ -32,9 +37,9 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
     
     private javax.swing.JLabel stateLabel;
     
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel executionPanel;
     
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel sampleDataPanel;
     
     private javax.swing.JScrollPane scrollPane;
     
@@ -49,6 +54,8 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
     private Integer sampleId;
     
     private SampleExecutionTask task;
+
+	private Integer speedPercentage;
 	
     public SampleJFrame(MainController mainController, Integer experimentId, Integer sampleId) {
     	task = new SampleExecutionTask(this, mainController, experimentId, sampleId);
@@ -56,6 +63,8 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
     	this.mainController = mainController;
         this.experimentId = experimentId;
         this.sampleId = sampleId;
+        
+        speedPercentage = 0;
         
     	initComponents();        
     }
@@ -66,26 +75,34 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
 		Sample sample = mainController.getSample(experimentId, sampleId);
 		
         executionTabbedPane = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
+        executionPanel = new javax.swing.JPanel();
         oscillationNumberLabel = new javax.swing.JLabel();
+        actualSpeedLabel = new javax.swing.JLabel();
         chronometerLabel = new javax.swing.JLabel();
         stateLabel = new javax.swing.JLabel();
         switcherSlider = new javax.swing.JSlider();
-        jPanel2 = new javax.swing.JPanel();
+        sampleDataPanel = new javax.swing.JPanel();
         scrollPane = new javax.swing.JScrollPane();
         propertiesTable = new javax.swing.JTable();
+        
         editButton = new javax.swing.JButton();
+        speedDownButton = new javax.swing.JButton();
+        speedUpButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
         oscillationNumberLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         oscillationNumberLabel.setText(sample.getOscillations() + " " + Literals.getInstance().getString("sample.oscillations"));
 
+        actualSpeedLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        actualSpeedLabel.setText(Literals.getInstance().getString("speed.actual") + " " + speedPercentage + "%");
+        
         chronometerLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         chronometerLabel.setText(TimeUtils.getDuration(sample.getDurationMillis()));
 
         stateLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         stateLabel.setText(Literals.getInstance().getString("sample.off"));
+        stateLabel.setForeground(Color.RED);
 
         switcherSlider.setValue(0);
         switcherSlider.setMinimum(0);
@@ -102,16 +119,46 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
 					
 					if(value == 0){
 						stateLabel.setText(Literals.getInstance().getString("sample.off"));
+						stateLabel.setForeground(Color.RED);
 					} else if(value == 1){
 						stateLabel.setText(Literals.getInstance().getString("sample.on"));
+						stateLabel.setForeground(Color.GREEN);
+						
 						task.execute();
 					}
 			    }
 			}
 		});
         
-        org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
+        speedUpButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/speed-up.png"))); // NOI18N
+        speedUpButton.setText(Literals.getInstance().getString("speed.up"));
+        speedUpButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+					speedUpActionPerformed(evt);
+				} catch (SerialPortException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+        });
+        
+        speedDownButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/speed-down.png"))); // NOI18N
+        speedDownButton.setText(Literals.getInstance().getString("speed.down"));
+        speedDownButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	try {
+					speedDownActionPerformed(evt);
+				} catch (SerialPortException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+        });
+        
+        org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(executionPanel);
+        executionPanel.setLayout(jPanel1Layout);
+        
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel1Layout.createSequentialGroup()
@@ -127,8 +174,17 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
                         .add(switcherSlider, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 82, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(stateLabel)
-                        .add(41, 41, 41))))
+                        .add(41, 41, 41))
+            		.add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
+	                    .add(speedUpButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 82, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+	                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+	                    .add(speedDownButton)
+	                    .add(41, 41, 41))
+            		.add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
+            			.add(actualSpeedLabel)
+            			.add(41, 41, 41))))
         );
+        
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel1Layout.createSequentialGroup()
@@ -140,10 +196,16 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(switcherSlider, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(stateLabel))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                        .add(speedUpButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(speedDownButton))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(actualSpeedLabel)
                 .addContainerGap(79, Short.MAX_VALUE))
         );
 
-        executionTabbedPane.addTab(Literals.getInstance().getString("sample.execution"), jPanel1);
+        executionTabbedPane.addTab(Literals.getInstance().getString("sample.execution"), executionPanel);
 
         propertiesTable.setModel(getTableModel());
         scrollPane.setViewportView(propertiesTable);
@@ -156,8 +218,8 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
             }
         });
 
-        org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
+        org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(sampleDataPanel);
+        sampleDataPanel.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(scrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
@@ -173,7 +235,7 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
                 .add(scrollPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 168, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
         );
 
-        executionTabbedPane.addTab(Literals.getInstance().getString("sample.data"), jPanel2);
+        executionTabbedPane.addTab(Literals.getInstance().getString("sample.data"), sampleDataPanel);
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -195,6 +257,20 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
 	protected void editButtonActionPerformed(ActionEvent evt) {
 		JFrame sampleEditorJFrame = new SampleEditorJFrame(mainController, experimentId, sampleId, this);
 		sampleEditorJFrame.setVisible(true);
+	}
+	
+	protected void speedUpActionPerformed(ActionEvent evt) throws SerialPortException {
+		if(speedPercentage >= 100) return;
+		speedPercentage+=10;
+		mainController.setSpeed(speedPercentage);
+        actualSpeedLabel.setText(Literals.getInstance().getString("speed.actual") + " " + speedPercentage + "%");
+	}
+	
+	protected void speedDownActionPerformed(ActionEvent evt) throws SerialPortException {
+		if(speedPercentage <= 0) return;
+		speedPercentage-=10;
+		mainController.setSpeed(speedPercentage);
+        actualSpeedLabel.setText(Literals.getInstance().getString("speed.actual") + " " + speedPercentage + "%");
 	}
 
 	private DefaultTableModel getTableModel() {

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.filebreaker.manager.gui.frames.samples;
 
 import java.awt.event.MouseAdapter;

@@ -12,6 +12,11 @@ import com.filebreaker.manager.managers.experiments.ExperimentsManager;
 import com.filebreaker.manager.managers.experiments.ExperimentsManagerImpl;
 import com.filebreaker.manager.managers.exports.ExportToExcelManagerImpl;
 import com.filebreaker.manager.managers.exports.ExportsManager;
+import com.filebreaker.manager.managers.serial.SerialConnectionManager;
+import com.filebreaker.manager.managers.serial.jssc.FilebreakerNotConnectedException;
+import com.filebreaker.manager.managers.serial.jssc.SerialConnectionManagerImpl;
+
+import jssc.SerialPortException;
 
 public class MainController {
 
@@ -19,9 +24,21 @@ public class MainController {
 	
 	private ExportsManager exportsManager;
 	
+	private SerialConnectionManager serialConnectionManager;
+	
 	public MainController(){
 		experimentsManager = new ExperimentsManagerImpl();
 		exportsManager = new ExportToExcelManagerImpl();
+		
+		try {
+			serialConnectionManager = new SerialConnectionManagerImpl();
+		} catch (FilebreakerNotConnectedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SerialPortException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	// Experiments
@@ -91,11 +108,14 @@ public class MainController {
 	}
 
 	public boolean isFileBroken() {
-		return false;
+		return serialConnectionManager.isFileBroken();
 	}
 
 	public int getOscillations() {
 		return 0;
 	}
 
+	public void setSpeed(int speedPercentage) throws SerialPortException{
+		serialConnectionManager.setSpeed(speedPercentage);
+	}
 }
