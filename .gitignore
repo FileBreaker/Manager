@@ -3,6 +3,7 @@
 *.class
 
 ### Eclipse ###
+target/
 
 .metadata
 bin/
