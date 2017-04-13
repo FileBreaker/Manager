@@ -1,5 +1,6 @@
 package com.filebreaker.manager.persistence.h2;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,7 +13,7 @@ public class H2DAO {
 
 	private static final String H2_DRIVER_CLASSNAME = "org.h2.Driver";
 	
-	private static final String JDBC_H2_URL = "jdbc:h2:~/test;INIT=RUNSCRIPT FROM 'classpath:scripts/init.sql'";
+	private static final String JDBC_H2_URL = "jdbc:h2:" + System.getProperty("user.home") + File.separator + "filebreaker;INIT=RUNSCRIPT FROM 'classpath:scripts/init.sql'";
 
 	private static final String H2_USER = "sa";
 	
