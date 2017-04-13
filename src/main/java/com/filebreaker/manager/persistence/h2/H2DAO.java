@@ -1,45 +1,28 @@
 package com.filebreaker.manager.persistence.h2;
 
-import java.math.BigDecimal;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 
-public abstract class H2DAO {
+import org.springframework.stereotype.Component;
 
-	protected Connection getConnection() throws ClassNotFoundException, SQLException {
-		Class.forName("org.h2.Driver");
-		Connection conn = DriverManager.getConnection("jdbc:h2:~/test", "sa", "");
-		
-		return conn;
+@Component
+public class H2DAO {
+
+	private static final String H2_DRIVER_CLASSNAME = "org.h2.Driver";
+	
+	private static final String JDBC_H2_URL = "jdbc:h2:~/test;INIT=RUNSCRIPT FROM 'classpath:scripts/init.sql'";
+
+	private static final String H2_USER = "sa";
+	
+	private static final String H2_PASSWORD = "";
+
+	public H2DAO() throws ClassNotFoundException, SQLException, IOException {
+		Class.forName(H2_DRIVER_CLASSNAME);
 	}
-
-	protected void setNullSafeValue(PreparedStatement ps, int index, Object value, int sqlType) throws SQLException {
-		if(value == null){
-			ps.setNull(index, sqlType);
-		} else {
-			setValueToPreparedStatement(ps, index, value, sqlType);
-		}
-	}
-
-	private void setValueToPreparedStatement(PreparedStatement ps, int index, Object value, int sqlType) throws SQLException {
-		switch(sqlType){
-			case java.sql.Types.INTEGER:
-				ps.setInt(index, (Integer) value);
-				break;
-			case java.sql.Types.DECIMAL:
-				ps.setBigDecimal(index, (BigDecimal)value);
-				break;
-			case java.sql.Types.VARCHAR:
-				ps.setString(index, (String) value);
-				break;
-			case java.sql.Types.TIMESTAMP:
-				ps.setTimestamp(index, (Timestamp) value);
-				break;
-			default:
-				throw new SQLException("unrecognized SQL Type");
-		}
+	
+	public Connection getConnection() throws SQLException {
+		return DriverManager.getConnection(JDBC_H2_URL, H2_USER, H2_PASSWORD);		
 	}
 }

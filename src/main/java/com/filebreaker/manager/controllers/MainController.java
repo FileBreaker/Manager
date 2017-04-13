@@ -1,110 +1,20 @@
 package com.filebreaker.manager.controllers;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.List;
-import java.util.Set;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
-import com.filebreaker.manager.beans.Experiment;
-import com.filebreaker.manager.beans.Sample;
-import com.filebreaker.manager.managers.experiments.ExperimentsManager;
-import com.filebreaker.manager.managers.experiments.ExperimentsManagerImpl;
-import com.filebreaker.manager.managers.exports.ExportToExcelManagerImpl;
-import com.filebreaker.manager.managers.exports.ExportsManager;
-import com.filebreaker.manager.managers.serial.SerialConnectionManager;
-import com.filebreaker.manager.managers.serial.jssc.FilebreakerNotConnectedException;
-import com.filebreaker.manager.managers.serial.jssc.SerialConnectionManagerImpl;
+import com.filebreaker.communications.SerialConnectionManager;
 
 import jssc.SerialPortException;
 
+@Controller
 public class MainController {
-
-	private ExperimentsManager experimentsManager;
-	
-	private ExportsManager exportsManager;
 	
 	private SerialConnectionManager serialConnectionManager;
 	
-	public MainController(){
-		experimentsManager = new ExperimentsManagerImpl();
-		exportsManager = new ExportToExcelManagerImpl();
-		
-		try {
-			serialConnectionManager = new SerialConnectionManagerImpl();
-		} catch (FilebreakerNotConnectedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SerialPortException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	// Experiments
-	public List<Experiment> getExperiments(){
-		List<Experiment> experiments = experimentsManager.findExperiments();
-		return experiments;
-	}
-	
-	public Experiment getExperiment(Integer experimentId) {
-		Experiment experiment = experimentsManager.findExperiment(experimentId);
-		return experiment;
-	}
-	
-	public void createExperiment(String experimentName, Integer samplesNumber) {
-		experimentsManager.createExperiment(experimentName, samplesNumber);
-	}
-	
-	public void exportExperiment(Integer experimentId, File file) throws FileNotFoundException, IOException {
-		exportsManager.exportExperiment(experimentId, file);
-	}
-
-	public void deleteExperiment(Integer selectedExperimentId) {
-		experimentsManager.deleteExperiment(selectedExperimentId);
-	}
-	
-	public void editExperiment(Experiment experiment){
-		experimentsManager.updateExperiment(experiment);
-	}
-	
-	// Samples
-	public List<Sample> getSamples(Integer experimentId){
-		List<Sample> samples = experimentsManager.findSamples(experimentId);
-		return samples;
-	}
-	
-	public Sample getSample(Integer experimentId, Integer sampleId){
-		Sample sample = experimentsManager.findSample(experimentId, sampleId);
-		return sample;
-	}
-	
-	public void createSample(Sample sample) {
-		experimentsManager.createSample(sample);
-	}
-
-	public void updateSample(Sample sample) {
-		experimentsManager.updateSample(sample);
-	}
-	
-	public void deleteSample(Integer experimentId, Integer sampleId) {
-		experimentsManager.deleteSample(experimentId, sampleId);
-	}
-	
-	public void deleteSamples(Integer experimentId, Set<Integer> samplesId) {
-		experimentsManager.deleteSamples(experimentId, samplesId);
-	}
-
-	public void exportSamples(Set<Integer> selectedSamplesId, Integer experimentId, File saveFile) throws IOException {
-		exportsManager.exportSamples(selectedSamplesId, experimentId, saveFile);
-	}
-	
-	public void saveState(Integer experimentId, Integer sampleId, long duration, int oscillations) {
-		experimentsManager.saveState(experimentId, sampleId, duration, oscillations);	
-	}
-	
-	public void duplicateSamples(Integer sampleId, Integer experimentId, Integer samplesNumber) {
-		experimentsManager.duplicateSample(sampleId, experimentId, samplesNumber);
+	@Autowired
+	public MainController(SerialConnectionManager serialConnectionManager){
+		this.serialConnectionManager = serialConnectionManager;
 	}
 
 	public boolean isFileBroken() {

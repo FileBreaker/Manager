@@ -5,12 +5,15 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.filebreaker.manager.controllers.MainController;
-import com.filebreaker.manager.gui.frames.samples.SampleJFrame;
-import com.filebreaker.manager.gui.utils.TimeUtils;
+import com.filebreaker.manager.samples.SamplesController;
+import com.filebreaker.manager.view.frames.samples.SampleJFrame;
+import com.filebreaker.manager.view.utils.TimeUtils;
 
 public class SampleExecutionTask {
 	
 	private SampleJFrame sampleJFrame;
+	
+	private SamplesController samplesController;
 	
 	private MainController mainController;
 	
@@ -18,8 +21,9 @@ public class SampleExecutionTask {
 	
 	private Integer experimentId;
 	
-	public SampleExecutionTask(SampleJFrame view, MainController mainController, Integer experimentId, Integer sampleId){
+	public SampleExecutionTask(SampleJFrame view, SamplesController samplesController, MainController mainController, Integer experimentId, Integer sampleId){
 		this.sampleJFrame = view;
+		this.samplesController = samplesController;
 		this.mainController = mainController;
 		this.sampleId = sampleId;
 		this.experimentId = experimentId;
@@ -38,7 +42,7 @@ public class SampleExecutionTask {
 	     			
 	     			sampleJFrame.setTimeToChronometerLabel(TimeUtils.getDuration(diff));
 	     		} else {
-	     			mainController.saveState(experimentId, sampleId, diff, oscillations);
+	     			samplesController.saveState(experimentId, sampleId, diff, oscillations);
 	     			cancel();
 	     		}
 	         } 
