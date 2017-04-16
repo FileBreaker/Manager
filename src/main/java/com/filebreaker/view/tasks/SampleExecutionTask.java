@@ -7,6 +7,7 @@ import java.util.TimerTask;
 import com.filebreaker.controllers.MainController;
 import com.filebreaker.samples.SamplesController;
 import com.filebreaker.view.frames.samples.SampleJFrame;
+import com.filebreaker.view.i18n.I18n;
 import com.filebreaker.view.utils.TimeUtils;
 
 public class SampleExecutionTask {
@@ -43,6 +44,10 @@ public class SampleExecutionTask {
 	     			sampleJFrame.setTimeToChronometerLabel(TimeUtils.getDuration(diff));
 	     			sampleJFrame.setLdrValue(mainController.getLdrValue().toString());
 	     		} else {
+	     			if(mainController.isFileBroken()){
+	     				sampleJFrame.setLdrValue(I18n.getInstance().getString("file.broken"));
+	     			}
+	     			
 	     			samplesController.saveState(experimentId, sampleId, diff, oscillations);
 	     			cancel();
 	     		}

@@ -34,7 +34,6 @@ public class IdentifiedTableModel extends DefaultTableModel {
 	public void setEditableNameCell(boolean value){
 		this.editableName = value;
 	}
-
 	
 	@Override
 	public boolean isCellEditable(int row, int column) {

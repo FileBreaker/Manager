@@ -15,7 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.filebreaker.persistence.h2.H2DAO;
+import com.filebreaker.persistence.H2DAO;
 
 @Repository
 public class SamplesDAO {

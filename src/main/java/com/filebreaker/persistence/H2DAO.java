@@ -1,4 +1,4 @@
-package com.filebreaker.persistence.h2;
+package com.filebreaker.persistence;
 
 import java.io.File;
 import java.io.IOException;
