@@ -6,52 +6,63 @@ import jssc.SerialPortEventListener;
 import jssc.SerialPortException;
 
 class FilebreakerSerialPortEventListener implements SerialPortEventListener {
-
-	private boolean stringComplete;
 	
-	private String inputString;
+	private String ldrValueAggregated;
 	
 	private boolean isFileBroken;
 	
 	private SerialPort serialPort;
 	
+	private Integer ldrValue;
+	
 	public FilebreakerSerialPortEventListener(SerialPort serialPort){
-		this.stringComplete = false;
-		this.serialPort = serialPort;
-		this.inputString = "";
+		this.ldrValueAggregated = "";
 		this.isFileBroken = false;
+		this.serialPort = serialPort;
+		this.ldrValue = 0;
 	}
 	
 	public void serialEvent(SerialPortEvent serialPortEvent) {
 		if(!serialPortEvent.isRXCHAR()) return;
 		
 		try {
-			char receivedChar = (char)serialPort.readBytes(1)[0];
+			char receivedChar = readChar();
 			
-			if(receivedChar == '\n') {
-				stringComplete = true;
-			} else if (receivedChar == 'r' || receivedChar == 'R') {
-				System.out.println("ROTURA!!!!!!!!!: " + receivedChar);
-				isFileBroken = true;
-			}
-			else {
-				inputString = new StringBuilder(inputString).append(receivedChar).toString();
-			}
-			
-			if (stringComplete) {
-				System.out.println(inputString);
-			    
-			    // clear the string:
-			    inputString = "";
-			    stringComplete = false;
-			  }
+			isFileBroken = detectFileBrokenSignal(receivedChar);
+			readLdrValue(receivedChar);
 		} catch (SerialPortException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
 	public boolean isFileBroken(){
 		return isFileBroken;
+	}
+	
+	public Integer getLdrValue(){
+		return ldrValue;
+	}
+	
+	private void readLdrValue(char receivedChar) {
+		if(isFileBroken) return;
+		
+		if(detectLineFeedSignal(receivedChar)) {
+			ldrValue = new Integer(ldrValueAggregated);
+		    ldrValueAggregated = "";
+		} else {
+			ldrValueAggregated = new StringBuilder(ldrValueAggregated).append(receivedChar).toString();
+		}
+	}
+	
+	private char readChar() throws SerialPortException {
+		return (char)serialPort.readBytes(1)[0];
+	}
+	
+	private boolean detectLineFeedSignal(char receivedChar) {
+		return receivedChar == '\n';
+	}
+	
+	private boolean detectFileBrokenSignal(char receivedChar){
+		return Character.toLowerCase(receivedChar) == 'r';
 	}
 }

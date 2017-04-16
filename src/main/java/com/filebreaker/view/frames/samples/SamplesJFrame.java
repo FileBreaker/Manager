@@ -24,7 +24,7 @@ import com.filebreaker.samples.Sample;
 import com.filebreaker.samples.SamplesController;
 import com.filebreaker.view.dialogs.DuplicateSampleJDialog;
 import com.filebreaker.view.frames.RefreshableFrame;
-import com.filebreaker.view.i18n.Literals;
+import com.filebreaker.view.i18n.I18n;
 import com.filebreaker.view.tables.IdentifiedTableModel;
 import com.filebreaker.view.utils.ExportFileChooserFactory;
 
@@ -71,7 +71,7 @@ public class SamplesJFrame extends javax.swing.JFrame implements RefreshableFram
     	this.setResizable(false);
     	
     	Experiment experiment = experimentsController.getExperiment(this.experimentId);
-    	this.setTitle(Literals.getInstance().getString("samples.number") + " " + experiment.getName()); // NOI18N
+    	this.setTitle(I18n.getInstance().getString("samples.number") + " " + experiment.getName()); // NOI18N
     	
         sampleLabel = new javax.swing.JLabel();
         exportButton = new javax.swing.JButton();
@@ -83,10 +83,10 @@ public class SamplesJFrame extends javax.swing.JFrame implements RefreshableFram
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        sampleLabel.setText(Literals.getInstance().getString("samples.title"));
+        sampleLabel.setText(I18n.getInstance().getString("samples.title"));
 
         exportButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/page_down.gif"))); // NOI18N
-        exportButton.setText(Literals.getInstance().getString("samples.export"));
+        exportButton.setText(I18n.getInstance().getString("samples.export"));
         exportButton.setEnabled(false);
         exportButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,7 +120,7 @@ public class SamplesJFrame extends javax.swing.JFrame implements RefreshableFram
         scrollPane.setViewportView(samplesTable);
 
         newButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/note_new.gif"))); // NOI18N
-        newButton.setText(Literals.getInstance().getString("samples.new"));
+        newButton.setText(I18n.getInstance().getString("samples.new"));
         newButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newButtonActionPerformed(evt);
@@ -128,7 +128,7 @@ public class SamplesJFrame extends javax.swing.JFrame implements RefreshableFram
         });
 
         deleteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/note_delete.gif"))); // NOI18N
-        deleteButton.setText(Literals.getInstance().getString("samples.delete"));
+        deleteButton.setText(I18n.getInstance().getString("samples.delete"));
         deleteButton.setEnabled(false);
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -137,7 +137,7 @@ public class SamplesJFrame extends javax.swing.JFrame implements RefreshableFram
         });
         
         duplicateButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/note_new.gif"))); // NOI18N
-        duplicateButton.setText(Literals.getInstance().getString("samples.duplicate"));
+        duplicateButton.setText(I18n.getInstance().getString("samples.duplicate"));
         duplicateButton.setEnabled(false);
         duplicateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -196,9 +196,9 @@ public class SamplesJFrame extends javax.swing.JFrame implements RefreshableFram
     	return new IdentifiedTableModel(
             getModel(samples),
             new String [] {
-                Literals.getInstance().getString("samples.sample.identifier"), 
-                Literals.getInstance().getString("samples.sample.creationdate"), 
-                Literals.getInstance().getString("samples.sample.modificationdate")
+                I18n.getInstance().getString("samples.sample.identifier"), 
+                I18n.getInstance().getString("samples.sample.creationdate"), 
+                I18n.getInstance().getString("samples.sample.modificationdate")
             },
             getModelIds(samples)
         );

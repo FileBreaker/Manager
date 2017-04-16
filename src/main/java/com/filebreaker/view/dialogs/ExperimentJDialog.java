@@ -7,7 +7,7 @@ import javax.swing.JDialog;
 import com.filebreaker.experiments.Experiment;
 import com.filebreaker.experiments.ExperimentsController;
 import com.filebreaker.view.frames.experiments.ExperimentsFrameView;
-import com.filebreaker.view.i18n.Literals;
+import com.filebreaker.view.i18n.I18n;
 
 public class ExperimentJDialog extends javax.swing.JDialog {
 
@@ -81,14 +81,14 @@ public class ExperimentJDialog extends javax.swing.JDialog {
 
         titleLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         
-        titleLabel.setText(Literals.getInstance().getString("new.experiment.required.data"));
-        experimentLabel.setText(Literals.getInstance().getString("new.experiment.name"));
-        sampleNumberLabel.setText(Literals.getInstance().getString("new.experiment.initial.sample.number"));
+        titleLabel.setText(I18n.getInstance().getString("new.experiment.required.data"));
+        experimentLabel.setText(I18n.getInstance().getString("new.experiment.name"));
+        sampleNumberLabel.setText(I18n.getInstance().getString("new.experiment.initial.sample.number"));
         
         experimentNameTextField.setText("");
         
         saveExperimentButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/note_new.gif")));
-        saveExperimentButton.setText(Literals.getInstance().getString("new.experiment.save"));
+        saveExperimentButton.setText(I18n.getInstance().getString("new.experiment.save"));
         saveExperimentButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createExperimentActionPerformed(evt);
@@ -96,7 +96,7 @@ public class ExperimentJDialog extends javax.swing.JDialog {
         });
 
         cancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/note_delete.gif")));
-        cancelButton.setText(Literals.getInstance().getString("new.experiment.cancel"));
+        cancelButton.setText(I18n.getInstance().getString("new.experiment.cancel"));
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	cancelExperimentCreationActionPerformed(evt);

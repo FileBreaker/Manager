@@ -1,7 +1,6 @@
 package com.filebreaker.view.frames.samples;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JFrame;
@@ -12,9 +11,9 @@ import javax.swing.table.DefaultTableModel;
 import com.filebreaker.controllers.MainController;
 import com.filebreaker.samples.Sample;
 import com.filebreaker.samples.SamplesController;
-import com.filebreaker.tasks.SampleExecutionTask;
 import com.filebreaker.view.frames.RefreshableFrame;
-import com.filebreaker.view.i18n.Literals;
+import com.filebreaker.view.i18n.I18n;
+import com.filebreaker.view.tasks.SampleExecutionTask;
 import com.filebreaker.view.utils.TimeUtils;
 
 import jssc.SerialPortException;
@@ -36,6 +35,8 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
 	private javax.swing.JButton editButton;
     
 	private javax.swing.JLabel chronometerLabel;
+	
+	private javax.swing.JLabel ldrValueLabel;
     
     private javax.swing.JLabel oscillationNumberLabel;
     
@@ -85,6 +86,7 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
         oscillationNumberLabel = new javax.swing.JLabel();
         actualSpeedLabel = new javax.swing.JLabel();
         chronometerLabel = new javax.swing.JLabel();
+        ldrValueLabel = new javax.swing.JLabel();
         stateLabel = new javax.swing.JLabel();
         switcherSlider = new javax.swing.JSlider();
         sampleDataPanel = new javax.swing.JPanel();
@@ -98,16 +100,19 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
         oscillationNumberLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        oscillationNumberLabel.setText(sample.getOscillations() + " " + Literals.getInstance().getString("sample.oscillations"));
+        oscillationNumberLabel.setText(sample.getOscillations() + " " + I18n.getInstance().getString("sample.oscillations"));
 
         actualSpeedLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        actualSpeedLabel.setText(Literals.getInstance().getString("speed.actual") + " " + speedPercentage + "%");
+        actualSpeedLabel.setText(I18n.getInstance().getString("speed.actual") + " " + speedPercentage + "%");
         
         chronometerLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         chronometerLabel.setText(TimeUtils.getDuration(sample.getDurationMillis()));
+        
+        ldrValueLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        ldrValueLabel.setText(I18n.getInstance().getString("ldr.value") + " " + 0);
 
         stateLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        stateLabel.setText(Literals.getInstance().getString("sample.off"));
+        stateLabel.setText(I18n.getInstance().getString("sample.off"));
         stateLabel.setForeground(Color.RED);
 
         switcherSlider.setValue(0);
@@ -124,10 +129,10 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
 					int value = source.getValue();
 					
 					if(value == 0){
-						stateLabel.setText(Literals.getInstance().getString("sample.off"));
+						stateLabel.setText(I18n.getInstance().getString("sample.off"));
 						stateLabel.setForeground(Color.RED);
 					} else if(value == 1){
-						stateLabel.setText(Literals.getInstance().getString("sample.on"));
+						stateLabel.setText(I18n.getInstance().getString("sample.on"));
 						stateLabel.setForeground(Color.GREEN);
 						
 						task.execute();
@@ -137,7 +142,7 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
 		});
         
         speedUpButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/speed-up.png"))); // NOI18N
-        speedUpButton.setText(Literals.getInstance().getString("speed.up"));
+        speedUpButton.setText(I18n.getInstance().getString("speed.up"));
         speedUpButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
@@ -150,7 +155,7 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
         });
         
         speedDownButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/speed-down.png"))); // NOI18N
-        speedDownButton.setText(Literals.getInstance().getString("speed.down"));
+        speedDownButton.setText(I18n.getInstance().getString("speed.down"));
         speedDownButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	try {
@@ -188,7 +193,10 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
 	                    .add(41, 41, 41))
             		.add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
             			.add(actualSpeedLabel)
-            			.add(41, 41, 41))))
+            			.add(41, 41, 41))
+            		.add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
+	        			.add(ldrValueLabel)
+	        			.add(41, 41, 41))))
         );
         
         jPanel1Layout.setVerticalGroup(
@@ -208,16 +216,18 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
                         .add(speedDownButton))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(actualSpeedLabel)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(ldrValueLabel)
                 .addContainerGap(79, Short.MAX_VALUE))
         );
 
-        executionTabbedPane.addTab(Literals.getInstance().getString("sample.execution"), executionPanel);
+        executionTabbedPane.addTab(I18n.getInstance().getString("sample.execution"), executionPanel);
 
         propertiesTable.setModel(getTableModel());
         scrollPane.setViewportView(propertiesTable);
 
         editButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/interface_dialog.gif"))); // NOI18N
-        editButton.setText(Literals.getInstance().getString("sample.edit"));
+        editButton.setText(I18n.getInstance().getString("sample.edit"));
         editButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editButtonActionPerformed(evt);
@@ -238,10 +248,10 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel2Layout.createSequentialGroup()
                 .add(editButton)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(scrollPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 168, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(scrollPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 218, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
         );
 
-        executionTabbedPane.addTab(Literals.getInstance().getString("sample.data"), sampleDataPanel);
+        executionTabbedPane.addTab(I18n.getInstance().getString("sample.data"), sampleDataPanel);
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         
@@ -255,7 +265,7 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, executionTabbedPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 270, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, executionTabbedPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 305, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -270,14 +280,14 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
 		if(speedPercentage >= 100) return;
 		speedPercentage+=10;
 		mainController.setSpeed(speedPercentage);
-        actualSpeedLabel.setText(Literals.getInstance().getString("speed.actual") + " " + speedPercentage + "%");
+        actualSpeedLabel.setText(I18n.getInstance().getString("speed.actual") + " " + speedPercentage + "%");
 	}
 	
 	protected void speedDownActionPerformed(ActionEvent evt) throws SerialPortException {
 		if(speedPercentage <= 0) return;
 		speedPercentage-=10;
 		mainController.setSpeed(speedPercentage);
-        actualSpeedLabel.setText(Literals.getInstance().getString("speed.actual") + " " + speedPercentage + "%");
+        actualSpeedLabel.setText(I18n.getInstance().getString("speed.actual") + " " + speedPercentage + "%");
 	}
 
 	private DefaultTableModel getTableModel() {
@@ -286,8 +296,8 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
     	return new DefaultTableModel(
             getModel(sample),
             new String [] {
-                Literals.getInstance().getString("sample.property"), 
-                Literals.getInstance().getString("sample.value")
+                I18n.getInstance().getString("sample.property"), 
+                I18n.getInstance().getString("sample.value")
             }
         );
 	}
@@ -298,70 +308,70 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
 		if(sample != null){
 			result = new Object[22][2];
 		
-			result[0][0] = Literals.getInstance().getString("sample.editor.id");
+			result[0][0] = I18n.getInstance().getString("sample.editor.id");
 			result[0][1] = sample.getId();
 			
-			result[1][0] = Literals.getInstance().getString("sample.oscillations");
+			result[1][0] = I18n.getInstance().getString("sample.oscillations");
 			result[1][1] = sample.getOscillations();
 			
-			result[2][0] = Literals.getInstance().getString("sample.editor.helix.angle");
+			result[2][0] = I18n.getInstance().getString("sample.editor.helix.angle");
 			result[2][1] = sample.getHelixAngle();
 			
-			result[3][0] = Literals.getInstance().getString("sample.editor.distance.turns");
+			result[3][0] = I18n.getInstance().getString("sample.editor.distance.turns");
 			result[3][1] = sample.getDistanceBetweenTurns();
 			
-			result[4][0] = Literals.getInstance().getString("sample.duration");
+			result[4][0] = I18n.getInstance().getString("sample.duration");
 			result[4][1] = TimeUtils.getDuration(sample.getDurationMillis());
 			
-			result[5][0] = Literals.getInstance().getString("sample.editor.apical.diameter");
+			result[5][0] = I18n.getInstance().getString("sample.editor.apical.diameter");
 			result[5][1] = sample.getApicalDiameter();
 			
-			result[6][0] = Literals.getInstance().getString("sample.editor.curve.angle");
+			result[6][0] = I18n.getInstance().getString("sample.editor.curve.angle");
 			result[6][1] = sample.getCurvatureAngle();
 			
-			result[7][0] = Literals.getInstance().getString("sample.editor.curve.radius");
+			result[7][0] = I18n.getInstance().getString("sample.editor.curve.radius");
 			result[7][1] = sample.getCurvatureRadius();
 			
-			result[8][0] = Literals.getInstance().getString("sample.editor.duct.speed");
+			result[8][0] = I18n.getInstance().getString("sample.editor.duct.speed");
 			result[8][1] = sample.getDuctSpeed();
 			
-			result[9][0] = Literals.getInstance().getString("sample.editor.engine.angular.speed");
+			result[9][0] = I18n.getInstance().getString("sample.editor.engine.angular.speed");
 			result[9][1] = sample.getEngineAngularSpeed();
 			
-			result[10][0] = Literals.getInstance().getString("sample.editor.engine.torque");
+			result[10][0] = I18n.getInstance().getString("sample.editor.engine.torque");
 			result[10][1] = sample.getEngineTorque();
 			
-			result[11][0] = Literals.getInstance().getString("experiments.identifier");
+			result[11][0] = I18n.getInstance().getString("experiments.identifier");
 			result[11][1] = sample.getExperimentId();
 			
-			result[12][0] = Literals.getInstance().getString("sample.editor.file.type");
+			result[12][0] = I18n.getInstance().getString("sample.editor.file.type");
 			result[12][1] = sample.getFileType();
 			
-			result[13][0] = Literals.getInstance().getString("sample.editor.identifier");
+			result[13][0] = I18n.getInstance().getString("sample.editor.identifier");
 			result[13][1] = sample.getId();
 			
-			result[14][0] = Literals.getInstance().getString("sample.editor.file.alloy");
+			result[14][0] = I18n.getInstance().getString("sample.editor.file.alloy");
 			result[14][1] = sample.getMetalCompositionId();
 			
-			result[15][0] = Literals.getInstance().getString("sample.modification");
+			result[15][0] = I18n.getInstance().getString("sample.modification");
 			result[15][1] = sample.getModificationDate();
 			
-			result[16][0] = Literals.getInstance().getString("sample.editor.movement.type");
+			result[16][0] = I18n.getInstance().getString("sample.editor.movement.type");
 			result[16][1] = sample.getMovementTypeId();
 			
-			result[17][0] = Literals.getInstance().getString("sample.editor.study.type");
+			result[17][0] = I18n.getInstance().getString("sample.editor.study.type");
 			result[17][1] = sample.getStudyTypeId();
 			
-			result[18][0] = Literals.getInstance().getString("sample.editor.study.group");
+			result[18][0] = I18n.getInstance().getString("sample.editor.study.group");
 			result[18][1] = sample.getStudyGroup();
 			
-			result[19][0] = Literals.getInstance().getString("sample.editor.use.number");
+			result[19][0] = I18n.getInstance().getString("sample.editor.use.number");
 			result[19][1] = sample.getUses();
 			
-			result[20][0] = Literals.getInstance().getString("sample.editor.coning");
+			result[20][0] = I18n.getInstance().getString("sample.editor.coning");
 			result[20][1] = sample.getConicity();
 			
-			result[21][0] = Literals.getInstance().getString("sample.editor.section");
+			result[21][0] = I18n.getInstance().getString("sample.editor.section");
 			result[21][1] = sample.getSection();
 		}
 		
@@ -382,5 +392,9 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
 	
 	public void setTimeToChronometerLabel(String time){
 		chronometerLabel.setText(time);
+	}
+
+	public void setLdrValue(String ldrValue) {
+		ldrValueLabel.setText(ldrValue);
 	}
 }

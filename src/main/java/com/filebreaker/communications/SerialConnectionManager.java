@@ -35,6 +35,7 @@ public class SerialConnectionManager {
 			
 			return serialPort;
 		} catch(Exception e){
+			System.err.println("No conectado: " + e.getMessage());
 			return null;
 		}
 	}
@@ -47,4 +48,9 @@ public class SerialConnectionManager {
 	public boolean isFileBroken(){
 		return filebreakerSerialPortEventListener.isFileBroken();
 	}
+
+	public Integer getLdrValue() {
+		return filebreakerSerialPortEventListener.getLdrValue();
+	}
+	
 }

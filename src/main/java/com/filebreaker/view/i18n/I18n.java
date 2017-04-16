@@ -4,15 +4,15 @@ import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class Literals {
+public class I18n {
 
 	private static ResourceBundle rb = ResourceBundle.getBundle("filebreaker", new Locale("en", "EN"));
 	
-	private static final Literals INSTANCE = new Literals();
+	private static final I18n INSTANCE = new I18n();
 	
-	private Literals(){	/* private constructor */ }
+	private I18n(){	/* private constructor */ }
 	
-	public static Literals getInstance(){
+	public static I18n getInstance(){
 		return INSTANCE;
 	}
 	

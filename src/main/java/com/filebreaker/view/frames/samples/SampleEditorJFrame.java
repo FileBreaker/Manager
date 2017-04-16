@@ -9,7 +9,7 @@ import javax.swing.SpinnerNumberModel;
 import com.filebreaker.samples.Sample;
 import com.filebreaker.samples.SamplesController;
 import com.filebreaker.view.frames.RefreshableFrame;
-import com.filebreaker.view.i18n.Literals;
+import com.filebreaker.view.i18n.I18n;
 
 public class SampleEditorJFrame extends javax.swing.JFrame {
 
@@ -164,41 +164,41 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
                 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        helixAngleLabel.setText(Literals.getInstance().getString("sample.editor.helix.angle"));
-        distanceBetweenTurnsLabel.setText(Literals.getInstance().getString("sample.editor.distance.turns"));
-        angleCurveLabel.setText(Literals.getInstance().getString("sample.editor.curve.angle"));
-        radiusCurveLabel.setText(Literals.getInstance().getString("sample.editor.curve.radius"));
-        useNumberLabel.setText(Literals.getInstance().getString("sample.editor.use.number"));
-        esterilizationNumberLabel.setText(Literals.getInstance().getString("sample.editor.sterilization.number"));
-        fileTypeLabel.setText(Literals.getInstance().getString("sample.editor.file.type"));
-        conicityLabel.setText(Literals.getInstance().getString("sample.editor.coning"));
-        apicalDiameterLabel.setText(Literals.getInstance().getString("sample.editor.apical.diameter"));
-        angularSpeedLabel.setText(Literals.getInstance().getString("sample.editor.engine.angular.speed"));
-        engineTorqueLabel.setText(Literals.getInstance().getString("sample.editor.engine.torque"));
-        movementTypeLabel.setText(Literals.getInstance().getString("sample.editor.movement.type"));
-        ductSpeedLabel.setText(Literals.getInstance().getString("sample.editor.duct.speed"));
-        fileMetalCompositionLabel.setText(Literals.getInstance().getString("sample.editor.file.alloy"));
-        studyTypeLabel.setText(Literals.getInstance().getString("sample.editor.study.type"));
-        studyGroupLabel.setText(Literals.getInstance().getString("sample.editor.study.group"));
-        sectionLabel.setText(Literals.getInstance().getString("sample.editor.section"));
+        helixAngleLabel.setText(I18n.getInstance().getString("sample.editor.helix.angle"));
+        distanceBetweenTurnsLabel.setText(I18n.getInstance().getString("sample.editor.distance.turns"));
+        angleCurveLabel.setText(I18n.getInstance().getString("sample.editor.curve.angle"));
+        radiusCurveLabel.setText(I18n.getInstance().getString("sample.editor.curve.radius"));
+        useNumberLabel.setText(I18n.getInstance().getString("sample.editor.use.number"));
+        esterilizationNumberLabel.setText(I18n.getInstance().getString("sample.editor.sterilization.number"));
+        fileTypeLabel.setText(I18n.getInstance().getString("sample.editor.file.type"));
+        conicityLabel.setText(I18n.getInstance().getString("sample.editor.coning"));
+        apicalDiameterLabel.setText(I18n.getInstance().getString("sample.editor.apical.diameter"));
+        angularSpeedLabel.setText(I18n.getInstance().getString("sample.editor.engine.angular.speed"));
+        engineTorqueLabel.setText(I18n.getInstance().getString("sample.editor.engine.torque"));
+        movementTypeLabel.setText(I18n.getInstance().getString("sample.editor.movement.type"));
+        ductSpeedLabel.setText(I18n.getInstance().getString("sample.editor.duct.speed"));
+        fileMetalCompositionLabel.setText(I18n.getInstance().getString("sample.editor.file.alloy"));
+        studyTypeLabel.setText(I18n.getInstance().getString("sample.editor.study.type"));
+        studyGroupLabel.setText(I18n.getInstance().getString("sample.editor.study.group"));
+        sectionLabel.setText(I18n.getInstance().getString("sample.editor.section"));
         
         fileTypeTextField.setText("");
         studyGroupTextField.setText("");
        
         movementTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<String>(new String [] {
-        		Literals.getInstance().getString("sample.editor.movement.type.continuous.rotational"), 
-        		Literals.getInstance().getString("sample.editor.movement.type.reciprocating"
+        		I18n.getInstance().getString("sample.editor.movement.type.continuous.rotational"), 
+        		I18n.getInstance().getString("sample.editor.movement.type.reciprocating"
         )}));
         fileMetalCompositionComboBox.setModel(new javax.swing.DefaultComboBoxModel<String>(new String[] { 
-        		Literals.getInstance().getString("sample.editor.file.alloy.niti")
+        		I18n.getInstance().getString("sample.editor.file.alloy.niti")
         }));
         studyTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<String>(new String[] { 
-        		Literals.getInstance().getString("sample.editor.study.type.static"), 
-        		Literals.getInstance().getString("sample.editor.study.type.dynamic")
+        		I18n.getInstance().getString("sample.editor.study.type.static"), 
+        		I18n.getInstance().getString("sample.editor.study.type.dynamic")
         }));
 
         saveButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/page_tick.gif"))); // NOI18N
-        saveButton.setText(Literals.getInstance().getString("sample.editor.save"));
+        saveButton.setText(I18n.getInstance().getString("sample.editor.save"));
         saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveButtonActionPerformed(evt);
@@ -206,7 +206,7 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
         });
 
         cancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/page_text_delete.gif"))); // NOI18N
-        cancelButton.setText(Literals.getInstance().getString("sample.editor.cancel"));
+        cancelButton.setText(I18n.getInstance().getString("sample.editor.cancel"));
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);

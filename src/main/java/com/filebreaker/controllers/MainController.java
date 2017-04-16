@@ -21,6 +21,10 @@ public class MainController {
 		return serialConnectionManager.isFileBroken();
 	}
 
+	public Integer getLdrValue(){
+		return serialConnectionManager.getLdrValue();
+	}
+	
 	public int getOscillations() {
 		return 0;
 	}

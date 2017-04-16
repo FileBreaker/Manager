@@ -30,7 +30,7 @@ import com.filebreaker.experiments.ExperimentsController;
 import com.filebreaker.samples.SamplesController;
 import com.filebreaker.view.dialogs.ExperimentJDialog;
 import com.filebreaker.view.frames.samples.SamplesJFrame;
-import com.filebreaker.view.i18n.Literals;
+import com.filebreaker.view.i18n.I18n;
 import com.filebreaker.view.tables.IdentifiedTableModel;
 import com.filebreaker.view.utils.ExportFileChooserFactory;
 
@@ -77,7 +77,7 @@ public class ExperimentsFrameView extends FrameView {
     	this.getFrame().setResizable(false);
     	
     	mainPanel = new JPanel();
-    	this.getFrame().setTitle(Literals.getInstance().getString("filebreaker.title"));
+    	this.getFrame().setTitle(I18n.getInstance().getString("filebreaker.title"));
     	
         experimentsLabel = new javax.swing.JLabel();
         exportButton = new javax.swing.JButton();
@@ -86,10 +86,10 @@ public class ExperimentsFrameView extends FrameView {
         deleteButton = new javax.swing.JButton();
         editButton = new javax.swing.JButton();
         
-        experimentsLabel.setText(Literals.getInstance().getString("experiments.title"));
+        experimentsLabel.setText(I18n.getInstance().getString("experiments.title"));
 
         exportButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/page_down.gif"))); // NOI18N
-        exportButton.setText(Literals.getInstance().getString("experiments.export"));
+        exportButton.setText(I18n.getInstance().getString("experiments.export"));
         exportButton.setEnabled(false);
         exportButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,7 +139,7 @@ public class ExperimentsFrameView extends FrameView {
         scrollPane.setViewportView(experimentsTable);
 
         newButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/note_new.gif"))); // NOI18N
-        newButton.setText(Literals.getInstance().getString("experiments.new"));
+        newButton.setText(I18n.getInstance().getString("experiments.new"));
         newButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newButtonActionPerformed(evt);
@@ -147,7 +147,7 @@ public class ExperimentsFrameView extends FrameView {
         });
 
         deleteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/note_delete.gif"))); // NOI18N
-        deleteButton.setText(Literals.getInstance().getString("experiments.delete"));
+        deleteButton.setText(I18n.getInstance().getString("experiments.delete"));
         deleteButton.setEnabled(false);
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -156,7 +156,7 @@ public class ExperimentsFrameView extends FrameView {
         });
         
         editButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/note.gif"))); // NOI18N
-        editButton.setText(Literals.getInstance().getString("experiments.name.edit"));
+        editButton.setText(I18n.getInstance().getString("experiments.name.edit"));
         editButton.setEnabled(false);
         editButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -228,9 +228,9 @@ public class ExperimentsFrameView extends FrameView {
 		return new IdentifiedTableModel(
             getModel(experiments),
             new String [] {
-                Literals.getInstance().getString("experiments.name"), 
-                Literals.getInstance().getString("experiments.creation.date"), 
-                Literals.getInstance().getString("experiments.modification.date")
+                I18n.getInstance().getString("experiments.name"), 
+                I18n.getInstance().getString("experiments.creation.date"), 
+                I18n.getInstance().getString("experiments.modification.date")
             },
             getModelIds(experiments)
         );

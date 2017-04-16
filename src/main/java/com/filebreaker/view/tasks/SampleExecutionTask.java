@@ -1,4 +1,4 @@
-package com.filebreaker.tasks;
+package com.filebreaker.view.tasks;
 
 import java.util.Date;
 import java.util.Timer;
@@ -41,6 +41,7 @@ public class SampleExecutionTask {
 	     			oscillations = mainController.getOscillations();
 	     			
 	     			sampleJFrame.setTimeToChronometerLabel(TimeUtils.getDuration(diff));
+	     			sampleJFrame.setLdrValue(mainController.getLdrValue().toString());
 	     		} else {
 	     			samplesController.saveState(experimentId, sampleId, diff, oscillations);
 	     			cancel();
