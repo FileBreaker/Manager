@@ -9,5 +9,5 @@
  
   <context:component-scan base-package="com.filebreaker"/>
   
-  <bean id="gui" class="com.filebreaker.manager.view.Gui" factory-method="getApplication" />
+  <bean id="gui" class="com.filebreaker.view.Gui" factory-method="getApplication" />
 </beans>
