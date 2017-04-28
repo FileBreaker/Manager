@@ -1,7 +1,11 @@
 package com.filebreaker.view.frames.samples;
 
 import java.awt.Color;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
 import javax.swing.event.ChangeEvent;
@@ -72,7 +76,7 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
         
         this.speedPercentage = 0;
         
-    	initComponents();        
+    	initComponents();
     }
 
 	private void initComponents() {
@@ -94,6 +98,7 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
         propertiesTable = new javax.swing.JTable();
         
         editButton = new javax.swing.JButton();
+        
         speedDownButton = new javax.swing.JButton();
         speedUpButton = new javax.swing.JButton();
 
@@ -146,7 +151,7 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
         speedUpButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
-					speedUpActionPerformed(evt);
+					speedUpActionPerformed();
 				} catch (SerialPortException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -159,7 +164,7 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
         speedDownButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	try {
-					speedDownActionPerformed(evt);
+					speedDownActionPerformed();
 				} catch (SerialPortException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -276,14 +281,14 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
 		sampleEditorJFrame.setVisible(true);
 	}
 	
-	protected void speedUpActionPerformed(ActionEvent evt) throws SerialPortException {
+	protected void speedUpActionPerformed() throws SerialPortException {
 		if(speedPercentage >= 100) return;
 		speedPercentage+=10;
 		mainController.setSpeed(speedPercentage);
         actualSpeedLabel.setText(I18n.getInstance().getString("speed.actual") + " " + speedPercentage + "%");
 	}
 	
-	protected void speedDownActionPerformed(ActionEvent evt) throws SerialPortException {
+	protected void speedDownActionPerformed() throws SerialPortException {
 		if(speedPercentage <= 0) return;
 		speedPercentage-=10;
 		mainController.setSpeed(speedPercentage);
@@ -395,6 +400,6 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
 	}
 
 	public void setLdrValue(String ldrValue) {
-		ldrValueLabel.setText(ldrValue);
+		ldrValueLabel.setText(I18n.getInstance().getString("ldr.value") + " " + ldrValue);
 	}
 }

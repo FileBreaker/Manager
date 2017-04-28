@@ -1,68 +1,75 @@
 package com.filebreaker.communications;
 
+import org.apache.commons.collections.Buffer;
+import org.apache.commons.collections.BufferUtils;
+import org.apache.commons.collections.buffer.BoundedFifoBuffer;
+
 import jssc.SerialPort;
 import jssc.SerialPortEvent;
 import jssc.SerialPortEventListener;
 import jssc.SerialPortException;
 
+@SuppressWarnings("unchecked")
 class FilebreakerSerialPortEventListener implements SerialPortEventListener {
+
+	private static final int BUFFER_SIZE = 4096;
+
+	private LDRReader ldrReader;
 	
-	private String ldrValueAggregated;
-	
-	private boolean isFileBroken;
+	private FileBrokenDetector detector;
 	
 	private SerialPort serialPort;
 	
-	private Integer ldrValue;
+	private Buffer fifo;
 	
 	public FilebreakerSerialPortEventListener(SerialPort serialPort){
-		this.ldrValueAggregated = "";
-		this.isFileBroken = false;
 		this.serialPort = serialPort;
-		this.ldrValue = 0;
+		
+		this.ldrReader = new LDRReader();
+		this.detector = new FileBrokenDetector();
+		
+		this.fifo = BufferUtils.synchronizedBuffer(new BoundedFifoBuffer(BUFFER_SIZE));
+		
+		Runnable readBufferRunnable = new Runnable(){
+			public void run() {
+				while(true){
+					if(fifo.size() > 0){
+						char signal = (Character)fifo.remove();
+						
+						detector.detect(signal);
+						
+						if(detector.isNotBroken()){
+							ldrReader.append(signal);
+						}
+					}
+				}
+			}
+		};
+		
+		new Thread(readBufferRunnable).start();
 	}
 	
 	public void serialEvent(SerialPortEvent serialPortEvent) {
 		if(!serialPortEvent.isRXCHAR()) return;
 		
 		try {
-			char receivedChar = readChar();
-			
-			isFileBroken = detectFileBrokenSignal(receivedChar);
-			readLdrValue(receivedChar);
+			for(byte b : readBuffer()){
+				fifo.add((char)b);
+			}
 		} catch (SerialPortException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public boolean isFileBroken(){
-		return isFileBroken;
+		return detector.isBroken();
 	}
 	
 	public Integer getLdrValue(){
-		return ldrValue;
+		return ldrReader.getValue();
 	}
 	
-	private void readLdrValue(char receivedChar) {
-		if(isFileBroken) return;
-		
-		if(detectLineFeedSignal(receivedChar)) {
-			ldrValue = new Integer(ldrValueAggregated);
-		    ldrValueAggregated = "";
-		} else {
-			ldrValueAggregated = new StringBuilder(ldrValueAggregated).append(receivedChar).toString();
-		}
-	}
-	
-	private char readChar() throws SerialPortException {
-		return (char)serialPort.readBytes(1)[0];
-	}
-	
-	private boolean detectLineFeedSignal(char receivedChar) {
-		return receivedChar == '\n';
-	}
-	
-	private boolean detectFileBrokenSignal(char receivedChar){
-		return Character.toLowerCase(receivedChar) == 'r';
+	private byte[] readBuffer() throws SerialPortException {
+		return serialPort.readBytes(serialPort.getInputBufferBytesCount());
 	}
 }

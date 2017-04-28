@@ -55,6 +55,6 @@ public class SampleExecutionTask {
 	     };
 	     
 	     Timer timer = new Timer();
-	     timer.scheduleAtFixedRate(timerTask, 0, 5);
+	     timer.scheduleAtFixedRate(timerTask, 0, 50);
 	}
 }
