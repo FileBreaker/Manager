@@ -16,15 +16,15 @@ $ ./mvnw package
 
 Or in Windows:
 
-``
+```
 mvnw.cmd package
-``
+```
 
 This will create an executable JAR under target/ folder called "manager-{version}-shaded.jar". Once the executable jar was created, to execute the project you should type the following:
 
 ```
 $ java -jar target/manager-{version}-shaded.jar
-``
+```
 
 ## Requirements
 
