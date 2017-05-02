@@ -1,34 +1,36 @@
 package com.filebreaker.view.frames.samples;
 
-import java.awt.Color;
-import java.awt.KeyEventDispatcher;
-import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.table.DefaultTableModel;
 
 import com.filebreaker.controllers.MainController;
 import com.filebreaker.samples.Sample;
 import com.filebreaker.samples.SamplesController;
 import com.filebreaker.view.frames.RefreshableFrame;
+import com.filebreaker.view.frames.components.ActualSpeedLabel;
+import com.filebreaker.view.frames.components.ChronometerLabel;
+import com.filebreaker.view.frames.components.EngineState;
+import com.filebreaker.view.frames.components.ExecutionTimeState;
+import com.filebreaker.view.frames.components.LdrState;
+import com.filebreaker.view.frames.components.LdrValueLabel;
+import com.filebreaker.view.frames.components.OscillationNumberLabel;
+import com.filebreaker.view.frames.components.SamplePropertiesTable;
+import com.filebreaker.view.frames.components.SampleState;
+import com.filebreaker.view.frames.components.SpeedDownButton;
+import com.filebreaker.view.frames.components.SpeedUpButton;
+import com.filebreaker.view.frames.components.StateLabel;
+import com.filebreaker.view.frames.components.SwitcherSlider;
 import com.filebreaker.view.i18n.I18n;
 import com.filebreaker.view.tasks.SampleExecutionTask;
-import com.filebreaker.view.utils.TimeUtils;
-
-import jssc.SerialPortException;
 
 public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame {
 
 	private static final long serialVersionUID = 8162818230491268811L;
 	
-	private SamplesController samplesController;
+	private SampleState sampleState;
 	
-	private MainController mainController;
+	private SamplesController samplesController;
 	
 	private javax.swing.JButton speedUpButton;
 	
@@ -44,7 +46,7 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
     
     private javax.swing.JLabel oscillationNumberLabel;
     
-    private javax.swing.JLabel stateLabel;
+    private StateLabel stateLabel;
     
     private javax.swing.JPanel executionPanel;
     
@@ -52,125 +54,59 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
     
     private javax.swing.JScrollPane scrollPane;
     
-    private javax.swing.JSlider switcherSlider;
+    private SwitcherSlider switcherSlider;
     
     private javax.swing.JTabbedPane executionTabbedPane;
     
-    private javax.swing.JTable propertiesTable;
-    
-    private Integer experimentId;
-    
-    private Integer sampleId;
+    private SamplePropertiesTable propertiesTable;
     
     private SampleExecutionTask task;
 
-	private Integer speedPercentage;
+	private Sample sample;
+
+	private ExecutionTimeState executionTimeState;
+
+	private LdrState ldrState;
+
+	private EngineState engineState;
 	
     public SampleJFrame(MainController mainController, SamplesController samplesController, Integer experimentId, Integer sampleId) {
-    	this.task = new SampleExecutionTask(this, samplesController, mainController, experimentId, sampleId);
-    	
-    	this.mainController = mainController;
     	this.samplesController = samplesController;
-        this.experimentId = experimentId;
-        this.sampleId = sampleId;
+        this.sample = samplesController.getSample(experimentId, sampleId);
         
-        this.speedPercentage = 0;
+        this.executionTimeState = new ExecutionTimeState(sample.getEngineAngularSpeed());
+        this.ldrState = new LdrState();
+        this.engineState = new EngineState(mainController, ldrState);
+        
+        this.sampleState = new SampleState(sample, mainController, executionTimeState, ldrState, engineState);
+        this.task = new SampleExecutionTask(samplesController, mainController, sampleState);
         
     	initComponents();
     }
 
 	private void initComponents() {
 		this.setResizable(false);
-		
-		Sample sample = samplesController.getSample(experimentId, sampleId);
+			
+		propertiesTable = new SamplePropertiesTable();
+		propertiesTable.setTableModel(sample);
 		
 		executionPanel = new javax.swing.JPanel();
         executionTabbedPane = new javax.swing.JTabbedPane();
         
-        oscillationNumberLabel = new javax.swing.JLabel();
-        actualSpeedLabel = new javax.swing.JLabel();
-        chronometerLabel = new javax.swing.JLabel();
-        ldrValueLabel = new javax.swing.JLabel();
-        stateLabel = new javax.swing.JLabel();
-        switcherSlider = new javax.swing.JSlider();
+        oscillationNumberLabel = new OscillationNumberLabel(executionTimeState);
+        chronometerLabel = new ChronometerLabel(executionTimeState);
+        ldrValueLabel = new LdrValueLabel(ldrState);
+        stateLabel = new StateLabel(engineState);
+        switcherSlider = new SwitcherSlider(engineState);
+        speedUpButton = new SpeedUpButton(engineState);
+        speedDownButton = new SpeedDownButton(engineState);
+        actualSpeedLabel = new ActualSpeedLabel(engineState);
         sampleDataPanel = new javax.swing.JPanel();
         scrollPane = new javax.swing.JScrollPane();
-        propertiesTable = new javax.swing.JTable();
         
-        editButton = new javax.swing.JButton();
-        
-        speedDownButton = new javax.swing.JButton();
-        speedUpButton = new javax.swing.JButton();
+        editButton = new javax.swing.JButton(); 
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        
-        oscillationNumberLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        oscillationNumberLabel.setText(sample.getOscillations() + " " + I18n.getInstance().getString("sample.oscillations"));
-
-        actualSpeedLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        actualSpeedLabel.setText(I18n.getInstance().getString("speed.actual") + " " + speedPercentage + "%");
-        
-        chronometerLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        chronometerLabel.setText(TimeUtils.getDuration(sample.getDurationMillis()));
-        
-        ldrValueLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        ldrValueLabel.setText(I18n.getInstance().getString("ldr.value") + " " + 0);
-
-        stateLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        stateLabel.setText(I18n.getInstance().getString("sample.off"));
-        stateLabel.setForeground(Color.RED);
-
-        switcherSlider.setValue(0);
-        switcherSlider.setMinimum(0);
-        switcherSlider.setMaximum(1);
-        switcherSlider.setMajorTickSpacing(1);
-        switcherSlider.setMinorTickSpacing(1);
-        switcherSlider.setSnapToTicks(true);
-        switcherSlider.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent evt) {
-				javax.swing.JSlider source = (javax.swing.JSlider)evt.getSource();
-			    
-				if (!source.getValueIsAdjusting()) {
-					int value = source.getValue();
-					
-					if(value == 0){
-						stateLabel.setText(I18n.getInstance().getString("sample.off"));
-						stateLabel.setForeground(Color.RED);
-					} else if(value == 1){
-						stateLabel.setText(I18n.getInstance().getString("sample.on"));
-						stateLabel.setForeground(Color.GREEN);
-						
-						task.execute();
-					}
-			    }
-			}
-		});
-        
-        speedUpButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/speed-up.png"))); // NOI18N
-        speedUpButton.setText(I18n.getInstance().getString("speed.up"));
-        speedUpButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                try {
-					speedUpActionPerformed();
-				} catch (SerialPortException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-            }
-        });
-        
-        speedDownButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/speed-down.png"))); // NOI18N
-        speedDownButton.setText(I18n.getInstance().getString("speed.down"));
-        speedDownButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	try {
-					speedDownActionPerformed();
-				} catch (SerialPortException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-            }
-        });
         
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(executionPanel);
         executionPanel.setLayout(jPanel1Layout);
@@ -228,7 +164,6 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
 
         executionTabbedPane.addTab(I18n.getInstance().getString("sample.execution"), executionPanel);
 
-        propertiesTable.setModel(getTableModel());
         scrollPane.setViewportView(propertiesTable);
 
         editButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/interface_dialog.gif"))); // NOI18N
@@ -273,133 +208,20 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
             .add(org.jdesktop.layout.GroupLayout.TRAILING, executionTabbedPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 305, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
         );
 
+        task.execute();
         pack();
     }
 	
 	protected void editButtonActionPerformed(ActionEvent evt) {
-		JFrame sampleEditorJFrame = new SampleEditorJFrame(samplesController, experimentId, sampleId, this);
+		JFrame sampleEditorJFrame = new SampleEditorJFrame(samplesController, sample.getExperimentId(), sample.getId(), this);
 		sampleEditorJFrame.setVisible(true);
 	}
-	
-	protected void speedUpActionPerformed() throws SerialPortException {
-		if(speedPercentage >= 100) return;
-		speedPercentage+=10;
-		mainController.setSpeed(speedPercentage);
-        actualSpeedLabel.setText(I18n.getInstance().getString("speed.actual") + " " + speedPercentage + "%");
-	}
-	
-	protected void speedDownActionPerformed() throws SerialPortException {
-		if(speedPercentage <= 0) return;
-		speedPercentage-=10;
-		mainController.setSpeed(speedPercentage);
-        actualSpeedLabel.setText(I18n.getInstance().getString("speed.actual") + " " + speedPercentage + "%");
-	}
-
-	private DefaultTableModel getTableModel() {
-    	Sample sample = samplesController.getSample(experimentId, sampleId);
-		
-    	return new DefaultTableModel(
-            getModel(sample),
-            new String [] {
-                I18n.getInstance().getString("sample.property"), 
-                I18n.getInstance().getString("sample.value")
-            }
-        );
-	}
-    
-    private Object[][] getModel(Sample sample){
-    	Object [][] result = null;
-		
-		if(sample != null){
-			result = new Object[22][2];
-		
-			result[0][0] = I18n.getInstance().getString("sample.editor.id");
-			result[0][1] = sample.getId();
-			
-			result[1][0] = I18n.getInstance().getString("sample.oscillations");
-			result[1][1] = sample.getOscillations();
-			
-			result[2][0] = I18n.getInstance().getString("sample.editor.helix.angle");
-			result[2][1] = sample.getHelixAngle();
-			
-			result[3][0] = I18n.getInstance().getString("sample.editor.distance.turns");
-			result[3][1] = sample.getDistanceBetweenTurns();
-			
-			result[4][0] = I18n.getInstance().getString("sample.duration");
-			result[4][1] = TimeUtils.getDuration(sample.getDurationMillis());
-			
-			result[5][0] = I18n.getInstance().getString("sample.editor.apical.diameter");
-			result[5][1] = sample.getApicalDiameter();
-			
-			result[6][0] = I18n.getInstance().getString("sample.editor.curve.angle");
-			result[6][1] = sample.getCurvatureAngle();
-			
-			result[7][0] = I18n.getInstance().getString("sample.editor.curve.radius");
-			result[7][1] = sample.getCurvatureRadius();
-			
-			result[8][0] = I18n.getInstance().getString("sample.editor.duct.speed");
-			result[8][1] = sample.getDuctSpeed();
-			
-			result[9][0] = I18n.getInstance().getString("sample.editor.engine.angular.speed");
-			result[9][1] = sample.getEngineAngularSpeed();
-			
-			result[10][0] = I18n.getInstance().getString("sample.editor.engine.torque");
-			result[10][1] = sample.getEngineTorque();
-			
-			result[11][0] = I18n.getInstance().getString("experiments.identifier");
-			result[11][1] = sample.getExperimentId();
-			
-			result[12][0] = I18n.getInstance().getString("sample.editor.file.type");
-			result[12][1] = sample.getFileType();
-			
-			result[13][0] = I18n.getInstance().getString("sample.editor.identifier");
-			result[13][1] = sample.getId();
-			
-			result[14][0] = I18n.getInstance().getString("sample.editor.file.alloy");
-			result[14][1] = sample.getMetalCompositionId();
-			
-			result[15][0] = I18n.getInstance().getString("sample.modification");
-			result[15][1] = sample.getModificationDate();
-			
-			result[16][0] = I18n.getInstance().getString("sample.editor.movement.type");
-			result[16][1] = sample.getMovementTypeId();
-			
-			result[17][0] = I18n.getInstance().getString("sample.editor.study.type");
-			result[17][1] = sample.getStudyTypeId();
-			
-			result[18][0] = I18n.getInstance().getString("sample.editor.study.group");
-			result[18][1] = sample.getStudyGroup();
-			
-			result[19][0] = I18n.getInstance().getString("sample.editor.use.number");
-			result[19][1] = sample.getUses();
-			
-			result[20][0] = I18n.getInstance().getString("sample.editor.coning");
-			result[20][1] = sample.getConicity();
-			
-			result[21][0] = I18n.getInstance().getString("sample.editor.section");
-			result[21][1] = sample.getSection();
-		}
-		
-		return result;
-    }
 
 	public void refresh() {
-		propertiesTable.setModel(getTableModel());
+		propertiesTable.setTableModel(samplesController.getSample(sample.getExperimentId(), sample.getId()));
 	}
 
-	public javax.swing.JSlider getSwitcherSlider() {
+	public SwitcherSlider getSwitcherSlider() {
 		return switcherSlider;
-	}
-
-	public void setSwitcherSlider(javax.swing.JSlider switcherSlider) {
-		this.switcherSlider = switcherSlider;
-	}
-	
-	public void setTimeToChronometerLabel(String time){
-		chronometerLabel.setText(time);
-	}
-
-	public void setLdrValue(String ldrValue) {
-		ldrValueLabel.setText(I18n.getInstance().getString("ldr.value") + " " + ldrValue);
 	}
 }

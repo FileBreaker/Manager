@@ -24,12 +24,12 @@ public class MainController {
 	public Integer getLdrValue(){
 		return serialConnectionManager.getLdrValue();
 	}
-	
-	public int getOscillations() {
-		return 0;
-	}
 
-	public void setSpeed(int speedPercentage) throws SerialPortException{
-		serialConnectionManager.setSpeed(speedPercentage);
+	public void setSpeed(int speedPercentage) {
+		try {
+			serialConnectionManager.setSpeed(speedPercentage);
+		} catch (SerialPortException e) {
+			e.printStackTrace();
+		}
 	}
 }
