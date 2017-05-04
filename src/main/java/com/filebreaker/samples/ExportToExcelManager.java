@@ -111,9 +111,9 @@ public class ExportToExcelManager {
 			engineTorqueTitleCell.setCellStyle(cellStyle);
 			experimentSheet.autoSizeColumn(0);
 			
-			Cell ductSpeedTitleCell = sampleRow.createCell(11);
-			ductSpeedTitleCell.setCellValue(sample.getDuctSpeed());
-			ductSpeedTitleCell.setCellStyle(cellStyle);
+			Cell rootCanalSpeedTitleCell = sampleRow.createCell(11);
+			rootCanalSpeedTitleCell.setCellValue(sample.getRootCanalSpeed());
+			rootCanalSpeedTitleCell.setCellStyle(cellStyle);
 			experimentSheet.autoSizeColumn(0);
 			
 			Cell movementTypeTitleCell = sampleRow.createCell(12);
@@ -236,9 +236,9 @@ public class ExportToExcelManager {
 		engineTorqueTitleCell.setCellStyle(cellStyle);
 		experimentSheet.autoSizeColumn(0);
 		
-		Cell ductSpeedTitleCell = titleRow.createCell(11);
-		ductSpeedTitleCell.setCellValue("Velocidad del conducto");
-		ductSpeedTitleCell.setCellStyle(cellStyle);
+		Cell rootCanalSpeedTitleCell = titleRow.createCell(11);
+		rootCanalSpeedTitleCell.setCellValue("Velocidad del conducto");
+		rootCanalSpeedTitleCell.setCellStyle(cellStyle);
 		experimentSheet.autoSizeColumn(0);
 		
 		Cell movementTypeTitleCell = titleRow.createCell(12);

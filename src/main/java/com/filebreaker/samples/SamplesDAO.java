@@ -45,7 +45,7 @@ public class SamplesDAO {
 																				"SECTION, " +
 																				"ENGINE_ANGULAR_SPEED, " +
 																				"ENGINE_TORQUE, " +
-																				"DUCT_SPEED, " +
+																				"ROOT_CANAL_SPEED, " +
 																				"MOVEMENT_TYPE_ID, " +
 																				"STUDY_TYPE_ID, " +
 																				"STUDY_GROUP, " +
@@ -68,7 +68,7 @@ public class SamplesDAO {
 			setNullSafeValue(prep, 11, sample.getSection(), java.sql.Types.DECIMAL);
 			setNullSafeValue(prep, 12, sample.getEngineAngularSpeed(), java.sql.Types.INTEGER);
 			setNullSafeValue(prep, 13, sample.getEngineTorque(), java.sql.Types.DECIMAL);
-			setNullSafeValue(prep, 14, sample.getDuctSpeed(), java.sql.Types.INTEGER);
+			setNullSafeValue(prep, 14, sample.getRootCanalSpeed(), java.sql.Types.INTEGER);
 			setNullSafeValue(prep, 15, sample.getMovementTypeId(), java.sql.Types.INTEGER);
 			setNullSafeValue(prep, 16, sample.getStudyTypeId(), java.sql.Types.INTEGER);
 			setNullSafeValue(prep, 17, sample.getStudyGroup(), java.sql.Types.VARCHAR);
@@ -187,7 +187,7 @@ public class SamplesDAO {
 					"SECTION=?, " + 
 					"ENGINE_ANGULAR_SPEED=?, " +
 					"ENGINE_TORQUE=?, " +
-					"DUCT_SPEED=?, " +
+					"ROOT_CANAL_SPEED=?, " +
 					"MOVEMENT_TYPE_ID=?, " +
 					"STUDY_TYPE_ID=?, " +
 					"STUDY_GROUP=?, " +
@@ -209,7 +209,7 @@ public class SamplesDAO {
 			prep.setBigDecimal(10, sample.getSection());
 			prep.setInt(11, sample.getEngineAngularSpeed());
 			prep.setBigDecimal(12, sample.getEngineTorque());
-			prep.setInt(13, sample.getDuctSpeed());
+			prep.setInt(13, sample.getRootCanalSpeed());
 			prep.setInt(14, sample.getMovementTypeId());
 			prep.setInt(15, sample.getStudyTypeId());
 			prep.setString(16, sample.getStudyGroup());
@@ -271,7 +271,7 @@ public class SamplesDAO {
 		sample.setCreationDate(rs.getDate("CREATION_DATE"));
 		sample.setCurvatureAngle(rs.getInt("CURVATURE_ANGLE"));
 		sample.setCurvatureRadius(rs.getInt("CURVATURE_RADIUS"));
-		sample.setDuctSpeed(rs.getInt("DUCT_SPEED"));
+		sample.setRootCanalSpeed(rs.getInt("ROOT_CANAL_SPEED"));
 		sample.setEngineAngularSpeed(rs.getInt("ENGINE_ANGULAR_SPEED"));
 		sample.setEngineTorque(rs.getBigDecimal("ENGINE_TORQUE"));
 		sample.setExperimentId(rs.getInt("EXPERIMENT_ID"));
@@ -304,7 +304,7 @@ public class SamplesDAO {
 				ps.setInt(index, (Integer) value);
 				break;
 			case java.sql.Types.DECIMAL:
-				ps.setBigDecimal(index, (BigDecimal)value);
+				ps.setBigDecimal(index, (BigDecimal) value);
 				break;
 			case java.sql.Types.VARCHAR:
 				ps.setString(index, (String) value);

@@ -49,8 +49,8 @@ public class SamplePropertiesTable extends JTable {
 		result[7][0] = I18n.getInstance().getString("sample.editor.curve.radius");
 		result[7][1] = sample.getCurvatureRadius();
 		
-		result[8][0] = I18n.getInstance().getString("sample.editor.duct.speed");
-		result[8][1] = sample.getDuctSpeed();
+		result[8][0] = I18n.getInstance().getString("sample.editor.root.canal.speed");
+		result[8][1] = sample.getRootCanalSpeed();
 		
 		result[9][0] = I18n.getInstance().getString("sample.editor.engine.angular.speed");
 		result[9][1] = sample.getEngineAngularSpeed();

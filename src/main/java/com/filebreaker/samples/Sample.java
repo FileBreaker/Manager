@@ -27,7 +27,7 @@ public class Sample {
 	
 	private BigDecimal engineTorque;
 	
-	private Integer ductSpeed;
+	private Integer rootCanalSpeed;
 	
 	private Integer movementTypeId;
 	
@@ -163,12 +163,12 @@ public class Sample {
 		this.studyGroup = studyGroup;
 	}
 
-	public Integer getDuctSpeed() {
-		return ductSpeed;
+	public Integer getRootCanalSpeed() {
+		return rootCanalSpeed;
 	}
 
-	public void setDuctSpeed(Integer ductSpeed) {
-		this.ductSpeed = ductSpeed;
+	public void setRootCanalSpeed(Integer rootCanalSpeed) {
+		this.rootCanalSpeed = rootCanalSpeed;
 	}
 
 	public Integer getExperimentId() {
