@@ -72,7 +72,11 @@ public class ExperimentsManager {
 	}
 
 	public void updateSample(Sample sample) {
+		Sample oldSample = findSample(sample.getExperimentId(), sample.getId());
+		sample.setDurationMillis(oldSample.getDurationMillis());
+		sample.setOscillations(oldSample.getOscillations());
 		sample.setModificationDate(new Date());
+		
 		samplesDAO.updateSample(sample);
 	}
 

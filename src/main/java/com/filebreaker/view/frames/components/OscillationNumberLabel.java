@@ -13,6 +13,7 @@ public class OscillationNumberLabel extends JLabel implements ExecutionTimeListe
 	public OscillationNumberLabel(ExecutionTimeState executionTimeState){
 		this.executionTimeState = executionTimeState;
 		this.executionTimeState.attach(this);
+		this.setOscillations(executionTimeState.getOscillations());
 		
 		initGUI();
 	}
@@ -27,6 +28,5 @@ public class OscillationNumberLabel extends JLabel implements ExecutionTimeListe
 	
 	private void initGUI() {
 		setFont(new java.awt.Font("Lucida Grande", 0, 24));
-		setOscillations(0);
 	}
 }

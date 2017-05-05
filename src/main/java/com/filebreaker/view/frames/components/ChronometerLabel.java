@@ -13,7 +13,7 @@ public class ChronometerLabel extends JLabel implements ExecutionTimeListener {
 	public ChronometerLabel(ExecutionTimeState executionTimeState) {
 		this.executionTimeState = executionTimeState;
 		this.executionTimeState.attach(this);
-		
+
 		initGUI();
 	}
 

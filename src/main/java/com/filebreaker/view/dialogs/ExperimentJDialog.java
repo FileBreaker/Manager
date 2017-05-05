@@ -2,7 +2,12 @@ package com.filebreaker.view.dialogs;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
 
 import com.filebreaker.experiments.Experiment;
 import com.filebreaker.experiments.ExperimentsController;
@@ -15,19 +20,19 @@ public class ExperimentJDialog extends javax.swing.JDialog {
 	
 	private Experiment experiment;
 
-	private javax.swing.JButton saveExperimentButton;
+	private JButton saveExperimentButton;
     
-	private javax.swing.JButton cancelButton;
+	private JButton cancelButton;
     
-    private javax.swing.JLabel titleLabel;
+    private JLabel titleLabel;
     
-    private javax.swing.JLabel experimentLabel;
+    private JLabel experimentLabel;
     
-    private javax.swing.JLabel sampleNumberLabel;
+    private JLabel sampleNumberLabel;
     
-    private javax.swing.JSpinner sampleNumberSpinner;
+    private JSpinner sampleNumberSpinner;
     
-    private javax.swing.JTextField experimentNameTextField;
+    private JTextField experimentNameTextField;
     
     private ExperimentsController experimentsController;
     
@@ -69,13 +74,13 @@ public class ExperimentJDialog extends javax.swing.JDialog {
     	
     	this.setResizable(false);
     	
-        titleLabel = new javax.swing.JLabel();
-        experimentLabel = new javax.swing.JLabel();
-        sampleNumberLabel = new javax.swing.JLabel();
-        experimentNameTextField = new javax.swing.JTextField();
-        sampleNumberSpinner = new javax.swing.JSpinner();
-        saveExperimentButton = new javax.swing.JButton();
-        cancelButton = new javax.swing.JButton();
+        titleLabel = new JLabel();
+        experimentLabel = new JLabel();
+        sampleNumberLabel = new JLabel();
+        experimentNameTextField = new JTextField();
+        sampleNumberSpinner = new JSpinner();
+        saveExperimentButton = new JButton();
+        cancelButton = new JButton();
 
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
@@ -87,7 +92,7 @@ public class ExperimentJDialog extends javax.swing.JDialog {
         
         experimentNameTextField.setText("");
         
-        saveExperimentButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/note_new.gif")));
+        saveExperimentButton.setIcon(new ImageIcon(getClass().getResource("/note_new.gif")));
         saveExperimentButton.setText(I18n.getInstance().getString("new.experiment.save"));
         saveExperimentButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -95,7 +100,7 @@ public class ExperimentJDialog extends javax.swing.JDialog {
             }
         });
 
-        cancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/note_delete.gif")));
+        cancelButton.setIcon(new ImageIcon(getClass().getResource("/note_delete.gif")));
         cancelButton.setText(I18n.getInstance().getString("new.experiment.cancel"));
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

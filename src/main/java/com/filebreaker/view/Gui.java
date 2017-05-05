@@ -3,21 +3,21 @@ package com.filebreaker.view;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;
 
-import com.filebreaker.controllers.MainController;
+import com.filebreaker.communications.SerialConnection;
 import com.filebreaker.experiments.ExperimentsController;
 import com.filebreaker.samples.SamplesController;
 import com.filebreaker.view.frames.experiments.ExperimentsFrameView;
 
 public class Gui extends SingleFrameApplication {
     
-	private MainController mainController;
+	private SerialConnection serialConnection;
 	
 	private SamplesController samplesController;
 	
 	private ExperimentsController experimentsController;
 	
-	public void startup(MainController mainController, SamplesController samplesController, ExperimentsController experimentsController){
-		this.mainController = mainController;
+	public void startup(SerialConnection serialConnection, SamplesController samplesController, ExperimentsController experimentsController){
+		this.serialConnection = serialConnection;
 		this.samplesController = samplesController;
 		this.experimentsController = experimentsController;
 		
@@ -30,7 +30,7 @@ public class Gui extends SingleFrameApplication {
     
 	@Override
 	public void startup() {
-        show(new ExperimentsFrameView(this, experimentsController, mainController, samplesController));
+        show(new ExperimentsFrameView(this, experimentsController, serialConnection, samplesController));
     }
     
     @Override

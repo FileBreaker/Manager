@@ -11,12 +11,9 @@ class FileBrokenDetector {
 	}
 	
 	public boolean detect(char signal){
-		if(isFileBroken) return true;
-		
-		isFileBroken = Character.toLowerCase(signal) == FILE_BROKEN_SIGNAL_CHAR;
-		return isFileBroken;
+		return isFileBroken = isFileBroken || isFileBrokenSignal(signal);
 	}
-	
+
 	public boolean isBroken(){
 		return isFileBroken;
 	}
@@ -24,4 +21,9 @@ class FileBrokenDetector {
 	public boolean isNotBroken(){
 		return !isFileBroken;
 	}
+	
+	private boolean isFileBrokenSignal(char signal) {
+		return Character.toLowerCase(signal) == FILE_BROKEN_SIGNAL_CHAR;
+	}
+
 }

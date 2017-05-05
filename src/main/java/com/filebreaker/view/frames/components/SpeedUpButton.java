@@ -1,5 +1,6 @@
 package com.filebreaker.view.frames.components;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import com.filebreaker.view.i18n.I18n;
@@ -18,7 +19,7 @@ public class SpeedUpButton extends JButton implements EngineStateListener {
 	}
 
 	private void initGUI() {
-		setIcon(new javax.swing.ImageIcon(getClass().getResource("/speed-up.png")));
+		setIcon(new ImageIcon(getClass().getResource("/speed-up.png")));
         setText(I18n.getInstance().getString("speed.up"));
         addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -3,7 +3,7 @@ package com.filebreaker.view.frames.components;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.filebreaker.controllers.MainController;
+import com.filebreaker.communications.SerialConnection;
 import com.filebreaker.view.frames.components.EngineSpeeds.EngineSpeedValue;
 
 public class EngineState implements LdrStateListener {
@@ -12,12 +12,12 @@ public class EngineState implements LdrStateListener {
 	
 	private EngineSpeedValue engineSpeed;
 	
-	private MainController mainController;
+	private SerialConnection serialConnection;
 	
 	private LdrState ldrState;
 	
-	public EngineState(MainController mainController, LdrState ldrState){
-		this.mainController = mainController;
+	public EngineState(SerialConnection serialConnection, LdrState ldrState){
+		this.serialConnection = serialConnection;
 		
 		this.ldrState = ldrState;
 		ldrState.attach(this);
@@ -67,7 +67,7 @@ public class EngineState implements LdrStateListener {
 			observer.updateSpeed();
 		}
 		
-		mainController.setSpeed(engineSpeed.getSpeedPercentage());
+		serialConnection.setSpeed(engineSpeed.getSpeedPercentage());
 	}
 
 	private void setSpeed(EngineSpeedValue engineSpeed){

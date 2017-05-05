@@ -3,7 +3,14 @@ package com.filebreaker.view.frames.samples;
 import java.awt.event.ActionEvent;
 import java.math.BigDecimal;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import com.filebreaker.samples.Sample;
@@ -16,77 +23,77 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = 6157009534536579567L;
 	
-	private javax.swing.JButton saveButton;
+	private JButton saveButton;
     
-	private javax.swing.JButton cancelButton;
+	private JButton cancelButton;
     
-	private javax.swing.JComboBox<String> fileMetalCompositionComboBox;
+	private JComboBox<String> fileMetalCompositionComboBox;
     
-	private javax.swing.JComboBox<String> studyTypeComboBox;
+	private JComboBox<String> studyTypeComboBox;
     
-	private javax.swing.JComboBox<String> movementTypeComboBox;
+	private JComboBox<String> movementTypeComboBox;
     
-	private javax.swing.JLabel helixAngleLabel;
+	private JLabel helixAngleLabel;
 	
-	private javax.swing.JLabel distanceBetweenTurnsLabel;
+	private JLabel distanceBetweenTurnsLabel;
 	
-	private javax.swing.JLabel angleCurveLabel;
+	private JLabel angleCurveLabel;
     
-	private javax.swing.JLabel movementTypeLabel;
+	private JLabel movementTypeLabel;
     
-	private javax.swing.JLabel rootCanalSpeedLabel;
+	private JLabel rootCanalSpeedLabel;
     
-	private javax.swing.JLabel fileMetalCompositionLabel;
+	private JLabel fileMetalCompositionLabel;
     
-	private javax.swing.JLabel studyTypeLabel;
+	private JLabel studyTypeLabel;
 	
-	private javax.swing.JLabel studyGroupLabel;
+	private JLabel studyGroupLabel;
     
-	private javax.swing.JLabel radiusCurveLabel;
+	private JLabel radiusCurveLabel;
     
-	private javax.swing.JLabel useNumberLabel;
+	private JLabel useNumberLabel;
     
-	private javax.swing.JLabel esterilizationNumberLabel;
+	private JLabel esterilizationNumberLabel;
     
-	private javax.swing.JLabel sectionLabel;
+	private JLabel sectionLabel;
 	
-	private javax.swing.JLabel fileTypeLabel;
+	private JLabel fileTypeLabel;
     
-	private javax.swing.JLabel conicityLabel;
+	private JLabel conicityLabel;
     
-	private javax.swing.JLabel apicalDiameterLabel;
+	private JLabel apicalDiameterLabel;
     
-	private javax.swing.JLabel angularSpeedLabel;
+	private JLabel angularSpeedLabel;
     
-	private javax.swing.JLabel engineTorqueLabel;
+	private JLabel engineTorqueLabel;
 	
-	private javax.swing.JSpinner helixAngleSpinner;
+	private JSpinner helixAngleSpinner;
 	
-	private javax.swing.JSpinner distanceBetweenTurnsSpinner;
+	private JSpinner distanceBetweenTurnsSpinner;
     
-	private javax.swing.JSpinner angleCurveSpinner;
+	private JSpinner angleCurveSpinner;
     
-	private javax.swing.JSpinner rootCanalSpeedSpinner;
+	private JSpinner rootCanalSpeedSpinner;
     
-	private javax.swing.JSpinner radiusCurveSpinner;
+	private JSpinner radiusCurveSpinner;
     
-	private javax.swing.JSpinner useNumberSpinner;
+	private JSpinner useNumberSpinner;
     
-	private javax.swing.JSpinner esterilizationNumberSpinner;
+	private JSpinner esterilizationNumberSpinner;
     
-	private javax.swing.JSpinner conicitySpinner;
+	private JSpinner conicitySpinner;
     
-	private javax.swing.JSpinner apicalDiameterSpinner;
+	private JSpinner apicalDiameterSpinner;
     
-	private javax.swing.JSpinner angularSpeedSpinner;
+	private JSpinner angularSpeedSpinner;
     
-	private javax.swing.JSpinner engineTorqueSpinner;
+	private JSpinner engineTorqueSpinner;
 	
-	private javax.swing.JSpinner sectionSpinner;
+	private JSpinner sectionSpinner;
     
-	private javax.swing.JTextField fileTypeTextField;
+	private JTextField fileTypeTextField;
 	
-	private javax.swing.JTextField studyGroupTextField;
+	private JTextField studyGroupTextField;
 	
 	private SamplesController samplesController;
 	
@@ -116,39 +123,39 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
 
 		this.setResizable(false);
 		
-		helixAngleLabel = new javax.swing.JLabel();
-		distanceBetweenTurnsLabel = new javax.swing.JLabel();
-        angleCurveLabel = new javax.swing.JLabel();
-        radiusCurveLabel = new javax.swing.JLabel();
-        useNumberLabel = new javax.swing.JLabel();
-        esterilizationNumberLabel = new javax.swing.JLabel();
-        sectionLabel = new javax.swing.JLabel();
-        fileTypeLabel = new javax.swing.JLabel();
-        conicityLabel = new javax.swing.JLabel();
-        apicalDiameterLabel = new javax.swing.JLabel();
-        angularSpeedLabel = new javax.swing.JLabel();
-        engineTorqueLabel = new javax.swing.JLabel();
-        movementTypeLabel = new javax.swing.JLabel();
-        rootCanalSpeedLabel = new javax.swing.JLabel();
-        fileMetalCompositionLabel = new javax.swing.JLabel();
-        studyTypeLabel = new javax.swing.JLabel();
-        studyGroupLabel = new javax.swing.JLabel();
+		helixAngleLabel = new JLabel();
+		distanceBetweenTurnsLabel = new JLabel();
+        angleCurveLabel = new JLabel();
+        radiusCurveLabel = new JLabel();
+        useNumberLabel = new JLabel();
+        esterilizationNumberLabel = new JLabel();
+        sectionLabel = new JLabel();
+        fileTypeLabel = new JLabel();
+        conicityLabel = new JLabel();
+        apicalDiameterLabel = new JLabel();
+        angularSpeedLabel = new JLabel();
+        engineTorqueLabel = new JLabel();
+        movementTypeLabel = new JLabel();
+        rootCanalSpeedLabel = new JLabel();
+        fileMetalCompositionLabel = new JLabel();
+        studyTypeLabel = new JLabel();
+        studyGroupLabel = new JLabel();
         
-        saveButton = new javax.swing.JButton();
-        cancelButton = new javax.swing.JButton();
+        saveButton = new JButton();
+        cancelButton = new JButton();
         helixAngleSpinner = new SampleEditorSpinner();
         distanceBetweenTurnsSpinner = new SampleEditorSpinner();
         angleCurveSpinner = new SampleEditorSpinner();
         radiusCurveSpinner = new SampleEditorSpinner();
         useNumberSpinner = new SampleEditorSpinner();
         esterilizationNumberSpinner = new SampleEditorSpinner();
-        fileTypeTextField = new javax.swing.JTextField();
-        studyGroupTextField = new javax.swing.JTextField();
+        fileTypeTextField = new JTextField();
+        studyGroupTextField = new JTextField();
         angularSpeedSpinner = new SampleEditorSpinner();
         rootCanalSpeedSpinner = new SampleEditorSpinner();
-        movementTypeComboBox = new javax.swing.JComboBox<String>();
-        fileMetalCompositionComboBox = new javax.swing.JComboBox<String>();
-        studyTypeComboBox = new javax.swing.JComboBox<String>();
+        movementTypeComboBox = new JComboBox<String>();
+        fileMetalCompositionComboBox = new JComboBox<String>();
+        studyTypeComboBox = new JComboBox<String>();
         
         // spinners with double values
         SpinnerNumberModel snmApicalDiameter = new SpinnerNumberModel(0.0,0.0,99999.99,0.01);
@@ -186,19 +193,19 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
         fileTypeTextField.setText("");
         studyGroupTextField.setText("");
        
-        movementTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<String>(new String [] {
+        movementTypeComboBox.setModel(new DefaultComboBoxModel<String>(new String [] {
         		I18n.getInstance().getString("sample.editor.movement.type.continuous.rotational"), 
         		I18n.getInstance().getString("sample.editor.movement.type.reciprocating"
         )}));
-        fileMetalCompositionComboBox.setModel(new javax.swing.DefaultComboBoxModel<String>(new String[] { 
+        fileMetalCompositionComboBox.setModel(new DefaultComboBoxModel<String>(new String[] { 
         		I18n.getInstance().getString("sample.editor.file.alloy.niti")
         }));
-        studyTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<String>(new String[] { 
+        studyTypeComboBox.setModel(new DefaultComboBoxModel<String>(new String[] { 
         		I18n.getInstance().getString("sample.editor.study.type.static"), 
         		I18n.getInstance().getString("sample.editor.study.type.dynamic")
         }));
 
-        saveButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/page_tick.gif"))); // NOI18N
+        saveButton.setIcon(new ImageIcon(getClass().getResource("/page_tick.gif"))); // NOI18N
         saveButton.setText(I18n.getInstance().getString("sample.editor.save"));
         saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -206,7 +213,7 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
             }
         });
 
-        cancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/page_text_delete.gif"))); // NOI18N
+        cancelButton.setIcon(new ImageIcon(getClass().getResource("/page_text_delete.gif"))); // NOI18N
         cancelButton.setText(I18n.getInstance().getString("sample.editor.cancel"));
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

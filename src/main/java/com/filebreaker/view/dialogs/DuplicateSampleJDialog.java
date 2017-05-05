@@ -2,7 +2,11 @@ package com.filebreaker.view.dialogs;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JSpinner;
 
 import com.filebreaker.samples.SamplesController;
 import com.filebreaker.view.frames.samples.SamplesJFrame;
@@ -12,15 +16,15 @@ public class DuplicateSampleJDialog extends javax.swing.JDialog {
 
 	private static final long serialVersionUID = 8408082753995792194L;
 
-	private javax.swing.JLabel titleLabel;
+	private JLabel titleLabel;
 	
-	private javax.swing.JButton duplicateSampleButton;
+	private JButton duplicateSampleButton;
     
-	private javax.swing.JButton cancelButton;
+	private JButton cancelButton;
     
-    private javax.swing.JLabel sampleNumberLabel;
+    private JLabel sampleNumberLabel;
     
-    private javax.swing.JSpinner sampleNumberSpinner;
+    private JSpinner sampleNumberSpinner;
     
     private SamplesController samplesController;
     
@@ -55,11 +59,11 @@ public class DuplicateSampleJDialog extends javax.swing.JDialog {
     	
     	this.setResizable(false);
     	
-    	titleLabel = new javax.swing.JLabel();
-        sampleNumberLabel = new javax.swing.JLabel();
-        sampleNumberSpinner = new javax.swing.JSpinner();
-        duplicateSampleButton = new javax.swing.JButton();
-        cancelButton = new javax.swing.JButton();
+    	titleLabel = new JLabel();
+        sampleNumberLabel = new JLabel();
+        sampleNumberSpinner = new JSpinner();
+        duplicateSampleButton = new JButton();
+        cancelButton = new JButton();
 
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
@@ -68,7 +72,7 @@ public class DuplicateSampleJDialog extends javax.swing.JDialog {
 
         sampleNumberLabel.setText(I18n.getInstance().getString("duplicate.sample.number"));
         
-        duplicateSampleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/note_new.gif")));
+        duplicateSampleButton.setIcon(new ImageIcon(getClass().getResource("/note_new.gif")));
         duplicateSampleButton.setText(I18n.getInstance().getString("duplicate.sample.save"));
         duplicateSampleButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -76,7 +80,7 @@ public class DuplicateSampleJDialog extends javax.swing.JDialog {
             }
         });
 
-        cancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/note_delete.gif")));
+        cancelButton.setIcon(new ImageIcon(getClass().getResource("/note_delete.gif")));
         cancelButton.setText(I18n.getInstance().getString("duplicate.sample.cancel"));
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

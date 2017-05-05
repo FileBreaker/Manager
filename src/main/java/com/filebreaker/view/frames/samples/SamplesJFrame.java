@@ -11,13 +11,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import com.filebreaker.controllers.MainController;
+import com.filebreaker.communications.SerialConnection;
 import com.filebreaker.experiments.Experiment;
 import com.filebreaker.experiments.ExperimentsController;
 import com.filebreaker.samples.Sample;
@@ -36,32 +40,32 @@ public class SamplesJFrame extends javax.swing.JFrame implements RefreshableFram
 	
 	private SamplesController samplesController;
 	
-	private MainController mainController;
+	private SerialConnection serialConnection;
 
-    private javax.swing.JButton exportButton;
+    private JButton exportButton;
     
-    private javax.swing.JButton newButton;
+    private JButton newButton;
     
-    private javax.swing.JButton deleteButton;
+    private JButton deleteButton;
     
-    private javax.swing.JButton duplicateButton;
+    private JButton duplicateButton;
     
-    private javax.swing.JLabel sampleLabel;
+    private JLabel sampleLabel;
     
-    private javax.swing.JScrollPane scrollPane;
+    private JScrollPane scrollPane;
     
-    private javax.swing.JTable samplesTable; 
+    private JTable samplesTable; 
     
     private Integer experimentId;
     
     private JDialog duplicateSampleDialog;
 
-    public SamplesJFrame(MainController mainController, ExperimentsController experimentsController, SamplesController samplesController, Integer experimentId) {
+    public SamplesJFrame(SerialConnection serialConnection, ExperimentsController experimentsController, SamplesController samplesController, Integer experimentId) {
     	this.experimentId = experimentId;
     	
     	this.experimentsController = experimentsController;
     	this.samplesController = samplesController;
-    	this.mainController = mainController;
+    	this.serialConnection = serialConnection;
         
     	initComponents();   
     }
@@ -73,19 +77,19 @@ public class SamplesJFrame extends javax.swing.JFrame implements RefreshableFram
     	Experiment experiment = experimentsController.getExperiment(this.experimentId);
     	this.setTitle(I18n.getInstance().getString("samples.number") + " " + experiment.getName()); // NOI18N
     	
-        sampleLabel = new javax.swing.JLabel();
-        exportButton = new javax.swing.JButton();
-        scrollPane = new javax.swing.JScrollPane();
-        samplesTable = new javax.swing.JTable();
-        newButton = new javax.swing.JButton();
-        deleteButton = new javax.swing.JButton();
-        duplicateButton = new javax.swing.JButton();
+        sampleLabel = new JLabel();
+        exportButton = new JButton();
+        scrollPane = new JScrollPane();
+        samplesTable = new JTable();
+        newButton = new JButton();
+        deleteButton = new JButton();
+        duplicateButton = new JButton();
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         sampleLabel.setText(I18n.getInstance().getString("samples.title"));
 
-        exportButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/page_down.gif"))); // NOI18N
+        exportButton.setIcon(new ImageIcon(getClass().getResource("/page_down.gif"))); // NOI18N
         exportButton.setText(I18n.getInstance().getString("samples.export"));
         exportButton.setEnabled(false);
         exportButton.addActionListener(new java.awt.event.ActionListener() {
@@ -110,7 +114,7 @@ public class SamplesJFrame extends javax.swing.JFrame implements RefreshableFram
         				IdentifiedTableModel tableModel = (IdentifiedTableModel)target.getModel();
         				Map<String, Object> composedSampleId = (Map<String, Object>) tableModel.getModelId(row);
                 	
-        				JFrame sampleJFrame = new SampleJFrame(mainController, samplesController, experimentId, (Integer)composedSampleId.get("sampleId"));
+        				JFrame sampleJFrame = new SampleJFrame(serialConnection, samplesController, experimentId, (Integer)composedSampleId.get("sampleId"));
         				sampleJFrame.setVisible(true);
         			}
         		}
@@ -119,7 +123,7 @@ public class SamplesJFrame extends javax.swing.JFrame implements RefreshableFram
         
         scrollPane.setViewportView(samplesTable);
 
-        newButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/note_new.gif"))); // NOI18N
+        newButton.setIcon(new ImageIcon(getClass().getResource("/note_new.gif"))); // NOI18N
         newButton.setText(I18n.getInstance().getString("samples.new"));
         newButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -127,7 +131,7 @@ public class SamplesJFrame extends javax.swing.JFrame implements RefreshableFram
             }
         });
 
-        deleteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/note_delete.gif"))); // NOI18N
+        deleteButton.setIcon(new ImageIcon(getClass().getResource("/note_delete.gif"))); // NOI18N
         deleteButton.setText(I18n.getInstance().getString("samples.delete"));
         deleteButton.setEnabled(false);
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
@@ -136,7 +140,7 @@ public class SamplesJFrame extends javax.swing.JFrame implements RefreshableFram
             }
         });
         
-        duplicateButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/note_new.gif"))); // NOI18N
+        duplicateButton.setIcon(new ImageIcon(getClass().getResource("/note_new.gif"))); // NOI18N
         duplicateButton.setText(I18n.getInstance().getString("samples.duplicate"));
         duplicateButton.setEnabled(false);
         duplicateButton.addActionListener(new java.awt.event.ActionListener() {

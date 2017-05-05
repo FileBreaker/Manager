@@ -18,6 +18,7 @@ public class LdrState {
 	
 	public void setIsFileBroken(boolean isFileBroken){
 		this.isFileBroken = isFileBroken;
+		notifyAllObservers();
 	}
 	
 	public boolean isFileBroken(){

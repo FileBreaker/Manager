@@ -24,13 +24,11 @@ public class SamplesController {
 	}
 	
 	public List<Sample> getSamples(Integer experimentId){
-		List<Sample> samples = experimentsManager.findSamples(experimentId);
-		return samples;
+		return experimentsManager.findSamples(experimentId);
 	}
 	
 	public Sample getSample(Integer experimentId, Integer sampleId){
-		Sample sample = experimentsManager.findSample(experimentId, sampleId);
-		return sample;
+		return experimentsManager.findSample(experimentId, sampleId);
 	}
 	
 	public void createSample(Sample sample) {

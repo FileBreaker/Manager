@@ -13,10 +13,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
@@ -24,7 +28,7 @@ import javax.swing.table.DefaultTableModel;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.FrameView;
 
-import com.filebreaker.controllers.MainController;
+import com.filebreaker.communications.SerialConnection;
 import com.filebreaker.experiments.Experiment;
 import com.filebreaker.experiments.ExperimentsController;
 import com.filebreaker.samples.SamplesController;
@@ -34,40 +38,36 @@ import com.filebreaker.view.i18n.I18n;
 import com.filebreaker.view.tables.IdentifiedTableModel;
 import com.filebreaker.view.utils.ExportFileChooserFactory;
 
-/**
- *
- * @author danielortegaufano
- */
 public class ExperimentsFrameView extends FrameView {
 
-	private MainController mainController;
+	private SerialConnection serialConnection;
 	
 	private ExperimentsController experimentsController;
 	
 	private SamplesController samplesController;
 	
-	private javax.swing.JButton exportButton;
+	private JButton exportButton;
     
-    private javax.swing.JButton newButton;
+    private JButton newButton;
     
-    private javax.swing.JButton deleteButton;
+    private JButton deleteButton;
     
-    private javax.swing.JButton editButton;
+    private JButton editButton;
     
-    private javax.swing.JLabel experimentsLabel;
+    private JLabel experimentsLabel;
     
-    private javax.swing.JScrollPane scrollPane;
+    private JScrollPane scrollPane;
     
-    private javax.swing.JTable experimentsTable;
+    private JTable experimentsTable;
     
-    private javax.swing.JPanel mainPanel;
+    private JPanel mainPanel;
 
 	private JDialog newExperimentJDialog;
 	
-    public ExperimentsFrameView(Application app, ExperimentsController experimentsController, MainController mainController, SamplesController samplesController) {
+    public ExperimentsFrameView(Application app, ExperimentsController experimentsController, SerialConnection serialConnection, SamplesController samplesController) {
 		super(app);
 		this.experimentsController = experimentsController;
-		this.mainController = mainController;
+		this.serialConnection = serialConnection;
 		this.samplesController = samplesController;
 		
 		initComponents();
@@ -79,16 +79,16 @@ public class ExperimentsFrameView extends FrameView {
     	mainPanel = new JPanel();
     	this.getFrame().setTitle(I18n.getInstance().getString("filebreaker.title"));
     	
-        experimentsLabel = new javax.swing.JLabel();
-        exportButton = new javax.swing.JButton();
-        scrollPane = new javax.swing.JScrollPane();
-        newButton = new javax.swing.JButton();
-        deleteButton = new javax.swing.JButton();
-        editButton = new javax.swing.JButton();
+        experimentsLabel = new JLabel();
+        exportButton = new JButton();
+        scrollPane = new JScrollPane();
+        newButton = new JButton();
+        deleteButton = new JButton();
+        editButton = new JButton();
         
         experimentsLabel.setText(I18n.getInstance().getString("experiments.title"));
 
-        exportButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/page_down.gif"))); // NOI18N
+        exportButton.setIcon(new ImageIcon(getClass().getResource("/page_down.gif"))); // NOI18N
         exportButton.setText(I18n.getInstance().getString("experiments.export"));
         exportButton.setEnabled(false);
         exportButton.addActionListener(new java.awt.event.ActionListener() {
@@ -105,7 +105,7 @@ public class ExperimentsFrameView extends FrameView {
             }
         });
         
-        experimentsTable = new javax.swing.JTable(){
+        experimentsTable = new JTable(){
 			private static final long serialVersionUID = 8174336416229179263L;
 
 			@Override
@@ -129,7 +129,7 @@ public class ExperimentsFrameView extends FrameView {
             			IdentifiedTableModel tableModel = (IdentifiedTableModel)target.getModel();
             			Integer selectedExperimentId = (Integer) tableModel.getModelId(row);
 
-            			JFrame samplesJFrame = new SamplesJFrame(mainController, experimentsController, samplesController, selectedExperimentId);
+            			JFrame samplesJFrame = new SamplesJFrame(serialConnection, experimentsController, samplesController, selectedExperimentId);
             			samplesJFrame.setVisible(true);
             		}
                 }
@@ -138,7 +138,7 @@ public class ExperimentsFrameView extends FrameView {
         
         scrollPane.setViewportView(experimentsTable);
 
-        newButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/note_new.gif"))); // NOI18N
+        newButton.setIcon(new ImageIcon(getClass().getResource("/note_new.gif"))); // NOI18N
         newButton.setText(I18n.getInstance().getString("experiments.new"));
         newButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -146,7 +146,7 @@ public class ExperimentsFrameView extends FrameView {
             }
         });
 
-        deleteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/note_delete.gif"))); // NOI18N
+        deleteButton.setIcon(new ImageIcon(getClass().getResource("/note_delete.gif"))); // NOI18N
         deleteButton.setText(I18n.getInstance().getString("experiments.delete"));
         deleteButton.setEnabled(false);
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
@@ -155,7 +155,7 @@ public class ExperimentsFrameView extends FrameView {
             }
         });
         
-        editButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/note.gif"))); // NOI18N
+        editButton.setIcon(new ImageIcon(getClass().getResource("/note.gif"))); // NOI18N
         editButton.setText(I18n.getInstance().getString("experiments.name.edit"));
         editButton.setEnabled(false);
         editButton.addActionListener(new java.awt.event.ActionListener() {

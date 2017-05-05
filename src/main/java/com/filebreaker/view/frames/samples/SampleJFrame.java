@@ -2,9 +2,17 @@ package com.filebreaker.view.frames.samples;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
-import com.filebreaker.controllers.MainController;
+import com.filebreaker.communications.SerialConnection;
 import com.filebreaker.samples.Sample;
 import com.filebreaker.samples.SamplesController;
 import com.filebreaker.view.frames.RefreshableFrame;
@@ -32,31 +40,31 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
 	
 	private SamplesController samplesController;
 	
-	private javax.swing.JButton speedUpButton;
+	private JButton speedUpButton;
 	
-	private javax.swing.JButton speedDownButton;
+	private JButton speedDownButton;
 	
-	private javax.swing.JLabel actualSpeedLabel;
+	private JLabel actualSpeedLabel;
 	
-	private javax.swing.JButton editButton;
+	private JButton editButton;
     
-	private javax.swing.JLabel chronometerLabel;
+	private JLabel chronometerLabel;
 	
-	private javax.swing.JLabel ldrValueLabel;
+	private JLabel ldrValueLabel;
     
-    private javax.swing.JLabel oscillationNumberLabel;
+    private JLabel oscillationNumberLabel;
     
     private StateLabel stateLabel;
     
-    private javax.swing.JPanel executionPanel;
+    private JPanel executionPanel;
     
-    private javax.swing.JPanel sampleDataPanel;
+    private JPanel sampleDataPanel;
     
-    private javax.swing.JScrollPane scrollPane;
+    private JScrollPane scrollPane;
     
     private SwitcherSlider switcherSlider;
     
-    private javax.swing.JTabbedPane executionTabbedPane;
+    private JTabbedPane executionTabbedPane;
     
     private SamplePropertiesTable propertiesTable;
     
@@ -70,16 +78,16 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
 
 	private EngineState engineState;
 	
-    public SampleJFrame(MainController mainController, SamplesController samplesController, Integer experimentId, Integer sampleId) {
+    public SampleJFrame(SerialConnection serialConnection, SamplesController samplesController, Integer experimentId, Integer sampleId) {
     	this.samplesController = samplesController;
         this.sample = samplesController.getSample(experimentId, sampleId);
         
-        this.executionTimeState = new ExecutionTimeState(sample.getEngineAngularSpeed());
+        this.executionTimeState = new ExecutionTimeState(sample);
         this.ldrState = new LdrState();
-        this.engineState = new EngineState(mainController, ldrState);
+        this.engineState = new EngineState(serialConnection, ldrState);
         
-        this.sampleState = new SampleState(sample, mainController, executionTimeState, ldrState, engineState);
-        this.task = new SampleExecutionTask(samplesController, mainController, sampleState);
+        this.sampleState = new SampleState(sample, executionTimeState, ldrState, engineState);
+        this.task = new SampleExecutionTask(samplesController, serialConnection, sampleState);
         
     	initComponents();
     }
@@ -90,8 +98,8 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
 		propertiesTable = new SamplePropertiesTable();
 		propertiesTable.setTableModel(sample);
 		
-		executionPanel = new javax.swing.JPanel();
-        executionTabbedPane = new javax.swing.JTabbedPane();
+		executionPanel = new JPanel();
+        executionTabbedPane = new JTabbedPane();
         
         oscillationNumberLabel = new OscillationNumberLabel(executionTimeState);
         chronometerLabel = new ChronometerLabel(executionTimeState);
@@ -101,10 +109,10 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
         speedUpButton = new SpeedUpButton(engineState);
         speedDownButton = new SpeedDownButton(engineState);
         actualSpeedLabel = new ActualSpeedLabel(engineState);
-        sampleDataPanel = new javax.swing.JPanel();
-        scrollPane = new javax.swing.JScrollPane();
+        sampleDataPanel = new JPanel();
+        scrollPane = new JScrollPane();
         
-        editButton = new javax.swing.JButton(); 
+        editButton = new JButton(); 
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
@@ -166,7 +174,7 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
 
         scrollPane.setViewportView(propertiesTable);
 
-        editButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/interface_dialog.gif"))); // NOI18N
+        editButton.setIcon(new ImageIcon(getClass().getResource("/interface_dialog.gif"))); // NOI18N
         editButton.setText(I18n.getInstance().getString("sample.edit"));
         editButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -208,6 +216,12 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
             .add(org.jdesktop.layout.GroupLayout.TRAILING, executionTabbedPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 305, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
         );
 
+        executionTabbedPane.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+            	refresh();
+            }
+        });
+        
         task.execute();
         pack();
     }

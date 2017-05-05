@@ -1,5 +1,8 @@
 package com.filebreaker.communications;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.collections.Buffer;
 import org.apache.commons.collections.BufferUtils;
 import org.apache.commons.collections.buffer.BoundedFifoBuffer;
@@ -10,9 +13,11 @@ import jssc.SerialPortEventListener;
 import jssc.SerialPortException;
 
 @SuppressWarnings("unchecked")
-class FilebreakerSerialPortEventListener implements SerialPortEventListener {
+public class BufferedSerialPortEventListener implements SerialPortEventListener {
 
-	private static final int BUFFER_SIZE = 4096;
+	private List<FileBrokenListener> observers = new ArrayList<FileBrokenListener>();
+	
+	private static final int BUFFER_SIZE = 8192;
 
 	private LDRReader ldrReader;
 	
@@ -20,26 +25,28 @@ class FilebreakerSerialPortEventListener implements SerialPortEventListener {
 	
 	private SerialPort serialPort;
 	
-	private Buffer fifo;
+	private Buffer buffer;
 	
-	public FilebreakerSerialPortEventListener(SerialPort serialPort){
+	public BufferedSerialPortEventListener(SerialPort serialPort){
 		this.serialPort = serialPort;
 		
 		this.ldrReader = new LDRReader();
 		this.detector = new FileBrokenDetector();
 		
-		this.fifo = BufferUtils.synchronizedBuffer(new BoundedFifoBuffer(BUFFER_SIZE));
+		this.buffer = BufferUtils.synchronizedBuffer(new BoundedFifoBuffer(BUFFER_SIZE));
 		
 		Runnable readBufferRunnable = new Runnable(){
 			public void run() {
 				while(true){
-					if(fifo.size() > 0){
-						char signal = (Character)fifo.remove();
+					if(buffer.size() > 0){
+						char signal = (Character)buffer.remove();
 						
 						detector.detect(signal);
 						
 						if(detector.isNotBroken()){
 							ldrReader.append(signal);
+						} else {
+							notifyAllObservers();
 						}
 					}
 				}
@@ -54,22 +61,32 @@ class FilebreakerSerialPortEventListener implements SerialPortEventListener {
 		
 		try {
 			for(byte b : readBuffer()){
-				fifo.add((char)b);
+				buffer.add((char)b);
 			}
 		} catch (SerialPortException e) {
 			e.printStackTrace();
 		}
 	}
 
+	public Integer getLdrValue(){
+		return ldrReader.getValue();
+	}
+
+	public void attach(FileBrokenListener observer) {
+		observers.add(observer);
+	}
+	
 	public boolean isFileBroken(){
 		return detector.isBroken();
 	}
 	
-	public Integer getLdrValue(){
-		return ldrReader.getValue();
-	}
-	
 	private byte[] readBuffer() throws SerialPortException {
 		return serialPort.readBytes(serialPort.getInputBufferBytesCount());
+	}
+	
+	private void notifyAllObservers() {
+		for (FileBrokenListener observer : observers) {
+			observer.update();
+		}
 	}
 }

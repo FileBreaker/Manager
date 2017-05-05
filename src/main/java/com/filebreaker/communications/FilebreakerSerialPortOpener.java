@@ -11,7 +11,7 @@ import jssc.SerialPortException;
 import jssc.SerialPortList;
 
 @Component
-class FilebreakerSerialPortDetector {
+class FilebreakerSerialPortOpener {
 
 	private static final String MAC_OS_X_SERIAL_PORT_NAME = "/dev/tty.usbmodem1411";
 	

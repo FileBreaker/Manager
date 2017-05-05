@@ -1,6 +1,5 @@
 package com.filebreaker.view.frames.components;
 
-import com.filebreaker.controllers.MainController;
 import com.filebreaker.samples.Sample;
 
 public class SampleState {
@@ -13,7 +12,7 @@ public class SampleState {
 	
 	private Sample sample;
 	
-	public SampleState(Sample sample, MainController mainController, ExecutionTimeState executionTimeState, LdrState ldrState, EngineState engineState){
+	public SampleState(Sample sample, ExecutionTimeState executionTimeState, LdrState ldrState, EngineState engineState){
 		this.sample = sample;
 		this.executionTimeState = executionTimeState;
         this.ldrState = ldrState;
@@ -46,6 +45,10 @@ public class SampleState {
 	
 	public void setExecutionTime(long millis){
 		executionTimeState.setExecutionTime(millis);
+	}
+	
+	public long getExecutionTime(){
+		return sample.getDurationMillis();
 	}
 	
 	public void setLdrValue(Integer value){

@@ -3,6 +3,8 @@ package com.filebreaker.view.frames.components;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.filebreaker.samples.Sample;
+
 public class ExecutionTimeState {
 
 	private static final int MILLIS_PER_MINUTE = 60000;
@@ -15,9 +17,10 @@ public class ExecutionTimeState {
 	
 	private Integer engineAngularSpeed;
 	
-	public ExecutionTimeState(Integer engineAngularSpeed){
-		this.executionMillis = 0L;
-		this.engineAngularSpeed = engineAngularSpeed;
+	public ExecutionTimeState(Sample sample) {
+		this.executionMillis = sample.getDurationMillis();
+		this.engineAngularSpeed = sample.getEngineAngularSpeed();
+		this.oscillations = sample.getOscillations();
 	}
 	
 	public void setExecutionTime(long millis){
@@ -49,6 +52,7 @@ public class ExecutionTimeState {
 			oscillations = 0;
 			return;
 		}
-		oscillations = (int) ((executionMillis / engineAngularSpeed) * MILLIS_PER_MINUTE);
+
+		oscillations = (int) ((executionMillis * engineAngularSpeed) / MILLIS_PER_MINUTE);
 	}
 }
