@@ -143,16 +143,16 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
         
         saveButton = new JButton();
         cancelButton = new JButton();
-        helixAngleSpinner = new SampleEditorSpinner();
-        distanceBetweenTurnsSpinner = new SampleEditorSpinner();
-        angleCurveSpinner = new SampleEditorSpinner();
-        radiusCurveSpinner = new SampleEditorSpinner();
-        useNumberSpinner = new SampleEditorSpinner();
-        esterilizationNumberSpinner = new SampleEditorSpinner();
+        helixAngleSpinner = new SampleEditorSpinner(new SpinnerNumberModel(0, 0, null, 1));
+        distanceBetweenTurnsSpinner = new SampleEditorSpinner(new SpinnerNumberModel(0, 0, null, 1));
+        angleCurveSpinner = new SampleEditorSpinner(new SpinnerNumberModel(0, 0, null, 1));
+        radiusCurveSpinner = new SampleEditorSpinner(new SpinnerNumberModel(0, 0, null, 1));
+        useNumberSpinner = new SampleEditorSpinner(new SpinnerNumberModel(0, 0, null, 1));
+        esterilizationNumberSpinner = new SampleEditorSpinner(new SpinnerNumberModel(0, 0, null, 1));
         fileTypeTextField = new JTextField();
         studyGroupTextField = new JTextField();
-        angularSpeedSpinner = new SampleEditorSpinner();
-        rootCanalSpeedSpinner = new SampleEditorSpinner();
+        angularSpeedSpinner = new SampleEditorSpinner(new SpinnerNumberModel(0, 0, null, 1));
+        rootCanalSpeedSpinner = new SampleEditorSpinner(new SpinnerNumberModel(0, 0, null, 1));
         movementTypeComboBox = new JComboBox<String>();
         fileMetalCompositionComboBox = new JComboBox<String>();
         studyTypeComboBox = new JComboBox<String>();

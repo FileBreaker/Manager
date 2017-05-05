@@ -29,35 +29,40 @@ public class SampleExecutionTask implements FileBrokenListener {
 		this.sampleState = sampleState;
 		
 		this.bufferedSerialPortEventListener = serialConnection.getBufferedSerialPortEventListener();
-		this.bufferedSerialPortEventListener.attach(this);
+		//TODO: Borrar!!!
+		if(this.bufferedSerialPortEventListener != null){
+			this.bufferedSerialPortEventListener.attach(this);
+		}
 	}
 	
 	public void execute() {
 		TimerTask timerTask = new TimerTask(){
 			
-			long diff = sampleState.getExecutionTime();
+			long executionTime = sampleState.getExecutionTime();
 			
 			public void run(){
 	     		refreshSampleState();
 	     		saveSampleState();
-				
-				if(sampleState.isFileBroken()){
-	     			cancel();
-	     		}
-	         }
-
-			private void saveSampleState() {
-				if(sampleState.isEngineRunning()) return;
-				samplesController.saveState(sampleState.getExperimentId(), sampleState.getSampleId(), diff, sampleState.getOscillations());
-			}
+				cancelExecution();
+	        }
 
 			private void refreshSampleState() {
 				if(!sampleState.isEngineRunning()) return;
 				
-				diff += REFRESH_PERIOD_MS;
-				sampleState.setExecutionTime(diff);
+				executionTime += REFRESH_PERIOD_MS;
+				sampleState.setExecutionTime(executionTime);
 				sampleState.setLdrValue(serialConnection.getLdrValue());
-			} 
+			}
+			
+			private void saveSampleState() {
+				if(sampleState.isEngineRunning()) return;
+				samplesController.saveState(sampleState.getExperimentId(), sampleState.getSampleId(), executionTime, sampleState.getOscillations());
+			}
+			
+			private void cancelExecution() {
+				if(!sampleState.isFileBroken()) return;
+				cancel();
+			}
 	     };
 	     
 	     Timer timer = new Timer();

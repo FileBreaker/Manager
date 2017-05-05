@@ -7,10 +7,6 @@ public class SampleEditorSpinner extends JSpinner {
 
 	private static final long serialVersionUID = 1L;
 
-	public SampleEditorSpinner() {
-		
-	}
-	
 	public SampleEditorSpinner(SpinnerNumberModel spinnerNumberModel) {
 		super(spinnerNumberModel);
 	}
