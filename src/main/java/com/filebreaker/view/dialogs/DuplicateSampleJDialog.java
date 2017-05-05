@@ -7,9 +7,9 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
 
 import com.filebreaker.samples.SamplesController;
+import com.filebreaker.view.frames.components.PositiveIntegerSpinnerNumberModel;
 import com.filebreaker.view.frames.samples.SamplesJFrame;
 import com.filebreaker.view.i18n.I18n;
 
@@ -62,7 +62,7 @@ public class DuplicateSampleJDialog extends javax.swing.JDialog {
     	
     	titleLabel = new JLabel();
         sampleNumberLabel = new JLabel();
-        sampleNumberSpinner = new JSpinner(new SpinnerNumberModel(0, 0, null, 1));
+        sampleNumberSpinner = new JSpinner(new PositiveIntegerSpinnerNumberModel());
         duplicateSampleButton = new JButton();
         cancelButton = new JButton();
 

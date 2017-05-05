@@ -16,6 +16,7 @@ import javax.swing.SpinnerNumberModel;
 import com.filebreaker.samples.Sample;
 import com.filebreaker.samples.SamplesController;
 import com.filebreaker.view.frames.RefreshableFrame;
+import com.filebreaker.view.frames.components.PositiveIntegerSpinnerNumberModel;
 import com.filebreaker.view.frames.components.SampleEditorSpinner;
 import com.filebreaker.view.i18n.I18n;
 
@@ -143,16 +144,16 @@ public class SampleEditorJFrame extends javax.swing.JFrame {
         
         saveButton = new JButton();
         cancelButton = new JButton();
-        helixAngleSpinner = new SampleEditorSpinner(new SpinnerNumberModel(0, 0, null, 1));
-        distanceBetweenTurnsSpinner = new SampleEditorSpinner(new SpinnerNumberModel(0, 0, null, 1));
-        angleCurveSpinner = new SampleEditorSpinner(new SpinnerNumberModel(0, 0, null, 1));
-        radiusCurveSpinner = new SampleEditorSpinner(new SpinnerNumberModel(0, 0, null, 1));
-        useNumberSpinner = new SampleEditorSpinner(new SpinnerNumberModel(0, 0, null, 1));
-        esterilizationNumberSpinner = new SampleEditorSpinner(new SpinnerNumberModel(0, 0, null, 1));
+        helixAngleSpinner = new SampleEditorSpinner(new PositiveIntegerSpinnerNumberModel());
+        distanceBetweenTurnsSpinner = new SampleEditorSpinner(new PositiveIntegerSpinnerNumberModel());
+        angleCurveSpinner = new SampleEditorSpinner(new PositiveIntegerSpinnerNumberModel());
+        radiusCurveSpinner = new SampleEditorSpinner(new PositiveIntegerSpinnerNumberModel());
+        useNumberSpinner = new SampleEditorSpinner(new PositiveIntegerSpinnerNumberModel());
+        esterilizationNumberSpinner = new SampleEditorSpinner(new PositiveIntegerSpinnerNumberModel());
         fileTypeTextField = new JTextField();
         studyGroupTextField = new JTextField();
-        angularSpeedSpinner = new SampleEditorSpinner(new SpinnerNumberModel(0, 0, null, 1));
-        rootCanalSpeedSpinner = new SampleEditorSpinner(new SpinnerNumberModel(0, 0, null, 1));
+        angularSpeedSpinner = new SampleEditorSpinner(new PositiveIntegerSpinnerNumberModel());
+        rootCanalSpeedSpinner = new SampleEditorSpinner(new PositiveIntegerSpinnerNumberModel());
         movementTypeComboBox = new JComboBox<String>();
         fileMetalCompositionComboBox = new JComboBox<String>();
         studyTypeComboBox = new JComboBox<String>();

@@ -8,10 +8,10 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
 
 import com.filebreaker.experiments.Experiment;
 import com.filebreaker.experiments.ExperimentsController;
+import com.filebreaker.view.frames.components.PositiveIntegerSpinnerNumberModel;
 import com.filebreaker.view.frames.experiments.ExperimentsFrameView;
 import com.filebreaker.view.i18n.I18n;
 
@@ -79,7 +79,7 @@ public class ExperimentJDialog extends javax.swing.JDialog {
         experimentLabel = new JLabel();
         sampleNumberLabel = new JLabel();
         experimentNameTextField = new JTextField();
-        sampleNumberSpinner = new JSpinner(new SpinnerNumberModel(0, 0, null, 1));
+        sampleNumberSpinner = new JSpinner(new PositiveIntegerSpinnerNumberModel());
         saveExperimentButton = new JButton();
         cancelButton = new JButton();
 
