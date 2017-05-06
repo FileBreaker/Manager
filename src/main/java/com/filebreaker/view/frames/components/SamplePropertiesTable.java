@@ -10,13 +10,17 @@ import com.filebreaker.view.utils.TimeUtils;
 public class SamplePropertiesTable extends JTable {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	public void setTableModel(Sample sample) {
 		this.setModel(new DefaultTableModel(getModel(sample), new String[] {
 				I18n.getInstance().getString("sample.property"), 
 				I18n.getInstance().getString("sample.value") 
 		}));
 	}
+	
+	public boolean isCellEditable(int row, int column){  
+        return false;  
+    }
 	
 	private Object[][] getModel(Sample sample){
     	Object [][] result = null;
@@ -93,4 +97,5 @@ public class SamplePropertiesTable extends JTable {
 		
 		return result;
     }
+
 }

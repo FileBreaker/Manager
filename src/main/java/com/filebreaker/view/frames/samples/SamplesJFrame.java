@@ -59,6 +59,8 @@ public class SamplesJFrame extends javax.swing.JFrame implements RefreshableFram
     private Integer experimentId;
     
     private JDialog duplicateSampleDialog;
+    
+    private JFrame sampleJFrame;
 
     public SamplesJFrame(SerialConnection serialConnection, ExperimentsController experimentsController, SamplesController samplesController, Integer experimentId) {
     	this.experimentId = experimentId;
@@ -114,7 +116,7 @@ public class SamplesJFrame extends javax.swing.JFrame implements RefreshableFram
         				IdentifiedTableModel tableModel = (IdentifiedTableModel)target.getModel();
         				Map<String, Object> composedSampleId = (Map<String, Object>) tableModel.getModelId(row);
                 	
-        				JFrame sampleJFrame = new SampleJFrame(serialConnection, samplesController, experimentId, (Integer)composedSampleId.get("sampleId"));
+        				sampleJFrame = new SampleJFrame(serialConnection, samplesController, experimentId, (Integer)composedSampleId.get("sampleId"));
         				sampleJFrame.setVisible(true);
         			}
         		}
