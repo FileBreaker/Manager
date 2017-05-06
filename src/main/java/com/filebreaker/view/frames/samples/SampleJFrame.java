@@ -2,6 +2,7 @@ package com.filebreaker.view.frames.samples;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -9,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.KeyStroke;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -90,6 +92,28 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
         this.task = new SampleExecutionTask(samplesController, serialConnection, sampleState);
         
     	initComponents();
+    	
+    	getRootPane().getInputMap().put(KeyStroke.getKeyStroke("UP"), "upKeyPressed");
+    	getRootPane().getActionMap().put("upKeyPressed",
+         new AbstractAction() {
+    		
+			private static final long serialVersionUID = 1L;
+
+			public void actionPerformed(ActionEvent e) {
+				engineState.speedUp();
+			}
+		});
+    	
+    	getRootPane().getInputMap().put(KeyStroke.getKeyStroke("DOWN"), "downKeyPressed");
+    	getRootPane().getActionMap().put("downKeyPressed",
+         new AbstractAction() {
+    		
+			private static final long serialVersionUID = 1L;
+
+			public void actionPerformed(ActionEvent e) {
+				engineState.speedDown();
+			}
+		});
     }
 
 	private void initComponents() {
