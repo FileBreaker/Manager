@@ -2,6 +2,7 @@ package com.filebreaker.view.frames.components;
 
 import javax.swing.JLabel;
 
+import com.filebreaker.view.frames.listeners.ExecutionTimeListener;
 import com.filebreaker.view.utils.TimeUtils;
 
 public class ChronometerLabel extends JLabel implements ExecutionTimeListener {

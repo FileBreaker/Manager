@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import javax.swing.JLabel;
 
+import com.filebreaker.view.frames.listeners.EngineStateListener;
 import com.filebreaker.view.i18n.I18n;
 
 public class StateLabel extends JLabel implements EngineStateListener {

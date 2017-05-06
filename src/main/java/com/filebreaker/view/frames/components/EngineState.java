@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.filebreaker.communications.SerialConnection;
 import com.filebreaker.view.frames.components.EngineSpeeds.EngineSpeedValue;
+import com.filebreaker.view.frames.listeners.EngineStateListener;
+import com.filebreaker.view.frames.listeners.LdrStateListener;
 
 public class EngineState implements LdrStateListener {
 	

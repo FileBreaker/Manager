@@ -4,6 +4,8 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import com.filebreaker.view.frames.listeners.EngineStateListener;
+
 public class SwitcherSlider extends JSlider implements EngineStateListener {
 
 	private static final long serialVersionUID = 1L;

@@ -33,10 +33,10 @@ import com.filebreaker.experiments.Experiment;
 import com.filebreaker.experiments.ExperimentsController;
 import com.filebreaker.samples.SamplesController;
 import com.filebreaker.view.dialogs.ExperimentJDialog;
+import com.filebreaker.view.frames.ExportFileChooserFactory;
 import com.filebreaker.view.frames.samples.SamplesJFrame;
 import com.filebreaker.view.i18n.I18n;
 import com.filebreaker.view.tables.IdentifiedTableModel;
-import com.filebreaker.view.utils.ExportFileChooserFactory;
 
 public class ExperimentsFrameView extends FrameView {
 

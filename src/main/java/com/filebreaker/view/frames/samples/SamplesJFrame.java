@@ -27,12 +27,12 @@ import com.filebreaker.experiments.ExperimentsController;
 import com.filebreaker.samples.Sample;
 import com.filebreaker.samples.SamplesController;
 import com.filebreaker.view.dialogs.DuplicateSampleJDialog;
+import com.filebreaker.view.frames.ExportFileChooserFactory;
 import com.filebreaker.view.frames.RefreshableFrame;
 import com.filebreaker.view.i18n.I18n;
 import com.filebreaker.view.tables.IdentifiedTableModel;
-import com.filebreaker.view.utils.ExportFileChooserFactory;
 
-public class SamplesJFrame extends javax.swing.JFrame implements RefreshableFrame {
+public class SamplesJFrame extends JFrame implements RefreshableFrame {
 
 	private static final long serialVersionUID = 5223108555053502278L;
 	

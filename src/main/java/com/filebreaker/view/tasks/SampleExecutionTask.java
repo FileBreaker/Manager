@@ -23,13 +23,16 @@ public class SampleExecutionTask implements FileBrokenListener {
 	
 	private BufferedSerialPortEventListener bufferedSerialPortEventListener;
 	
+	private long executionTime;
+	
 	public SampleExecutionTask(SamplesController samplesController, SerialConnection serialConnection, SampleState sampleState){
 		this.samplesController = samplesController;
 		this.serialConnection = serialConnection;
 		this.sampleState = sampleState;
+		this.executionTime = sampleState.getExecutionTime();
 		
 		this.bufferedSerialPortEventListener = serialConnection.getBufferedSerialPortEventListener();
-		//TODO: Borrar!!!
+		
 		if(this.bufferedSerialPortEventListener != null){
 			this.bufferedSerialPortEventListener.attach(this);
 		}
@@ -37,8 +40,6 @@ public class SampleExecutionTask implements FileBrokenListener {
 	
 	public void execute() {
 		TimerTask timerTask = new TimerTask(){
-			
-			long executionTime = sampleState.getExecutionTime();
 			
 			public void run(){
 	     		refreshSampleState();
@@ -56,7 +57,7 @@ public class SampleExecutionTask implements FileBrokenListener {
 			
 			private void saveSampleState() {
 				if(sampleState.isEngineRunning()) return;
-				samplesController.saveState(sampleState.getExperimentId(), sampleState.getSampleId(), executionTime, sampleState.getOscillations());
+				saveState();
 			}
 			
 			private void cancelExecution() {
@@ -71,5 +72,9 @@ public class SampleExecutionTask implements FileBrokenListener {
 
 	public void update() {
 		sampleState.setFileBroken(true);
+	}
+
+	public void saveState() {
+		samplesController.saveState(sampleState.getExperimentId(), sampleState.getSampleId(), executionTime, sampleState.getOscillations());
 	}
 }

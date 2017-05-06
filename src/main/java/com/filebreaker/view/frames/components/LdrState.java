@@ -3,6 +3,8 @@ package com.filebreaker.view.frames.components;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.filebreaker.view.frames.listeners.LdrStateListener;
+
 public class LdrState {
 
 	private List<LdrStateListener> observers = new ArrayList<LdrStateListener>();

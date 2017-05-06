@@ -1,4 +1,4 @@
-package com.filebreaker.view.utils;
+package com.filebreaker.view.frames;
 
 import javax.swing.JFileChooser;
 

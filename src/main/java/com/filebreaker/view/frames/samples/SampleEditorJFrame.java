@@ -20,7 +20,7 @@ import com.filebreaker.view.frames.components.PositiveIntegerSpinnerNumberModel;
 import com.filebreaker.view.frames.components.SampleEditorSpinner;
 import com.filebreaker.view.i18n.I18n;
 
-public class SampleEditorJFrame extends javax.swing.JFrame {
+public class SampleEditorJFrame extends JFrame {
 
 	private static final long serialVersionUID = 6157009534536579567L;
 	

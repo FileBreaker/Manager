@@ -2,6 +2,7 @@ package com.filebreaker.view.frames.components;
 
 import javax.swing.JLabel;
 
+import com.filebreaker.view.frames.listeners.EngineStateListener;
 import com.filebreaker.view.i18n.I18n;
 
 public class ActualSpeedLabel extends JLabel implements EngineStateListener {

@@ -3,6 +3,7 @@ package com.filebreaker.view.frames.components;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+import com.filebreaker.view.frames.listeners.EngineStateListener;
 import com.filebreaker.view.i18n.I18n;
 
 public class SpeedDownButton extends JButton implements EngineStateListener {

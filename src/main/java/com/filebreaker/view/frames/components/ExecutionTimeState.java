@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.filebreaker.samples.Sample;
+import com.filebreaker.view.frames.listeners.ExecutionTimeListener;
 
 public class ExecutionTimeState {
 

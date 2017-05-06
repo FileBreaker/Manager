@@ -15,13 +15,11 @@ import jssc.SerialPortException;
 @SuppressWarnings("unchecked")
 public class BufferedSerialPortEventListener implements SerialPortEventListener {
 
-	private List<FileBrokenListener> observers = new ArrayList<FileBrokenListener>();
-	
 	private static final int BUFFER_SIZE = 8192;
+	
+	private List<FileBrokenListener> observers = new ArrayList<FileBrokenListener>();
 
 	private LDRReader ldrReader;
-	
-	private FileBrokenDetector detector;
 	
 	private SerialPort serialPort;
 	
@@ -29,10 +27,7 @@ public class BufferedSerialPortEventListener implements SerialPortEventListener 
 	
 	public BufferedSerialPortEventListener(SerialPort serialPort){
 		this.serialPort = serialPort;
-		
 		this.ldrReader = new LDRReader();
-		this.detector = new FileBrokenDetector();
-		
 		this.buffer = BufferUtils.synchronizedBuffer(new BoundedFifoBuffer(BUFFER_SIZE));
 		
 		Runnable readBufferRunnable = new Runnable(){
@@ -41,12 +36,11 @@ public class BufferedSerialPortEventListener implements SerialPortEventListener 
 					if(buffer.size() > 0){
 						char signal = (Character)buffer.remove();
 						
-						detector.detect(signal);
-						
-						if(detector.isNotBroken()){
-							ldrReader.append(signal);
-						} else {
+						if(FileBrokenDetector.isFileBroken(signal)){
 							notifyAllObservers();
+							buffer.clear();
+						} else {
+							ldrReader.append(signal);
 						}
 					}
 				}
@@ -74,10 +68,6 @@ public class BufferedSerialPortEventListener implements SerialPortEventListener 
 
 	public void attach(FileBrokenListener observer) {
 		observers.add(observer);
-	}
-	
-	public boolean isFileBroken(){
-		return detector.isBroken();
 	}
 	
 	private byte[] readBuffer() throws SerialPortException {

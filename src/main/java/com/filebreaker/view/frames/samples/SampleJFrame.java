@@ -1,6 +1,8 @@
 package com.filebreaker.view.frames.samples;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
@@ -34,7 +36,7 @@ import com.filebreaker.view.frames.components.SwitcherSlider;
 import com.filebreaker.view.i18n.I18n;
 import com.filebreaker.view.tasks.SampleExecutionTask;
 
-public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame {
+public class SampleJFrame extends JFrame implements RefreshableFrame {
 
 	private static final long serialVersionUID = 8162818230491268811L;
 	
@@ -114,6 +116,14 @@ public class SampleJFrame extends javax.swing.JFrame implements RefreshableFrame
 				engineState.speedDown();
 			}
 		});
+    	
+    	 addWindowListener(new WindowAdapter(){
+             @Override
+             public void windowClosing(WindowEvent e){
+                 task.saveState();
+                 e.getWindow().dispose();
+             }
+         });
     }
 
 	private void initComponents() {

@@ -2,6 +2,7 @@ package com.filebreaker.view.frames.components;
 
 import javax.swing.JLabel;
 
+import com.filebreaker.view.frames.listeners.ExecutionTimeListener;
 import com.filebreaker.view.i18n.I18n;
 
 public class OscillationNumberLabel extends JLabel implements ExecutionTimeListener {
