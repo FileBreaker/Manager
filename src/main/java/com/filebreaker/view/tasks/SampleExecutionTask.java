@@ -74,7 +74,16 @@ public class SampleExecutionTask implements FileBrokenListener {
 		sampleState.setFileBroken(true);
 	}
 
-	public void saveState() {
+	public void closeTask(){
+		saveState();
+		closeConnection();
+	}
+	
+	private void saveState() {
 		samplesController.saveState(sampleState.getExperimentId(), sampleState.getSampleId(), executionTime, sampleState.getOscillations());
+	}
+	
+	private void closeConnection(){
+		serialConnection.closePort();
 	}
 }

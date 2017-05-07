@@ -21,7 +21,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import com.filebreaker.communications.SerialConnection;
 import com.filebreaker.experiments.Experiment;
 import com.filebreaker.experiments.ExperimentsController;
 import com.filebreaker.samples.Sample;
@@ -39,8 +38,6 @@ public class SamplesJFrame extends JFrame implements RefreshableFrame {
 	private ExperimentsController experimentsController;
 	
 	private SamplesController samplesController;
-	
-	private SerialConnection serialConnection;
 
     private JButton exportButton;
     
@@ -62,12 +59,11 @@ public class SamplesJFrame extends JFrame implements RefreshableFrame {
     
     private JFrame sampleJFrame;
 
-    public SamplesJFrame(SerialConnection serialConnection, ExperimentsController experimentsController, SamplesController samplesController, Integer experimentId) {
+    public SamplesJFrame(ExperimentsController experimentsController, SamplesController samplesController, Integer experimentId) {
     	this.experimentId = experimentId;
     	
     	this.experimentsController = experimentsController;
     	this.samplesController = samplesController;
-    	this.serialConnection = serialConnection;
         
     	initComponents();   
     }
@@ -115,8 +111,9 @@ public class SamplesJFrame extends JFrame implements RefreshableFrame {
         			if(e.getClickCount() > 1){
         				IdentifiedTableModel tableModel = (IdentifiedTableModel)target.getModel();
         				Map<String, Object> composedSampleId = (Map<String, Object>) tableModel.getModelId(row);
-                	
-        				sampleJFrame = new SampleJFrame(serialConnection, samplesController, experimentId, (Integer)composedSampleId.get("sampleId"));
+        				Integer sampleId = (Integer)composedSampleId.get("sampleId");
+        				
+						sampleJFrame = new SampleJFrame(samplesController, experimentId, sampleId);
         				sampleJFrame.setVisible(true);
         			}
         		}

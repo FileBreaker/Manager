@@ -3,7 +3,7 @@ package com.filebreaker.communications;
 import jssc.SerialPort;
 import jssc.SerialPortException;
 
-class FilebreakerSerialPortBuilder {
+class FilebreakerSerialPortFactory {
 
 	private static final int BAUDRATE = SerialPort.BAUDRATE_9600;
 	

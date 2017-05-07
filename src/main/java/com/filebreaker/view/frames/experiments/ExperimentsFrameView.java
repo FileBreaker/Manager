@@ -28,7 +28,6 @@ import javax.swing.table.DefaultTableModel;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.FrameView;
 
-import com.filebreaker.communications.SerialConnection;
 import com.filebreaker.experiments.Experiment;
 import com.filebreaker.experiments.ExperimentsController;
 import com.filebreaker.samples.SamplesController;
@@ -39,8 +38,6 @@ import com.filebreaker.view.i18n.I18n;
 import com.filebreaker.view.tables.IdentifiedTableModel;
 
 public class ExperimentsFrameView extends FrameView {
-
-	private SerialConnection serialConnection;
 	
 	private ExperimentsController experimentsController;
 	
@@ -64,10 +61,9 @@ public class ExperimentsFrameView extends FrameView {
 
 	private JDialog newExperimentJDialog;
 	
-    public ExperimentsFrameView(Application app, ExperimentsController experimentsController, SerialConnection serialConnection, SamplesController samplesController) {
+    public ExperimentsFrameView(Application app, ExperimentsController experimentsController, SamplesController samplesController) {
 		super(app);
 		this.experimentsController = experimentsController;
-		this.serialConnection = serialConnection;
 		this.samplesController = samplesController;
 		
 		initComponents();
@@ -129,7 +125,7 @@ public class ExperimentsFrameView extends FrameView {
             			IdentifiedTableModel tableModel = (IdentifiedTableModel)target.getModel();
             			Integer selectedExperimentId = (Integer) tableModel.getModelId(row);
 
-            			JFrame samplesJFrame = new SamplesJFrame(serialConnection, experimentsController, samplesController, selectedExperimentId);
+            			JFrame samplesJFrame = new SamplesJFrame(experimentsController, samplesController, selectedExperimentId);
             			samplesJFrame.setVisible(true);
             		}
                 }

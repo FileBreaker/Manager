@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.filebreaker.communications.SerialConnection;
 import com.filebreaker.experiments.ExperimentsController;
 import com.filebreaker.samples.SamplesController;
 import com.filebreaker.view.Gui;
@@ -14,27 +13,18 @@ public class FilebreakerMain {
 	private static final String APPLICATION_CONTEXT_FILENAME = "application-context.xml";
 	
 	@Autowired
-	SerialConnection serialConnection;
-	
-	@Autowired
 	SamplesController samplesController;
 	
 	@Autowired
 	ExperimentsController experimentsController;
 	
 	public FilebreakerMain(){
-		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(APPLICATION_CONTEXT_FILENAME);
-		
-		try {
-			AutowireCapableBeanFactory acbFactory = context.getAutowireCapableBeanFactory();
-			acbFactory.autowireBean(this);
-		} finally {
-			context.close();
-		}
+		AutowireCapableBeanFactory acbFactory = new ClassPathXmlApplicationContext(APPLICATION_CONTEXT_FILENAME).getAutowireCapableBeanFactory();
+		acbFactory.autowireBean(this);
 	}
 	
 	public static void main(String [] args){
 		FilebreakerMain fileBreakerMain = new FilebreakerMain();
-		Gui.getApplication().startup(fileBreakerMain.serialConnection, fileBreakerMain.samplesController, fileBreakerMain.experimentsController);
+		Gui.getApplication().startup(fileBreakerMain.samplesController, fileBreakerMain.experimentsController);
 	}
 }

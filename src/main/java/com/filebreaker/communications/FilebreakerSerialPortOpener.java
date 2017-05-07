@@ -30,7 +30,7 @@ class FilebreakerSerialPortOpener {
 		
 		for (String detectedPortName : detectedPortNames) {
 			if(SERIAL_PORT_NAMES.contains(detectedPortName)){
-				return FilebreakerSerialPortBuilder.buildOpenedSerialPort(detectedPortName);
+				return FilebreakerSerialPortFactory.buildOpenedSerialPort(detectedPortName);
 			}
 		}
 		

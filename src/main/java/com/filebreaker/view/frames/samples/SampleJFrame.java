@@ -35,6 +35,7 @@ import com.filebreaker.view.frames.components.StateLabel;
 import com.filebreaker.view.frames.components.SwitcherSlider;
 import com.filebreaker.view.i18n.I18n;
 import com.filebreaker.view.tasks.SampleExecutionTask;
+import com.filebreaker.view.utils.ApplicationContextProvider;
 
 public class SampleJFrame extends JFrame implements RefreshableFrame {
 
@@ -82,9 +83,11 @@ public class SampleJFrame extends JFrame implements RefreshableFrame {
 
 	private EngineState engineState;
 	
-    public SampleJFrame(SerialConnection serialConnection, SamplesController samplesController, Integer experimentId, Integer sampleId) {
+    public SampleJFrame(SamplesController samplesController, Integer experimentId, Integer sampleId) {
     	this.samplesController = samplesController;
         this.sample = samplesController.getSample(experimentId, sampleId);
+        
+        SerialConnection serialConnection = ApplicationContextProvider.getApplicationContext().getBean(SerialConnection.class);
         
         this.executionTimeState = new ExecutionTimeState(sample);
         this.ldrState = new LdrState();
@@ -92,10 +95,12 @@ public class SampleJFrame extends JFrame implements RefreshableFrame {
         
         this.sampleState = new SampleState(sample, executionTimeState, ldrState, engineState);
         this.task = new SampleExecutionTask(samplesController, serialConnection, sampleState);
-        
-    	initComponents();
-    	
-    	getRootPane().getInputMap().put(KeyStroke.getKeyStroke("UP"), "upKeyPressed");
+    	 
+     	initComponents();
+    }
+
+	private void addKeyUpShortcut() {
+		getRootPane().getInputMap().put(KeyStroke.getKeyStroke("UP"), "upKeyPressed");
     	getRootPane().getActionMap().put("upKeyPressed",
          new AbstractAction() {
     		
@@ -105,8 +110,10 @@ public class SampleJFrame extends JFrame implements RefreshableFrame {
 				engineState.speedUp();
 			}
 		});
-    	
-    	getRootPane().getInputMap().put(KeyStroke.getKeyStroke("DOWN"), "downKeyPressed");
+	}
+
+	private void addKeyDownShortcut() {
+		getRootPane().getInputMap().put(KeyStroke.getKeyStroke("DOWN"), "downKeyPressed");
     	getRootPane().getActionMap().put("downKeyPressed",
          new AbstractAction() {
     		
@@ -116,17 +123,24 @@ public class SampleJFrame extends JFrame implements RefreshableFrame {
 				engineState.speedDown();
 			}
 		});
-    	
-    	 addWindowListener(new WindowAdapter(){
-             @Override
-             public void windowClosing(WindowEvent e){
-                 task.saveState();
-                 e.getWindow().dispose();
-             }
-         });
-    }
+	}
+	
+	private void addWindowClosingListener() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				task.closeTask();
+				e.getWindow().dispose();
+			}
+		});
+	}
+
 
 	private void initComponents() {
+		addKeyUpShortcut();
+    	addKeyDownShortcut();
+		addWindowClosingListener();
+		
 		this.setResizable(false);
 			
 		propertiesTable = new SamplePropertiesTable();
@@ -260,7 +274,7 @@ public class SampleJFrame extends JFrame implements RefreshableFrame {
         pack();
     }
 	
-	protected void editButtonActionPerformed(ActionEvent evt) {
+	private void editButtonActionPerformed(ActionEvent evt) {
 		JFrame sampleEditorJFrame = new SampleEditorJFrame(samplesController, sample.getExperimentId(), sample.getId(), this);
 		sampleEditorJFrame.setVisible(true);
 	}
@@ -269,7 +283,4 @@ public class SampleJFrame extends JFrame implements RefreshableFrame {
 		propertiesTable.setTableModel(samplesController.getSample(sample.getExperimentId(), sample.getId()));
 	}
 
-	public SwitcherSlider getSwitcherSlider() {
-		return switcherSlider;
-	}
 }

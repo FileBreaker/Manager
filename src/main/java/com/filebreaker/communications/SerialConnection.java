@@ -3,12 +3,15 @@ package com.filebreaker.communications;
 import java.nio.charset.Charset;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import jssc.SerialPort;
 import jssc.SerialPortException;
 
 @Component
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class SerialConnection {
 	
 	private static final String US_ASCII_CHARSET_NAME = "US-ASCII";
@@ -17,18 +20,18 @@ public class SerialConnection {
 
 	private BufferedSerialPortEventListener bufferedSerialPortEventListener;
 	
-	private FilebreakerSerialPortOpener filebreakerSerialPortDetector;
+	private FilebreakerSerialPortOpener filebreakerSerialPortOpener;
 	
 	@Autowired
 	public SerialConnection(FilebreakerSerialPortOpener filebreakerSerialPortDetector) throws FilebreakerNotConnectedException, SerialPortException {
-		this.filebreakerSerialPortDetector = filebreakerSerialPortDetector;
+		this.filebreakerSerialPortOpener = filebreakerSerialPortDetector;
 		
 		this.serialPort = buildSerialPort();
 	}
 
 	private SerialPort buildSerialPort() throws FilebreakerNotConnectedException, SerialPortException {
 		try {
-			SerialPort serialPort = this.filebreakerSerialPortDetector.getSOSpecificSerialPort();
+			SerialPort serialPort = this.filebreakerSerialPortOpener.getSOSpecificSerialPort();
 			this.bufferedSerialPortEventListener = new BufferedSerialPortEventListener(serialPort);
 			
 			serialPort.addEventListener(bufferedSerialPortEventListener);
@@ -57,4 +60,11 @@ public class SerialConnection {
 		return bufferedSerialPortEventListener;
 	}
 	
+	public void closePort(){
+		try {
+			serialPort.closePort();
+		} catch (SerialPortException e) {
+			e.printStackTrace();
+		}
+	}
 }

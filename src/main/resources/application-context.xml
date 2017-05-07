@@ -10,4 +10,6 @@
   <context:component-scan base-package="com.filebreaker"/>
   
   <bean id="gui" class="com.filebreaker.view.Gui" factory-method="getApplication" />
+  <bean id="applicationContextProvder" class="com.filebreaker.view.utils.ApplicationContextProvider"/>
+  
 </beans>
