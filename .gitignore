@@ -64,3 +64,4 @@ local.properties
 *.h2.db
 *.trace.db
 *.trace.db.old
+*.lock.db
