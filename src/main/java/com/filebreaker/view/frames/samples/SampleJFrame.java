@@ -82,6 +82,8 @@ public class SampleJFrame extends JFrame implements RefreshableFrame {
 	private LdrState ldrState;
 
 	private EngineState engineState;
+
+	private JFrame sampleEditorJFrame;
 	
     public SampleJFrame(SamplesController samplesController, Integer experimentId, Integer sampleId) {
     	this.samplesController = samplesController;
@@ -129,6 +131,7 @@ public class SampleJFrame extends JFrame implements RefreshableFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
+				closeSampleEditorJFrame();
 				engineState.stop();
 				task.closeTask();
 				
@@ -276,8 +279,19 @@ public class SampleJFrame extends JFrame implements RefreshableFrame {
     }
 	
 	private void editButtonActionPerformed(ActionEvent evt) {
-		JFrame sampleEditorJFrame = new SampleEditorJFrame(samplesController, sample.getExperimentId(), sample.getId(), this);
+		if(isSampleEditorJFrameDisplayed()) return;
+		
+		sampleEditorJFrame = new SampleEditorJFrame(samplesController, sample.getExperimentId(), sample.getId(), this);
 		sampleEditorJFrame.setVisible(true);
+	}
+
+	private boolean isSampleEditorJFrameDisplayed() {
+		return sampleEditorJFrame != null && sampleEditorJFrame.isDisplayable();
+	}
+	
+	private void closeSampleEditorJFrame() {
+		if(!isSampleEditorJFrameDisplayed()) return;
+		sampleEditorJFrame.dispose();
 	}
 
 	public void refresh() {

@@ -113,8 +113,10 @@ public class SamplesJFrame extends JFrame implements RefreshableFrame {
         				Map<String, Object> composedSampleId = (Map<String, Object>) tableModel.getModelId(row);
         				Integer sampleId = (Integer)composedSampleId.get("sampleId");
         				
-						sampleJFrame = new SampleJFrame(samplesController, experimentId, sampleId);
-        				sampleJFrame.setVisible(true);
+        				if(sampleJFrame == null || !sampleJFrame.isDisplayable()){
+        					sampleJFrame = new SampleJFrame(samplesController, experimentId, sampleId);
+        					sampleJFrame.setVisible(true);
+        				}
         			}
         		}
         	}
