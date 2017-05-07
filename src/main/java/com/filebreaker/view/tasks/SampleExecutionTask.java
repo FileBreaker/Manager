@@ -2,6 +2,9 @@ package com.filebreaker.view.tasks;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import com.filebreaker.communications.BufferedSerialPortEventListener;
 import com.filebreaker.communications.FileBrokenListener;
@@ -32,14 +35,13 @@ public class SampleExecutionTask implements FileBrokenListener {
 		this.executionTime = sampleState.getExecutionTime();
 		
 		this.bufferedSerialPortEventListener = serialConnection.getBufferedSerialPortEventListener();
-		
-		if(this.bufferedSerialPortEventListener != null){
-			this.bufferedSerialPortEventListener.attach(this);
-		}
+		this.bufferedSerialPortEventListener.attach(this);
 	}
 	
 	public void execute() {
-		TimerTask timerTask = new TimerTask(){
+	    final ScheduledExecutorService scheduledPool = Executors.newScheduledThreadPool(1);
+
+		Runnable timerTask = new Runnable(){
 			
 			public void run(){
 	     		refreshSampleState();
@@ -62,12 +64,11 @@ public class SampleExecutionTask implements FileBrokenListener {
 			
 			private void cancelExecution() {
 				if(!sampleState.isFileBroken()) return;
-				cancel();
+				scheduledPool.shutdown();
 			}
 	     };
 	     
-	     Timer timer = new Timer();
-	     timer.scheduleAtFixedRate(timerTask, DELAY_MS, REFRESH_PERIOD_MS);
+	     scheduledPool.scheduleWithFixedDelay(timerTask, DELAY_MS, REFRESH_PERIOD_MS, TimeUnit.MILLISECONDS);
 	}
 
 	public void update() {
