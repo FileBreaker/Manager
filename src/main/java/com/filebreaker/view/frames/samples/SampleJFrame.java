@@ -129,12 +129,13 @@ public class SampleJFrame extends JFrame implements RefreshableFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
+				engineState.stop();
 				task.closeTask();
+				
 				e.getWindow().dispose();
 			}
 		});
 	}
-
 
 	private void initComponents() {
 		addKeyUpShortcut();

@@ -16,7 +16,7 @@ public class H2DAO {
 	
 	private static final String H2_FILE_PATH = Paths.get(".").toAbsolutePath().normalize().toString() + File.separator + "filebreaker";
 	
-	private static final String JDBC_H2_URL = "jdbc:h2:" + H2_FILE_PATH + ";INIT=RUNSCRIPT FROM 'classpath:scripts/init.sql'";
+	private static final String JDBC_H2_URL = "jdbc:h2:" + H2_FILE_PATH + ";INIT=RUNSCRIPT FROM 'classpath:scripts/init.sql';DB_CLOSE_ON_EXIT=FALSE";
 
 	private static final String H2_USER = "sa";
 	
