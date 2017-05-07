@@ -18,13 +18,25 @@ public class FilebreakerMain {
 	@Autowired
 	ExperimentsController experimentsController;
 	
+	static ClassPathXmlApplicationContext applicationContext;
+	
 	public FilebreakerMain(){
-		AutowireCapableBeanFactory acbFactory = new ClassPathXmlApplicationContext(APPLICATION_CONTEXT_FILENAME).getAutowireCapableBeanFactory();
+		FilebreakerMain.applicationContext = new ClassPathXmlApplicationContext(APPLICATION_CONTEXT_FILENAME);
+		
+		AutowireCapableBeanFactory acbFactory = applicationContext.getAutowireCapableBeanFactory();
 		acbFactory.autowireBean(this);
 	}
 	
 	public static void main(String [] args){
 		FilebreakerMain fileBreakerMain = new FilebreakerMain();
 		Gui.getApplication().startup(fileBreakerMain.samplesController, fileBreakerMain.experimentsController);
+		
+		Runtime.getRuntime().addShutdownHook(new Thread(){
+		    @Override
+		    public void run() {
+		    	FilebreakerMain.applicationContext.close();
+		    }
+		});
 	}
+	
 }
